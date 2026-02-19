@@ -1,18 +1,31 @@
 # tmux-huckleberry
 
-TPM-compatible fuzzy session switcher for tmux. Opens in a popup via `prefix + Space`; fuzzy-find an existing session or type a new name to create one.
+TPM-compatible fuzzy command palette for tmux. Opens in a popup via `prefix + Space`; a top-level category menu routes to sub-palettes for sessions, windows, and config management.
 
 ## Architecture
 
+```
+[prefix + Space]
+    ↓
+scripts/huckleberry.sh (top-level dispatcher)
+    ├─ ␣ Sessions → scripts/palettes/sessions.sh
+    ├─ w Windows  → scripts/palettes/windows.sh
+    └─ c Config   → scripts/palettes/config.sh
+```
+
 1. `huckleberry.tmux` — TPM entry point; reads user options, binds key to open popup
-2. `scripts/huckleberry.sh` — core palette logic; runs inside the popup, pipes sessions through fzf
-3. `scripts/helpers.sh` — sourced utility (`get_tmux_option`)
-4. `scripts/variables.sh` — sourced option-name constants and defaults
+2. `scripts/huckleberry.sh` — top-level dispatcher; shows categories via fzf `--expect`, `exec`s into sub-palettes
+3. `scripts/palettes/common.sh` — sourced shared infrastructure (path resolution, `strip_fzf_opts`)
+4. `scripts/palettes/sessions.sh` — session switcher sub-palette (fuzzy-find/create sessions)
+5. `scripts/palettes/windows.sh` — window management sub-palette (rename, split, move)
+6. `scripts/palettes/config.sh` — config sub-palette (reload config, TPM install/update)
+7. `scripts/helpers.sh` — sourced utility (`get_tmux_option`)
+8. `scripts/variables.sh` — sourced option-name constants and defaults
 
 ## File permissions
 
-- **755** for executables: `huckleberry.tmux`, `scripts/huckleberry.sh`
-- **644** for sourced files: `scripts/helpers.sh`, `scripts/variables.sh`
+- **755** for executables: `huckleberry.tmux`, `scripts/huckleberry.sh`, `scripts/palettes/sessions.sh`, `scripts/palettes/windows.sh`, `scripts/palettes/config.sh`
+- **644** for sourced files: `scripts/helpers.sh`, `scripts/variables.sh`, `scripts/palettes/common.sh`
 
 ## Bash conventions
 
