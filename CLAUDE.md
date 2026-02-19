@@ -29,6 +29,15 @@ TPM-compatible fuzzy session switcher for tmux. Opens in a popup via `prefix + S
 - User options use the `@huckleberry-` prefix
 - Read options with `tmux show-option -gqv`
 
+## Configurability
+
+Every visual/stylistic choice exposed to the user must be configurable via a `@huckleberry-` tmux option. Never hardcode colors, labels, layout values, or display strings. For each option:
+1. Add a constant and default to `scripts/variables.sh`
+2. Read it via `get_tmux_option` in the appropriate script
+3. Document it in the README configuration table with default and description
+
+If a display property depends on the terminal or theme (e.g. border color), prefer relying on tmux's global settings rather than baking theme-specific values into the plugin.
+
 ## Commit conventions
 
 Conventional commits: `type(scope): description`

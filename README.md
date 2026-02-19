@@ -41,7 +41,11 @@ All options are set with `set -g` in your `~/.tmux.conf`:
 | `@huckleberry-x` | `C` | Popup horizontal position |
 | `@huckleberry-y` | `C` | Popup vertical position |
 | `@huckleberry-title` | ` 🤠 huckleberry ` | Popup title bar text |
+| `@huckleberry-border-lines` | `rounded` | Popup border style (`single`, `rounded`, `double`, `heavy`, `simple`, `padded`, `none`) |
 | `@huckleberry-prompt` | `session > ` | fzf prompt string |
+| `@huckleberry-header` | `  switch or create a session` | fzf header text |
+| `@huckleberry-preview` | `right:50%` | fzf preview window layout |
+| `@huckleberry-marker` | `* ` | Prefix for the current session in the list |
 
 ### Example
 

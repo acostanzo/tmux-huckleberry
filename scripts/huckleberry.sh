@@ -11,15 +11,21 @@ source "${CURRENT_DIR}/helpers.sh"
 source "${CURRENT_DIR}/variables.sh"
 
 prompt=$(get_tmux_option "$HUCKLEBERRY_PROMPT" "$HUCKLEBERRY_PROMPT_DEFAULT")
+header=$(get_tmux_option "$HUCKLEBERRY_HEADER" "$HUCKLEBERRY_HEADER_DEFAULT")
+preview=$(get_tmux_option "$HUCKLEBERRY_PREVIEW" "$HUCKLEBERRY_PREVIEW_DEFAULT")
+marker=$(get_tmux_option "$HUCKLEBERRY_MARKER" "$HUCKLEBERRY_MARKER_DEFAULT")
 current_session="$(tmux display-message -p '#{session_name}')"
+
+# Pad unmarked entries to align with the marker width.
+padding=$(printf '%*s' "${#marker}" '')
 
 # Build the session list, marking the current session with a prefix.
 session_list() {
     tmux list-sessions -F '#{session_name}' | while IFS= read -r name; do
         if [[ "$name" == "$current_session" ]]; then
-            echo "* ${name}"
+            echo "${marker}${name}"
         else
-            echo "  ${name}"
+            echo "${padding}${name}"
         fi
     done
 }
@@ -39,9 +45,9 @@ fzf_output=$(session_list | fzf \
     --reverse \
     --no-info \
     --prompt "$prompt" \
-    --header "  switch or create a session" \
-    --preview 'tmux list-windows -t $(echo {} | sed "s/^[* ] //") 2>/dev/null' \
-    --preview-window 'right:50%')
+    --header "$header" \
+    --preview 'tmux list-windows -t $(echo {} | sed "s/^[^a-zA-Z0-9]*//") 2>/dev/null' \
+    --preview-window "$preview")
 
 fzf_exit=$?
 
@@ -54,9 +60,9 @@ if [[ $fzf_exit -eq 130 ]]; then
 fi
 
 if [[ -n "$selection" ]]; then
-    # Strip the "* " or "  " prefix to get the bare session name.
-    target="${selection#\* }"
-    target="${target#  }"
+    # Strip the marker or padding prefix to get the bare session name.
+    target="${selection#"$marker"}"
+    target="${target#"$padding"}"
     tmux switch-client -t "=$target"
 elif [[ -n "$query" ]]; then
     # No match selected — create a new session with the query as its name.
