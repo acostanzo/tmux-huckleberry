@@ -88,3 +88,47 @@ HUCKLEBERRY_CAT_CONFIG_LABEL_DEFAULT="Config"
 
 HUCKLEBERRY_CAT_CONFIG_DESC="@huckleberry-cat-config-desc"
 HUCKLEBERRY_CAT_CONFIG_DESC_DEFAULT="Reload config, TPM install/update"
+
+# ---------------------------------------------------------------------------
+# Windows sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_WINDOWS_PROMPT="@huckleberry-windows-prompt"
+HUCKLEBERRY_WINDOWS_PROMPT_DEFAULT="window > "
+
+HUCKLEBERRY_WINDOWS_HEADER="@huckleberry-windows-header"
+HUCKLEBERRY_WINDOWS_HEADER_DEFAULT="  pick a window action"
+
+HUCKLEBERRY_WIN_RENAME="@huckleberry-win-rename"
+HUCKLEBERRY_WIN_RENAME_DEFAULT="Rename window"
+
+HUCKLEBERRY_WIN_SPLIT_H="@huckleberry-win-split-h"
+HUCKLEBERRY_WIN_SPLIT_H_DEFAULT="Split horizontal"
+
+HUCKLEBERRY_WIN_SPLIT_V="@huckleberry-win-split-v"
+HUCKLEBERRY_WIN_SPLIT_V_DEFAULT="Split vertical"
+
+HUCKLEBERRY_WIN_MOVE_LEFT="@huckleberry-win-move-left"
+HUCKLEBERRY_WIN_MOVE_LEFT_DEFAULT="Move window left"
+
+HUCKLEBERRY_WIN_MOVE_RIGHT="@huckleberry-win-move-right"
+HUCKLEBERRY_WIN_MOVE_RIGHT_DEFAULT="Move window right"
+
+# ---------------------------------------------------------------------------
+# Config sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_CONFIG_PROMPT="@huckleberry-config-prompt"
+HUCKLEBERRY_CONFIG_PROMPT_DEFAULT="config > "
+
+HUCKLEBERRY_CONFIG_HEADER="@huckleberry-config-header"
+HUCKLEBERRY_CONFIG_HEADER_DEFAULT="  pick a config action"
+
+HUCKLEBERRY_CFG_RELOAD="@huckleberry-cfg-reload"
+HUCKLEBERRY_CFG_RELOAD_DEFAULT="Reload config"
+
+HUCKLEBERRY_CFG_TPM_INSTALL="@huckleberry-cfg-tpm-install"
+HUCKLEBERRY_CFG_TPM_INSTALL_DEFAULT="TPM install plugins"
+
+HUCKLEBERRY_CFG_TPM_UPDATE="@huckleberry-cfg-tpm-update"
+HUCKLEBERRY_CFG_TPM_UPDATE_DEFAULT="TPM update plugins"
