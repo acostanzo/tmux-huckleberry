@@ -14,6 +14,8 @@ source "${SCRIPTS_DIR}/variables.sh"
 #   --height: forces inline mode, leaving a gap at the bottom
 #   --border: redundant with the tmux popup border
 strip_fzf_opts() {
-    FZF_DEFAULT_OPTS=$(printf '%s' "$FZF_DEFAULT_OPTS" | sed 's/--height=[^ ]*//; s/--border[^ ]*//')
+    shopt -s extglob
+    FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS//--height=*([^ ])/}"
+    FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS//--border*([^ ])/}"
     export FZF_DEFAULT_OPTS
 }

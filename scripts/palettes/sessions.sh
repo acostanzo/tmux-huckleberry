@@ -9,14 +9,14 @@ source "${CURRENT_DIR}/common.sh"
 
 strip_fzf_opts
 
-prompt=$(get_tmux_option "$HUCKLEBERRY_PROMPT" "$HUCKLEBERRY_PROMPT_DEFAULT")
-header=$(get_tmux_option "$HUCKLEBERRY_HEADER" "$HUCKLEBERRY_HEADER_DEFAULT")
-preview=$(get_tmux_option "$HUCKLEBERRY_PREVIEW" "$HUCKLEBERRY_PREVIEW_DEFAULT")
-marker=$(get_tmux_option "$HUCKLEBERRY_MARKER" "$HUCKLEBERRY_MARKER_DEFAULT")
+get_tmux_option "$HUCKLEBERRY_PROMPT" "$HUCKLEBERRY_PROMPT_DEFAULT"; prompt="$REPLY"
+get_tmux_option "$HUCKLEBERRY_HEADER" "$HUCKLEBERRY_HEADER_DEFAULT"; header="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PREVIEW" "$HUCKLEBERRY_PREVIEW_DEFAULT"; preview="$REPLY"
+get_tmux_option "$HUCKLEBERRY_MARKER" "$HUCKLEBERRY_MARKER_DEFAULT"; marker="$REPLY"
 current_session="$(tmux display-message -p '#{session_name}')"
 
 # Pad unmarked entries to align with the marker width.
-padding=$(printf '%*s' "${#marker}" '')
+printf -v padding '%*s' "${#marker}" ''
 
 # Build the session list, marking the current session with a prefix.
 session_list() {
@@ -44,12 +44,15 @@ fzf_output=$(session_list | fzf \
 
 fzf_exit=$?
 
-query=$(echo "$fzf_output" | head -n 1)
-selection=$(echo "$fzf_output" | sed -n '2p')
+# Parse output with bash read (no subprocess).
+{
+    IFS= read -r query
+    IFS= read -r selection
+} <<< "$fzf_output"
 
-# Escape pressed — exit cleanly.
+# Escape pressed — return to top-level menu (or exit if run directly).
 if [[ $fzf_exit -eq 130 ]]; then
-    exit 0
+    return 0 2>/dev/null || exit 0
 fi
 
 if [[ -n "$selection" ]]; then
@@ -57,6 +60,7 @@ if [[ -n "$selection" ]]; then
     target="${selection#"$marker"}"
     target="${target#"$padding"}"
     tmux switch-client -t "=$target"
+    exit 0
 elif [[ -n "$query" ]]; then
     # No match selected — create a new session with the query as its name.
     if tmux has-session -t "=$query" 2>/dev/null; then
@@ -67,4 +71,5 @@ elif [[ -n "$query" ]]; then
         tmux rename-window -t "=$query" "$query"
         tmux switch-client -t "=$query"
     fi
+    exit 0
 fi

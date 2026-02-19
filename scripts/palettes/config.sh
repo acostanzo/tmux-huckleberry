@@ -9,12 +9,12 @@ source "${CURRENT_DIR}/common.sh"
 
 strip_fzf_opts
 
-prompt=$(get_tmux_option "$HUCKLEBERRY_CONFIG_PROMPT" "$HUCKLEBERRY_CONFIG_PROMPT_DEFAULT")
-header=$(get_tmux_option "$HUCKLEBERRY_CONFIG_HEADER" "$HUCKLEBERRY_CONFIG_HEADER_DEFAULT")
+get_tmux_option "$HUCKLEBERRY_CONFIG_PROMPT" "$HUCKLEBERRY_CONFIG_PROMPT_DEFAULT"; prompt="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CONFIG_HEADER" "$HUCKLEBERRY_CONFIG_HEADER_DEFAULT"; header="$REPLY"
 
-reload_label=$(get_tmux_option "$HUCKLEBERRY_CFG_RELOAD" "$HUCKLEBERRY_CFG_RELOAD_DEFAULT")
-tpm_install_label=$(get_tmux_option "$HUCKLEBERRY_CFG_TPM_INSTALL" "$HUCKLEBERRY_CFG_TPM_INSTALL_DEFAULT")
-tpm_update_label=$(get_tmux_option "$HUCKLEBERRY_CFG_TPM_UPDATE" "$HUCKLEBERRY_CFG_TPM_UPDATE_DEFAULT")
+get_tmux_option "$HUCKLEBERRY_CFG_RELOAD" "$HUCKLEBERRY_CFG_RELOAD_DEFAULT"; reload_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CFG_TPM_INSTALL" "$HUCKLEBERRY_CFG_TPM_INSTALL_DEFAULT"; tpm_install_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CFG_TPM_UPDATE" "$HUCKLEBERRY_CFG_TPM_UPDATE_DEFAULT"; tpm_update_label="$REPLY"
 
 # --- Detect config path ------------------------------------------------------
 
@@ -40,10 +40,8 @@ fi
 
 actions="reload::${reload_label}"
 if [[ -n "$tpm_path" ]]; then
-    actions=$(printf '%s\n' \
-        "$actions" \
-        "tpm-install::${tpm_install_label}" \
-        "tpm-update::${tpm_update_label}")
+    actions+=$'\n'"tpm-install::${tpm_install_label}"
+    actions+=$'\n'"tpm-update::${tpm_update_label}"
 fi
 
 selection=$(echo "$actions" | fzf \
@@ -57,8 +55,9 @@ selection=$(echo "$actions" | fzf \
 
 fzf_exit=$?
 
+# Escape pressed — return to top-level menu (or exit if run directly).
 if [[ $fzf_exit -ne 0 ]]; then
-    exit 0
+    return 0 2>/dev/null || exit 0
 fi
 
 action="${selection%%::*}"
@@ -78,3 +77,4 @@ case "$action" in
         tmux run-shell "${tpm_path}/bindings/update_plugins"
         ;;
 esac
+exit 0

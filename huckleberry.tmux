@@ -6,13 +6,13 @@ CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${CURRENT_DIR}/scripts/helpers.sh"
 source "${CURRENT_DIR}/scripts/variables.sh"
 
-bind_key=$(get_tmux_option "$HUCKLEBERRY_BIND" "$HUCKLEBERRY_BIND_DEFAULT")
-width=$(get_tmux_option "$HUCKLEBERRY_WIDTH" "$HUCKLEBERRY_WIDTH_DEFAULT")
-height=$(get_tmux_option "$HUCKLEBERRY_HEIGHT" "$HUCKLEBERRY_HEIGHT_DEFAULT")
-pos_x=$(get_tmux_option "$HUCKLEBERRY_X" "$HUCKLEBERRY_X_DEFAULT")
-pos_y=$(get_tmux_option "$HUCKLEBERRY_Y" "$HUCKLEBERRY_Y_DEFAULT")
-title=$(get_tmux_option "$HUCKLEBERRY_TITLE" "$HUCKLEBERRY_TITLE_DEFAULT")
-border_lines=$(get_tmux_option "$HUCKLEBERRY_BORDER_LINES" "$HUCKLEBERRY_BORDER_LINES_DEFAULT")
+get_tmux_option "$HUCKLEBERRY_BIND" "$HUCKLEBERRY_BIND_DEFAULT"; bind_key="$REPLY"
+get_tmux_option "$HUCKLEBERRY_WIDTH" "$HUCKLEBERRY_WIDTH_DEFAULT"; width="$REPLY"
+get_tmux_option "$HUCKLEBERRY_HEIGHT" "$HUCKLEBERRY_HEIGHT_DEFAULT"; height="$REPLY"
+get_tmux_option "$HUCKLEBERRY_X" "$HUCKLEBERRY_X_DEFAULT"; pos_x="$REPLY"
+get_tmux_option "$HUCKLEBERRY_Y" "$HUCKLEBERRY_Y_DEFAULT"; pos_y="$REPLY"
+get_tmux_option "$HUCKLEBERRY_TITLE" "$HUCKLEBERRY_TITLE_DEFAULT"; title="$REPLY"
+get_tmux_option "$HUCKLEBERRY_BORDER_LINES" "$HUCKLEBERRY_BORDER_LINES_DEFAULT"; border_lines="$REPLY"
 
 tmux bind-key "$bind_key" display-popup \
     -E \
