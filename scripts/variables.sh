@@ -44,3 +44,47 @@ HUCKLEBERRY_PREVIEW_DEFAULT="right:50%"
 # Current session marker prefix
 HUCKLEBERRY_MARKER="@huckleberry-marker"
 HUCKLEBERRY_MARKER_DEFAULT="* "
+
+# ---------------------------------------------------------------------------
+# Top-level menu
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_MENU_PROMPT="@huckleberry-menu-prompt"
+HUCKLEBERRY_MENU_PROMPT_DEFAULT="  "
+
+HUCKLEBERRY_MENU_HEADER="@huckleberry-menu-header"
+HUCKLEBERRY_MENU_HEADER_DEFAULT="command palette"
+
+# Display character for the space key in menus
+HUCKLEBERRY_SPACE_DISPLAY="@huckleberry-space-display"
+HUCKLEBERRY_SPACE_DISPLAY_DEFAULT="␣"
+
+# Category: Sessions
+HUCKLEBERRY_CAT_SESSIONS_KEY="@huckleberry-cat-sessions-key"
+HUCKLEBERRY_CAT_SESSIONS_KEY_DEFAULT="space"
+
+HUCKLEBERRY_CAT_SESSIONS_LABEL="@huckleberry-cat-sessions-label"
+HUCKLEBERRY_CAT_SESSIONS_LABEL_DEFAULT="Sessions"
+
+HUCKLEBERRY_CAT_SESSIONS_DESC="@huckleberry-cat-sessions-desc"
+HUCKLEBERRY_CAT_SESSIONS_DESC_DEFAULT="Switch or create sessions"
+
+# Category: Windows
+HUCKLEBERRY_CAT_WINDOWS_KEY="@huckleberry-cat-windows-key"
+HUCKLEBERRY_CAT_WINDOWS_KEY_DEFAULT="w"
+
+HUCKLEBERRY_CAT_WINDOWS_LABEL="@huckleberry-cat-windows-label"
+HUCKLEBERRY_CAT_WINDOWS_LABEL_DEFAULT="Windows"
+
+HUCKLEBERRY_CAT_WINDOWS_DESC="@huckleberry-cat-windows-desc"
+HUCKLEBERRY_CAT_WINDOWS_DESC_DEFAULT="Rename, split, move windows"
+
+# Category: Config
+HUCKLEBERRY_CAT_CONFIG_KEY="@huckleberry-cat-config-key"
+HUCKLEBERRY_CAT_CONFIG_KEY_DEFAULT="c"
+
+HUCKLEBERRY_CAT_CONFIG_LABEL="@huckleberry-cat-config-label"
+HUCKLEBERRY_CAT_CONFIG_LABEL_DEFAULT="Config"
+
+HUCKLEBERRY_CAT_CONFIG_DESC="@huckleberry-cat-config-desc"
+HUCKLEBERRY_CAT_CONFIG_DESC_DEFAULT="Reload config, TPM install/update"
