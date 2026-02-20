@@ -137,6 +137,9 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-pane-send` | `Send pane to window` | Label for send pane action |
 | `@huckleberry-pane-send-prompt` | `window > ` | fzf prompt for window picker |
 | `@huckleberry-pane-send-header` | `  send pane to window` | fzf header for window picker |
+| `@huckleberry-pane-join` | `Join pane from window` | Label for join pane action |
+| `@huckleberry-pane-join-prompt` | `pane > ` | fzf prompt for pane picker |
+| `@huckleberry-pane-join-header` | `  join pane from another window` | fzf header for pane picker |
 
 ### Config palette
 

@@ -15,11 +15,13 @@ get_tmux_option "$HUCKLEBERRY_PANES_HEADER" "$HUCKLEBERRY_PANES_HEADER_DEFAULT";
 
 get_tmux_option "$HUCKLEBERRY_PANE_SELECT_LAYOUT" "$HUCKLEBERRY_PANE_SELECT_LAYOUT_DEFAULT"; select_layout_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_JOIN" "$HUCKLEBERRY_PANE_JOIN_DEFAULT"; join_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
 actions="select-layout::${select_layout_label}"
 actions+=$'\n'"send::${send_label}"
+actions+=$'\n'"join::${join_label}"
 
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
@@ -112,6 +114,45 @@ while true; do
 
             window_index="${win_selection%%:*}"
             tmux join-pane -t ":${window_index}"
+            exit 0
+            ;;
+        join)
+            get_tmux_option "$HUCKLEBERRY_PANE_JOIN_PROMPT" "$HUCKLEBERRY_PANE_JOIN_PROMPT_DEFAULT"; join_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_JOIN_HEADER" "$HUCKLEBERRY_PANE_JOIN_HEADER_DEFAULT"; join_header="$REPLY"
+
+            current_window=$(tmux display-message -p '#{window_index}')
+            pane_list=$(tmux list-panes -s \
+                -F '#{window_index}.#{pane_index}::#{window_index}:#{window_name}.#{pane_index} - #{pane_current_command}' \
+                | while IFS= read -r line; do
+                    target="${line%%::*}"
+                    win="${target%%.*}"
+                    if [[ "$win" != "$current_window" ]]; then
+                        echo "$line"
+                    fi
+                done)
+
+            if [[ -z "$pane_list" ]]; then
+                tmux display-message "No panes in other windows"
+                continue
+            fi
+
+            pane_selection=$(echo "$pane_list" | fzf \
+                --reverse \
+                --no-info \
+                --no-preview \
+                --delimiter '::' \
+                --with-nth 2 \
+                --prompt "$join_prompt" \
+                --header "$join_header")
+
+            pane_exit=$?
+
+            if [[ $pane_exit -ne 0 ]]; then
+                continue
+            fi
+
+            target="${pane_selection%%::*}"
+            tmux join-pane -s ":${target}"
             exit 0
             ;;
     esac

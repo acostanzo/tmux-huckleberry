@@ -167,6 +167,15 @@ HUCKLEBERRY_PANE_SEND_PROMPT_DEFAULT="window > "
 HUCKLEBERRY_PANE_SEND_HEADER="@huckleberry-pane-send-header"
 HUCKLEBERRY_PANE_SEND_HEADER_DEFAULT="  send pane to window"
 
+HUCKLEBERRY_PANE_JOIN="@huckleberry-pane-join"
+HUCKLEBERRY_PANE_JOIN_DEFAULT="Join pane from window"
+
+HUCKLEBERRY_PANE_JOIN_PROMPT="@huckleberry-pane-join-prompt"
+HUCKLEBERRY_PANE_JOIN_PROMPT_DEFAULT="pane > "
+
+HUCKLEBERRY_PANE_JOIN_HEADER="@huckleberry-pane-join-header"
+HUCKLEBERRY_PANE_JOIN_HEADER_DEFAULT="  join pane from another window"
+
 # ---------------------------------------------------------------------------
 # Config sub-palette
 # ---------------------------------------------------------------------------
