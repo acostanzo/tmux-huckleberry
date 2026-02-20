@@ -158,6 +158,15 @@ HUCKLEBERRY_PANE_LAYOUT_MAIN_V_DEFAULT="Main vertical"
 HUCKLEBERRY_PANE_LAYOUT_TILED="@huckleberry-pane-layout-tiled"
 HUCKLEBERRY_PANE_LAYOUT_TILED_DEFAULT="Tiled"
 
+HUCKLEBERRY_PANE_SEND="@huckleberry-pane-send"
+HUCKLEBERRY_PANE_SEND_DEFAULT="Send pane to window"
+
+HUCKLEBERRY_PANE_SEND_PROMPT="@huckleberry-pane-send-prompt"
+HUCKLEBERRY_PANE_SEND_PROMPT_DEFAULT="window > "
+
+HUCKLEBERRY_PANE_SEND_HEADER="@huckleberry-pane-send-header"
+HUCKLEBERRY_PANE_SEND_HEADER_DEFAULT="  send pane to window"
+
 # ---------------------------------------------------------------------------
 # Config sub-palette
 # ---------------------------------------------------------------------------

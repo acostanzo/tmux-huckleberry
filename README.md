@@ -134,6 +134,9 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-pane-layout-main-h` | `Main horizontal` | Label for main-horizontal layout |
 | `@huckleberry-pane-layout-main-v` | `Main vertical` | Label for main-vertical layout |
 | `@huckleberry-pane-layout-tiled` | `Tiled` | Label for tiled layout |
+| `@huckleberry-pane-send` | `Send pane to window` | Label for send pane action |
+| `@huckleberry-pane-send-prompt` | `window > ` | fzf prompt for window picker |
+| `@huckleberry-pane-send-header` | `  send pane to window` | fzf header for window picker |
 
 ### Config palette
 

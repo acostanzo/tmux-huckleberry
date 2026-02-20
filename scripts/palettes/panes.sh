@@ -14,10 +14,12 @@ get_tmux_option "$HUCKLEBERRY_PANES_PROMPT" "$HUCKLEBERRY_PANES_PROMPT_DEFAULT";
 get_tmux_option "$HUCKLEBERRY_PANES_HEADER" "$HUCKLEBERRY_PANES_HEADER_DEFAULT"; header="$REPLY"
 
 get_tmux_option "$HUCKLEBERRY_PANE_SELECT_LAYOUT" "$HUCKLEBERRY_PANE_SELECT_LAYOUT_DEFAULT"; select_layout_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
 actions="select-layout::${select_layout_label}"
+actions+=$'\n'"send::${send_label}"
 
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
@@ -75,6 +77,41 @@ while true; do
 
             layout="${layout_selection%%::*}"
             tmux select-layout "$layout"
+            exit 0
+            ;;
+        send)
+            get_tmux_option "$HUCKLEBERRY_PANE_SEND_PROMPT" "$HUCKLEBERRY_PANE_SEND_PROMPT_DEFAULT"; send_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_SEND_HEADER" "$HUCKLEBERRY_PANE_SEND_HEADER_DEFAULT"; send_header="$REPLY"
+
+            current_window=$(tmux display-message -p '#{window_index}')
+            window_list=$(tmux list-windows -F '#{window_index}: #{window_name}' \
+                | while IFS= read -r line; do
+                    idx="${line%%:*}"
+                    if [[ "$idx" != "$current_window" ]]; then
+                        echo "$line"
+                    fi
+                done)
+
+            if [[ -z "$window_list" ]]; then
+                tmux display-message "No other windows"
+                continue
+            fi
+
+            win_selection=$(echo "$window_list" | fzf \
+                --reverse \
+                --no-info \
+                --no-preview \
+                --prompt "$send_prompt" \
+                --header "$send_header")
+
+            win_exit=$?
+
+            if [[ $win_exit -ne 0 ]]; then
+                continue
+            fi
+
+            window_index="${win_selection%%:*}"
+            tmux join-pane -t ":${window_index}"
             exit 0
             ;;
     esac
