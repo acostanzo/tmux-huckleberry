@@ -17,6 +17,7 @@ get_tmux_option "$HUCKLEBERRY_PANE_SELECT_LAYOUT" "$HUCKLEBERRY_PANE_SELECT_LAYO
 get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_JOIN" "$HUCKLEBERRY_PANE_JOIN_DEFAULT"; join_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_BREAK" "$HUCKLEBERRY_PANE_BREAK_DEFAULT"; break_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_SWAP" "$HUCKLEBERRY_PANE_SWAP_DEFAULT"; swap_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
@@ -24,6 +25,7 @@ actions="select-layout::${select_layout_label}"
 actions+=$'\n'"send::${send_label}"
 actions+=$'\n'"join::${join_label}"
 actions+=$'\n'"break::${break_label}"
+actions+=$'\n'"swap::${swap_label}"
 
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
@@ -159,6 +161,44 @@ while true; do
             ;;
         break)
             tmux break-pane
+            exit 0
+            ;;
+        swap)
+            get_tmux_option "$HUCKLEBERRY_PANE_SWAP_PROMPT" "$HUCKLEBERRY_PANE_SWAP_PROMPT_DEFAULT"; swap_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_SWAP_HEADER" "$HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT"; swap_header="$REPLY"
+
+            current_pane=$(tmux display-message -p '#{pane_index}')
+            swap_list=$(tmux list-panes \
+                -F '#{pane_index}::#{pane_index}: #{pane_current_command} (#{pane_width}x#{pane_height})' \
+                | while IFS= read -r line; do
+                    idx="${line%%::*}"
+                    if [[ "$idx" != "$current_pane" ]]; then
+                        echo "$line"
+                    fi
+                done)
+
+            if [[ -z "$swap_list" ]]; then
+                tmux display-message "No other panes"
+                continue
+            fi
+
+            swap_selection=$(echo "$swap_list" | fzf \
+                --reverse \
+                --no-info \
+                --no-preview \
+                --delimiter '::' \
+                --with-nth 2 \
+                --prompt "$swap_prompt" \
+                --header "$swap_header")
+
+            swap_exit=$?
+
+            if [[ $swap_exit -ne 0 ]]; then
+                continue
+            fi
+
+            pane_index="${swap_selection%%::*}"
+            tmux swap-pane -t "$pane_index"
             exit 0
             ;;
     esac

@@ -141,6 +141,9 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-pane-join-prompt` | `pane > ` | fzf prompt for pane picker |
 | `@huckleberry-pane-join-header` | `  join pane from another window` | fzf header for pane picker |
 | `@huckleberry-pane-break` | `Break pane to window` | Label for break pane action |
+| `@huckleberry-pane-swap` | `Swap pane` | Label for swap pane action |
+| `@huckleberry-pane-swap-prompt` | `pane > ` | fzf prompt for swap picker |
+| `@huckleberry-pane-swap-header` | `  swap with pane` | fzf header for swap picker |
 
 ### Config palette
 

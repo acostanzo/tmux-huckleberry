@@ -179,6 +179,15 @@ HUCKLEBERRY_PANE_JOIN_HEADER_DEFAULT="  join pane from another window"
 HUCKLEBERRY_PANE_BREAK="@huckleberry-pane-break"
 HUCKLEBERRY_PANE_BREAK_DEFAULT="Break pane to window"
 
+HUCKLEBERRY_PANE_SWAP="@huckleberry-pane-swap"
+HUCKLEBERRY_PANE_SWAP_DEFAULT="Swap pane"
+
+HUCKLEBERRY_PANE_SWAP_PROMPT="@huckleberry-pane-swap-prompt"
+HUCKLEBERRY_PANE_SWAP_PROMPT_DEFAULT="pane > "
+
+HUCKLEBERRY_PANE_SWAP_HEADER="@huckleberry-pane-swap-header"
+HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT="  swap with pane"
+
 # ---------------------------------------------------------------------------
 # Config sub-palette
 # ---------------------------------------------------------------------------
