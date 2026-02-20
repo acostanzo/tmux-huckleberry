@@ -144,6 +144,7 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-pane-swap` | `Swap pane` | Label for swap pane action |
 | `@huckleberry-pane-swap-prompt` | `pane > ` | fzf prompt for swap picker |
 | `@huckleberry-pane-swap-header` | `  swap with pane` | fzf header for swap picker |
+| `@huckleberry-pane-kill` | `Kill pane` | Label for kill pane action |
 
 ### Config palette
 

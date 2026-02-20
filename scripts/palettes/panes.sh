@@ -18,6 +18,7 @@ get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_
 get_tmux_option "$HUCKLEBERRY_PANE_JOIN" "$HUCKLEBERRY_PANE_JOIN_DEFAULT"; join_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_BREAK" "$HUCKLEBERRY_PANE_BREAK_DEFAULT"; break_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SWAP" "$HUCKLEBERRY_PANE_SWAP_DEFAULT"; swap_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_KILL" "$HUCKLEBERRY_PANE_KILL_DEFAULT"; kill_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
@@ -26,6 +27,7 @@ actions+=$'\n'"send::${send_label}"
 actions+=$'\n'"join::${join_label}"
 actions+=$'\n'"break::${break_label}"
 actions+=$'\n'"swap::${swap_label}"
+actions+=$'\n'"kill::${kill_label}"
 
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
@@ -199,6 +201,10 @@ while true; do
 
             pane_index="${swap_selection%%::*}"
             tmux swap-pane -t "$pane_index"
+            exit 0
+            ;;
+        kill)
+            tmux kill-pane
             exit 0
             ;;
     esac

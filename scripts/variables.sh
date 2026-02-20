@@ -188,6 +188,9 @@ HUCKLEBERRY_PANE_SWAP_PROMPT_DEFAULT="pane > "
 HUCKLEBERRY_PANE_SWAP_HEADER="@huckleberry-pane-swap-header"
 HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT="  swap with pane"
 
+HUCKLEBERRY_PANE_KILL="@huckleberry-pane-kill"
+HUCKLEBERRY_PANE_KILL_DEFAULT="Kill pane"
+
 # ---------------------------------------------------------------------------
 # Config sub-palette
 # ---------------------------------------------------------------------------
