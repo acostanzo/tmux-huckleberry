@@ -140,6 +140,7 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-pane-join` | `Join pane from window` | Label for join pane action |
 | `@huckleberry-pane-join-prompt` | `pane > ` | fzf prompt for pane picker |
 | `@huckleberry-pane-join-header` | `  join pane from another window` | fzf header for pane picker |
+| `@huckleberry-pane-break` | `Break pane to window` | Label for break pane action |
 
 ### Config palette
 

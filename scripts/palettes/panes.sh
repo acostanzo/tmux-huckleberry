@@ -16,12 +16,14 @@ get_tmux_option "$HUCKLEBERRY_PANES_HEADER" "$HUCKLEBERRY_PANES_HEADER_DEFAULT";
 get_tmux_option "$HUCKLEBERRY_PANE_SELECT_LAYOUT" "$HUCKLEBERRY_PANE_SELECT_LAYOUT_DEFAULT"; select_layout_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_JOIN" "$HUCKLEBERRY_PANE_JOIN_DEFAULT"; join_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_BREAK" "$HUCKLEBERRY_PANE_BREAK_DEFAULT"; break_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
 actions="select-layout::${select_layout_label}"
 actions+=$'\n'"send::${send_label}"
 actions+=$'\n'"join::${join_label}"
+actions+=$'\n'"break::${break_label}"
 
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
@@ -153,6 +155,10 @@ while true; do
 
             target="${pane_selection%%::*}"
             tmux join-pane -s ":${target}"
+            exit 0
+            ;;
+        break)
+            tmux break-pane
             exit 0
             ;;
     esac

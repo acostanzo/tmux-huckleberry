@@ -176,6 +176,9 @@ HUCKLEBERRY_PANE_JOIN_PROMPT_DEFAULT="pane > "
 HUCKLEBERRY_PANE_JOIN_HEADER="@huckleberry-pane-join-header"
 HUCKLEBERRY_PANE_JOIN_HEADER_DEFAULT="  join pane from another window"
 
+HUCKLEBERRY_PANE_BREAK="@huckleberry-pane-break"
+HUCKLEBERRY_PANE_BREAK_DEFAULT="Break pane to window"
+
 # ---------------------------------------------------------------------------
 # Config sub-palette
 # ---------------------------------------------------------------------------
