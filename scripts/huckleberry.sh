@@ -27,6 +27,10 @@ get_tmux_option "$HUCKLEBERRY_CAT_WINDOWS_KEY" "$HUCKLEBERRY_CAT_WINDOWS_KEY_DEF
 get_tmux_option "$HUCKLEBERRY_CAT_WINDOWS_LABEL" "$HUCKLEBERRY_CAT_WINDOWS_LABEL_DEFAULT"; windows_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_WINDOWS_DESC" "$HUCKLEBERRY_CAT_WINDOWS_DESC_DEFAULT"; windows_desc="$REPLY"
 
+get_tmux_option "$HUCKLEBERRY_CAT_PANES_KEY" "$HUCKLEBERRY_CAT_PANES_KEY_DEFAULT"; panes_key="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CAT_PANES_LABEL" "$HUCKLEBERRY_CAT_PANES_LABEL_DEFAULT"; panes_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CAT_PANES_DESC" "$HUCKLEBERRY_CAT_PANES_DESC_DEFAULT"; panes_desc="$REPLY"
+
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_KEY" "$HUCKLEBERRY_CAT_CONFIG_KEY_DEFAULT"; config_key="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_LABEL" "$HUCKLEBERRY_CAT_CONFIG_LABEL_DEFAULT"; config_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_DESC" "$HUCKLEBERRY_CAT_CONFIG_DESC_DEFAULT"; config_desc="$REPLY"
@@ -35,13 +39,15 @@ get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_DESC" "$HUCKLEBERRY_CAT_CONFIG_DESC_DEF
 
 if [[ "$sessions_key" == "space" ]]; then sessions_display="$space_display"; else sessions_display="$sessions_key"; fi
 if [[ "$windows_key" == "space" ]]; then windows_display="$space_display"; else windows_display="$windows_key"; fi
+if [[ "$panes_key" == "space" ]]; then panes_display="$space_display"; else panes_display="$panes_key"; fi
 if [[ "$config_key" == "space" ]]; then config_display="$space_display"; else config_display="$config_key"; fi
 
 # --- Build menu (pure string concat, no subshell) ----------------------------
 
-printf -v menu '%s\n%s\n%s' \
+printf -v menu '%s\n%s\n%s\n%s' \
     "  ${sessions_display}  ${sessions_label}     ${sessions_desc}" \
     "  ${windows_display}  ${windows_label}      ${windows_desc}" \
+    "  ${panes_display}  ${panes_label}       ${panes_desc}" \
     "  ${config_display}  ${config_label}       ${config_desc}"
 
 # --- Strip conflicting FZF_DEFAULT_OPTS (bash builtins, no subprocess) -------
@@ -57,7 +63,7 @@ _dispatcher_dir="$CURRENT_DIR"
 while true; do
     fzf_output=$(echo "$menu" | fzf \
         --print-query \
-        --expect="${sessions_key},${windows_key},${config_key}" \
+        --expect="${sessions_key},${windows_key},${panes_key},${config_key}" \
         --reverse \
         --no-info \
         --no-preview \
@@ -87,6 +93,8 @@ while true; do
         palette="sessions"
     elif [[ "$key" == "$windows_key" ]]; then
         palette="windows"
+    elif [[ "$key" == "$panes_key" ]]; then
+        palette="panes"
     elif [[ "$key" == "$config_key" ]]; then
         palette="config"
     elif [[ -n "$selection" ]]; then
@@ -95,6 +103,8 @@ while true; do
             palette="sessions"
         elif [[ "$selection" == *"$windows_label"* ]]; then
             palette="windows"
+        elif [[ "$selection" == *"$panes_label"* ]]; then
+            palette="panes"
         elif [[ "$selection" == *"$config_label"* ]]; then
             palette="config"
         fi

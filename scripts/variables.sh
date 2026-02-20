@@ -79,6 +79,16 @@ HUCKLEBERRY_CAT_WINDOWS_LABEL_DEFAULT="Windows"
 HUCKLEBERRY_CAT_WINDOWS_DESC="@huckleberry-cat-windows-desc"
 HUCKLEBERRY_CAT_WINDOWS_DESC_DEFAULT="Rename, split, move windows"
 
+# Category: Panes
+HUCKLEBERRY_CAT_PANES_KEY="@huckleberry-cat-panes-key"
+HUCKLEBERRY_CAT_PANES_KEY_DEFAULT="p"
+
+HUCKLEBERRY_CAT_PANES_LABEL="@huckleberry-cat-panes-label"
+HUCKLEBERRY_CAT_PANES_LABEL_DEFAULT="Panes"
+
+HUCKLEBERRY_CAT_PANES_DESC="@huckleberry-cat-panes-desc"
+HUCKLEBERRY_CAT_PANES_DESC_DEFAULT="Layout, swap, move panes"
+
 # Category: Config
 HUCKLEBERRY_CAT_CONFIG_KEY="@huckleberry-cat-config-key"
 HUCKLEBERRY_CAT_CONFIG_KEY_DEFAULT="c"
@@ -113,6 +123,40 @@ HUCKLEBERRY_WIN_MOVE_LEFT_DEFAULT="Move window left"
 
 HUCKLEBERRY_WIN_MOVE_RIGHT="@huckleberry-win-move-right"
 HUCKLEBERRY_WIN_MOVE_RIGHT_DEFAULT="Move window right"
+
+# ---------------------------------------------------------------------------
+# Panes sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_PANES_PROMPT="@huckleberry-panes-prompt"
+HUCKLEBERRY_PANES_PROMPT_DEFAULT="pane > "
+
+HUCKLEBERRY_PANES_HEADER="@huckleberry-panes-header"
+HUCKLEBERRY_PANES_HEADER_DEFAULT="  pick a pane action"
+
+HUCKLEBERRY_PANE_SELECT_LAYOUT="@huckleberry-pane-select-layout"
+HUCKLEBERRY_PANE_SELECT_LAYOUT_DEFAULT="Select layout"
+
+HUCKLEBERRY_PANE_LAYOUT_PROMPT="@huckleberry-pane-layout-prompt"
+HUCKLEBERRY_PANE_LAYOUT_PROMPT_DEFAULT="layout > "
+
+HUCKLEBERRY_PANE_LAYOUT_HEADER="@huckleberry-pane-layout-header"
+HUCKLEBERRY_PANE_LAYOUT_HEADER_DEFAULT="  pick a layout"
+
+HUCKLEBERRY_PANE_LAYOUT_EVEN_H="@huckleberry-pane-layout-even-h"
+HUCKLEBERRY_PANE_LAYOUT_EVEN_H_DEFAULT="Even horizontal"
+
+HUCKLEBERRY_PANE_LAYOUT_EVEN_V="@huckleberry-pane-layout-even-v"
+HUCKLEBERRY_PANE_LAYOUT_EVEN_V_DEFAULT="Even vertical"
+
+HUCKLEBERRY_PANE_LAYOUT_MAIN_H="@huckleberry-pane-layout-main-h"
+HUCKLEBERRY_PANE_LAYOUT_MAIN_H_DEFAULT="Main horizontal"
+
+HUCKLEBERRY_PANE_LAYOUT_MAIN_V="@huckleberry-pane-layout-main-v"
+HUCKLEBERRY_PANE_LAYOUT_MAIN_V_DEFAULT="Main vertical"
+
+HUCKLEBERRY_PANE_LAYOUT_TILED="@huckleberry-pane-layout-tiled"
+HUCKLEBERRY_PANE_LAYOUT_TILED_DEFAULT="Tiled"
 
 # ---------------------------------------------------------------------------
 # Config sub-palette

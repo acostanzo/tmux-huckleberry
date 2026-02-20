@@ -24,12 +24,13 @@ Press **`prefix + Space`** to open the command palette.
 
 ### Top-level menu
 
-The palette opens with three categories. Press the hotkey to jump instantly, or type to fuzzy-search and press Enter.
+The palette opens with four categories. Press the hotkey to jump instantly, or type to fuzzy-search and press Enter.
 
 | Key | Category | Description |
 |---|---|---|
 | `Space` | Sessions | Switch or create sessions |
 | `w` | Windows | Rename, split, move windows |
+| `p` | Panes | Layout, swap, move panes |
 | `c` | Config | Reload config, TPM install/update |
 
 ### Sessions palette
@@ -44,6 +45,15 @@ The palette opens with three categories. Press the hotkey to jump instantly, or 
 - **Rename window** — opens tmux's native rename prompt
 - **Split horizontal / vertical** — split the current pane
 - **Move window left / right** — swap window position
+
+### Panes palette
+
+- **Select layout** — pick from 5 preset pane layouts
+- **Send pane to window** — move current pane to another window
+- **Join pane from window** — pull a pane from another window into this one
+- **Break pane to window** — promote current pane to its own window
+- **Swap pane** — swap current pane with another in the same window
+- **Kill pane** — close the current pane
 
 ### Config palette
 
@@ -82,6 +92,9 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-cat-windows-key` | `w` | Hotkey for Windows category |
 | `@huckleberry-cat-windows-label` | `Windows` | Display label for Windows |
 | `@huckleberry-cat-windows-desc` | `Rename, split, move windows` | Description for Windows |
+| `@huckleberry-cat-panes-key` | `p` | Hotkey for Panes category |
+| `@huckleberry-cat-panes-label` | `Panes` | Display label for Panes |
+| `@huckleberry-cat-panes-desc` | `Layout, swap, move panes` | Description for Panes |
 | `@huckleberry-cat-config-key` | `c` | Hotkey for Config category |
 | `@huckleberry-cat-config-label` | `Config` | Display label for Config |
 | `@huckleberry-cat-config-desc` | `Reload config, TPM install/update` | Description for Config |
@@ -106,6 +119,21 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-win-split-v` | `Split vertical` | Label for vertical split |
 | `@huckleberry-win-move-left` | `Move window left` | Label for move left |
 | `@huckleberry-win-move-right` | `Move window right` | Label for move right |
+
+### Panes palette
+
+| Option | Default | Description |
+|---|---|---|
+| `@huckleberry-panes-prompt` | `pane > ` | fzf prompt string |
+| `@huckleberry-panes-header` | `  pick a pane action` | fzf header text |
+| `@huckleberry-pane-select-layout` | `Select layout` | Label for select layout action |
+| `@huckleberry-pane-layout-prompt` | `layout > ` | fzf prompt for layout picker |
+| `@huckleberry-pane-layout-header` | `  pick a layout` | fzf header for layout picker |
+| `@huckleberry-pane-layout-even-h` | `Even horizontal` | Label for even-horizontal layout |
+| `@huckleberry-pane-layout-even-v` | `Even vertical` | Label for even-vertical layout |
+| `@huckleberry-pane-layout-main-h` | `Main horizontal` | Label for main-horizontal layout |
+| `@huckleberry-pane-layout-main-v` | `Main vertical` | Label for main-vertical layout |
+| `@huckleberry-pane-layout-tiled` | `Tiled` | Label for tiled layout |
 
 ### Config palette
 
