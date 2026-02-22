@@ -115,6 +115,8 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-windows-prompt` | `window > ` | fzf prompt string |
 | `@huckleberry-windows-header` | `  pick a window action` | fzf header text |
 | `@huckleberry-win-rename` | `Rename window` | Label for rename action |
+| `@huckleberry-win-rename-prompt` | `name > ` | fzf prompt for rename input |
+| `@huckleberry-win-rename-header` | `  rename window` | fzf header for rename input |
 | `@huckleberry-win-split-h` | `Split horizontal` | Label for horizontal split |
 | `@huckleberry-win-split-v` | `Split vertical` | Label for vertical split |
 | `@huckleberry-win-move-left` | `Move window left` | Label for move left |

@@ -112,6 +112,12 @@ HUCKLEBERRY_WINDOWS_HEADER_DEFAULT="  pick a window action"
 HUCKLEBERRY_WIN_RENAME="@huckleberry-win-rename"
 HUCKLEBERRY_WIN_RENAME_DEFAULT="Rename window"
 
+HUCKLEBERRY_WIN_RENAME_PROMPT="@huckleberry-win-rename-prompt"
+HUCKLEBERRY_WIN_RENAME_PROMPT_DEFAULT="name > "
+
+HUCKLEBERRY_WIN_RENAME_HEADER="@huckleberry-win-rename-header"
+HUCKLEBERRY_WIN_RENAME_HEADER_DEFAULT="  rename window"
+
 HUCKLEBERRY_WIN_SPLIT_H="@huckleberry-win-split-h"
 HUCKLEBERRY_WIN_SPLIT_H_DEFAULT="Split horizontal"
 

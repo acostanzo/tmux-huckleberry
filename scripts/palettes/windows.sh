@@ -46,7 +46,31 @@ action="${selection%%::*}"
 
 case "$action" in
     rename)
-        tmux command-prompt -I "#W" "rename-window -- '%%'"
+        get_tmux_option "$HUCKLEBERRY_WIN_RENAME_PROMPT" "$HUCKLEBERRY_WIN_RENAME_PROMPT_DEFAULT"; rename_prompt="$REPLY"
+        get_tmux_option "$HUCKLEBERRY_WIN_RENAME_HEADER" "$HUCKLEBERRY_WIN_RENAME_HEADER_DEFAULT"; rename_header="$REPLY"
+
+        current_name=$(tmux display-message -p '#W')
+        rename_output=$(printf '' | fzf \
+            --print-query \
+            --query "$current_name" \
+            --prompt "$rename_prompt" \
+            --header "$rename_header" \
+            --reverse \
+            --no-info \
+            --no-preview)
+
+        rename_exit=$?
+
+        if [[ $rename_exit -eq 130 ]]; then
+            return 0 2>/dev/null || exit 0
+        fi
+
+        IFS= read -r new_name <<< "$rename_output"
+
+        if [[ -n "$new_name" ]]; then
+            tmux rename-window -- "$new_name"
+            tmux set-window-option automatic-rename off
+        fi
         ;;
     split-h)
         tmux split-window -h
