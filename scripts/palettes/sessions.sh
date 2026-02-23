@@ -39,7 +39,7 @@ fzf_output=$(session_list | fzf \
     --no-info \
     --prompt "$prompt" \
     --header "$header" \
-    --preview 'tmux list-windows -t $(echo {} | sed "s/^[^a-zA-Z0-9]*//") 2>/dev/null' \
+    --preview 'name={}; name="${name#"${name%%[a-zA-Z0-9]*}"}"; tmux list-windows -t "=$name" 2>/dev/null' \
     --preview-window "$preview")
 
 fzf_exit=$?
@@ -52,6 +52,7 @@ fzf_exit=$?
 
 # Escape pressed — return to top-level menu (or exit if run directly).
 if [[ $fzf_exit -eq 130 ]]; then
+    # shellcheck disable=SC2317
     return 0 2>/dev/null || exit 0
 fi
 
@@ -63,6 +64,11 @@ if [[ -n "$selection" ]]; then
     exit 0
 elif [[ -n "$query" ]]; then
     # No match selected — create a new session with the query as its name.
+    if ! valid_session_name "$query"; then
+        tmux display-message "Invalid session name (cannot contain ':' or '.')"
+        # shellcheck disable=SC2317
+        return 0 2>/dev/null || exit 0
+    fi
     if tmux has-session -t "=$query" 2>/dev/null; then
         tmux switch-client -t "=$query"
     else

@@ -4,8 +4,6 @@
 # Shows categories via fzf; hotkeys or Enter route to sub-palettes.
 # Sub-palettes return here on Escape; the loop re-shows the menu.
 
-shopt -s extglob
-
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=helpers.sh
@@ -39,6 +37,21 @@ get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_KEY" "$HUCKLEBERRY_CAT_CONFIG_KEY_DEFAU
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_LABEL" "$HUCKLEBERRY_CAT_CONFIG_LABEL_DEFAULT"; config_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_DESC" "$HUCKLEBERRY_CAT_CONFIG_DESC_DEFAULT"; config_desc="$REPLY"
 
+# --- Warn on duplicate category keys ------------------------------------------
+
+_huck_seen_keys=" "
+_huck_dup=0
+for _k in "$sessions_key" "$session_mgmt_key" "$windows_key" "$panes_key" "$config_key"; do
+    if [[ "$_huck_seen_keys" == *" ${_k} "* ]]; then
+        _huck_dup=1
+        break
+    fi
+    _huck_seen_keys+="${_k} "
+done
+if [[ "$_huck_dup" -eq 1 ]]; then
+    tmux display-message "huckleberry: duplicate category keys detected — check @huckleberry-cat-*-key options"
+fi
+
 # --- Build display keys (render "space" as the configurable display char) ----
 
 if [[ "$sessions_key" == "space" ]]; then sessions_display="$space_display"; else sessions_display="$sessions_key"; fi
@@ -47,20 +60,24 @@ if [[ "$windows_key" == "space" ]]; then windows_display="$space_display"; else 
 if [[ "$panes_key" == "space" ]]; then panes_display="$space_display"; else panes_display="$panes_key"; fi
 if [[ "$config_key" == "space" ]]; then config_display="$space_display"; else config_display="$config_key"; fi
 
-# --- Build menu (pure string concat, no subshell) ----------------------------
+# --- Build menu (dynamically aligned, no subshell) ---------------------------
+
+# Compute the max label width so the description column aligns for any labels.
+max_label=${#sessions_label}
+for _l in "$session_mgmt_label" "$windows_label" "$panes_label" "$config_label"; do
+    (( ${#_l} > max_label )) && max_label=${#_l}
+done
 
 printf -v menu '%s\n%s\n%s\n%s\n%s' \
-    "  ${sessions_display}  ${sessions_label}   ${sessions_desc}" \
-    "  ${session_mgmt_display}  ${session_mgmt_label}       ${session_mgmt_desc}" \
-    "  ${windows_display}  ${windows_label}        ${windows_desc}" \
-    "  ${panes_display}  ${panes_label}          ${panes_desc}" \
-    "  ${config_display}  ${config_label}         ${config_desc}"
+    "$(printf '  %s  %-*s   %s' "$sessions_display" "$max_label" "$sessions_label" "$sessions_desc")" \
+    "$(printf '  %s  %-*s   %s' "$session_mgmt_display" "$max_label" "$session_mgmt_label" "$session_mgmt_desc")" \
+    "$(printf '  %s  %-*s   %s' "$windows_display" "$max_label" "$windows_label" "$windows_desc")" \
+    "$(printf '  %s  %-*s   %s' "$panes_display" "$max_label" "$panes_label" "$panes_desc")" \
+    "$(printf '  %s  %-*s   %s' "$config_display" "$max_label" "$config_label" "$config_desc")"
 
-# --- Strip conflicting FZF_DEFAULT_OPTS (bash builtins, no subprocess) -------
+# --- Strip conflicting FZF_DEFAULT_OPTS --------------------------------------
 
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS//--height=*([^ ])/}"
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS//--border*([^ ])/}"
-export FZF_DEFAULT_OPTS
+strip_fzf_opts
 
 # --- Main loop — sub-palettes return here on Escape -------------------------
 # Save the scripts dir — sub-palettes overwrite CURRENT_DIR when sourced.

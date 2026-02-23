@@ -41,6 +41,7 @@ while true; do
 
     # Escape pressed — return to top-level menu (or exit if run directly).
     if [[ $fzf_exit -ne 0 ]]; then
+        # shellcheck disable=SC2317
         return 0 2>/dev/null || exit 0
     fi
 
@@ -54,15 +55,14 @@ while true; do
 
             current_name=$(tmux display-message -p '#{session_name}')
 
-            new_name=$(: | fzf \
+            rename_output=$(: | fzf \
                 --print-query \
                 --reverse \
                 --no-info \
                 --no-preview \
                 --query "$current_name" \
                 --prompt "$rename_prompt" \
-                --header "$rename_header" \
-                | head -1)
+                --header "$rename_header")
 
             rename_exit=$?
 
@@ -70,7 +70,13 @@ while true; do
                 continue
             fi
 
+            IFS= read -r new_name <<< "$rename_output"
+
             if [[ -n "$new_name" ]]; then
+                if ! valid_session_name "$new_name"; then
+                    tmux display-message "Invalid session name (cannot contain ':' or '.')"
+                    continue
+                fi
                 tmux rename-session -- "$new_name"
             fi
             exit 0
@@ -112,14 +118,13 @@ while true; do
             get_tmux_option "$HUCKLEBERRY_SES_NEW_PROMPT" "$HUCKLEBERRY_SES_NEW_PROMPT_DEFAULT"; new_prompt="$REPLY"
             get_tmux_option "$HUCKLEBERRY_SES_NEW_HEADER" "$HUCKLEBERRY_SES_NEW_HEADER_DEFAULT"; new_header="$REPLY"
 
-            name=$(: | fzf \
+            new_output=$(: | fzf \
                 --print-query \
                 --reverse \
                 --no-info \
                 --no-preview \
                 --prompt "$new_prompt" \
-                --header "$new_header" \
-                | head -1)
+                --header "$new_header")
 
             new_exit=$?
 
@@ -127,7 +132,14 @@ while true; do
                 continue
             fi
 
+            IFS= read -r name <<< "$new_output"
+
             if [[ -z "$name" ]]; then
+                continue
+            fi
+
+            if ! valid_session_name "$name"; then
+                tmux display-message "Invalid session name (cannot contain ':' or '.')"
                 continue
             fi
 

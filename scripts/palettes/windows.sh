@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091  # sourced files are resolved at runtime
 # Windows sub-palette — window management actions via fzf.
+# Uses a while-true loop so Escape in sub-pickers returns to the action list.
 
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -25,64 +26,73 @@ actions+=$'\n'"split-v::${split_v_label}"
 actions+=$'\n'"move-left::${move_left_label}"
 actions+=$'\n'"move-right::${move_right_label}"
 
-selection=$(echo "$actions" | fzf \
-    --reverse \
-    --no-info \
-    --no-preview \
-    --delimiter '::' \
-    --with-nth 2 \
-    --prompt "$prompt" \
-    --header "$header")
+# --- Main loop — sub-pickers return here on Escape ----------------------------
 
-fzf_exit=$?
+while true; do
+    selection=$(echo "$actions" | fzf \
+        --reverse \
+        --no-info \
+        --no-preview \
+        --delimiter '::' \
+        --with-nth 2 \
+        --prompt "$prompt" \
+        --header "$header")
 
-# Escape pressed — return to top-level menu (or exit if run directly).
-if [[ $fzf_exit -ne 0 ]]; then
-    return 0 2>/dev/null || exit 0
-fi
+    fzf_exit=$?
 
-# Extract the action ID (everything before the first "::").
-action="${selection%%::*}"
+    # Escape pressed — return to top-level menu (or exit if run directly).
+    if [[ $fzf_exit -ne 0 ]]; then
+        # shellcheck disable=SC2317
+        return 0 2>/dev/null || exit 0
+    fi
 
-case "$action" in
-    rename)
-        get_tmux_option "$HUCKLEBERRY_WIN_RENAME_PROMPT" "$HUCKLEBERRY_WIN_RENAME_PROMPT_DEFAULT"; rename_prompt="$REPLY"
-        get_tmux_option "$HUCKLEBERRY_WIN_RENAME_HEADER" "$HUCKLEBERRY_WIN_RENAME_HEADER_DEFAULT"; rename_header="$REPLY"
+    # Extract the action ID (everything before the first "::").
+    action="${selection%%::*}"
 
-        current_name=$(tmux display-message -p '#W')
-        rename_output=$(printf '' | fzf \
-            --print-query \
-            --query "$current_name" \
-            --prompt "$rename_prompt" \
-            --header "$rename_header" \
-            --reverse \
-            --no-info \
-            --no-preview)
+    case "$action" in
+        rename)
+            get_tmux_option "$HUCKLEBERRY_WIN_RENAME_PROMPT" "$HUCKLEBERRY_WIN_RENAME_PROMPT_DEFAULT"; rename_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_WIN_RENAME_HEADER" "$HUCKLEBERRY_WIN_RENAME_HEADER_DEFAULT"; rename_header="$REPLY"
 
-        rename_exit=$?
+            current_name=$(tmux display-message -p '#W')
+            rename_output=$(printf '' | fzf \
+                --print-query \
+                --query "$current_name" \
+                --prompt "$rename_prompt" \
+                --header "$rename_header" \
+                --reverse \
+                --no-info \
+                --no-preview)
 
-        if [[ $rename_exit -eq 130 ]]; then
-            return 0 2>/dev/null || exit 0
-        fi
+            rename_exit=$?
 
-        IFS= read -r new_name <<< "$rename_output"
+            if [[ $rename_exit -ne 0 ]]; then
+                continue
+            fi
 
-        if [[ -n "$new_name" ]]; then
-            tmux rename-window -- "$new_name"
-            tmux set-window-option automatic-rename off
-        fi
-        ;;
-    split-h)
-        tmux split-window -h
-        ;;
-    split-v)
-        tmux split-window -v
-        ;;
-    move-left)
-        tmux swap-window -t -1 \; select-window -t -1
-        ;;
-    move-right)
-        tmux swap-window -t +1 \; select-window -t +1
-        ;;
-esac
-exit 0
+            IFS= read -r new_name <<< "$rename_output"
+
+            if [[ -n "$new_name" ]]; then
+                tmux rename-window -- "$new_name"
+                tmux set-window-option automatic-rename off
+            fi
+            exit 0
+            ;;
+        split-h)
+            tmux split-window -h
+            exit 0
+            ;;
+        split-v)
+            tmux split-window -v
+            exit 0
+            ;;
+        move-left)
+            tmux swap-window -t -1 \; select-window -t -1
+            exit 0
+            ;;
+        move-right)
+            tmux swap-window -t +1 \; select-window -t +1
+            exit 0
+            ;;
+    esac
+done

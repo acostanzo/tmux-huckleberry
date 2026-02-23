@@ -45,6 +45,7 @@ while true; do
 
     # Escape pressed — return to top-level menu (or exit if run directly).
     if [[ $fzf_exit -ne 0 ]]; then
+        # shellcheck disable=SC2317
         return 0 2>/dev/null || exit 0
     fi
 

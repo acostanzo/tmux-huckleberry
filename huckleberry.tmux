@@ -3,6 +3,14 @@
 
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# --- Dependency checks -------------------------------------------------------
+
+if ! command -v fzf &>/dev/null; then
+    tmux display-message "huckleberry: fzf not found — install fzf to use this plugin"
+    # shellcheck disable=SC2317
+    return 2>/dev/null || exit 1
+fi
+
 source "${CURRENT_DIR}/scripts/helpers.sh"
 source "${CURRENT_DIR}/scripts/variables.sh"
 
