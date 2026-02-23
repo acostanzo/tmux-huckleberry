@@ -23,7 +23,7 @@ HUCKLEBERRY_Y_DEFAULT="C"
 
 # Popup title
 HUCKLEBERRY_TITLE="@huckleberry-title"
-HUCKLEBERRY_TITLE_DEFAULT=" 🤠 huckleberry "
+HUCKLEBERRY_TITLE_DEFAULT=" 🤠 Huckleberry "
 
 # Popup border line style (single, rounded, double, heavy, simple, padded, none)
 HUCKLEBERRY_BORDER_LINES="@huckleberry-border-lines"

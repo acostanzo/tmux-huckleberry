@@ -88,7 +88,7 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-height` | `50%` | Popup height |
 | `@huckleberry-x` | `C` | Popup horizontal position |
 | `@huckleberry-y` | `C` | Popup vertical position |
-| `@huckleberry-title` | ` 🤠 huckleberry ` | Popup title bar text |
+| `@huckleberry-title` | ` 🤠 Huckleberry ` | Popup title bar text |
 | `@huckleberry-border-lines` | `rounded` | Popup border style (`single`, `rounded`, `double`, `heavy`, `simple`, `padded`, `none`) |
 
 ### Top-level menu
