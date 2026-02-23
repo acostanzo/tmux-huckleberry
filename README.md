@@ -131,6 +131,9 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-ses-kill` | `Kill session` | Label for kill action |
 | `@huckleberry-ses-kill-prompt` | `session > ` | fzf prompt for kill picker |
 | `@huckleberry-ses-kill-header` | `  kill session` | fzf header for kill picker |
+| `@huckleberry-ses-new` | `New session` | Label for new session action |
+| `@huckleberry-ses-new-prompt` | `name > ` | fzf prompt for new session input |
+| `@huckleberry-ses-new-header` | `  create session` | fzf header for new session input |
 
 ### Windows palette
 

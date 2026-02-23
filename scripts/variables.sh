@@ -235,6 +235,15 @@ HUCKLEBERRY_SES_KILL_PROMPT_DEFAULT="session > "
 HUCKLEBERRY_SES_KILL_HEADER="@huckleberry-ses-kill-header"
 HUCKLEBERRY_SES_KILL_HEADER_DEFAULT="  kill session"
 
+HUCKLEBERRY_SES_NEW="@huckleberry-ses-new"
+HUCKLEBERRY_SES_NEW_DEFAULT="New session"
+
+HUCKLEBERRY_SES_NEW_PROMPT="@huckleberry-ses-new-prompt"
+HUCKLEBERRY_SES_NEW_PROMPT_DEFAULT="name > "
+
+HUCKLEBERRY_SES_NEW_HEADER="@huckleberry-ses-new-header"
+HUCKLEBERRY_SES_NEW_HEADER_DEFAULT="  create session"
+
 # ---------------------------------------------------------------------------
 # Config sub-palette
 # ---------------------------------------------------------------------------

@@ -15,11 +15,13 @@ get_tmux_option "$HUCKLEBERRY_SESSION_MGMT_HEADER" "$HUCKLEBERRY_SESSION_MGMT_HE
 
 get_tmux_option "$HUCKLEBERRY_SES_RENAME" "$HUCKLEBERRY_SES_RENAME_DEFAULT"; rename_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SES_KILL" "$HUCKLEBERRY_SES_KILL_DEFAULT"; kill_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_SES_NEW" "$HUCKLEBERRY_SES_NEW_DEFAULT"; new_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
 actions="rename::${rename_label}"
 actions+=$'\n'"kill::${kill_label}"
+actions+=$'\n'"new::${new_label}"
 
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
@@ -102,6 +104,39 @@ while true; do
             fi
 
             tmux kill-session -t "=$target"
+            exit 0
+            ;;
+        new)
+            get_tmux_option "$HUCKLEBERRY_SES_NEW_PROMPT" "$HUCKLEBERRY_SES_NEW_PROMPT_DEFAULT"; new_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_SES_NEW_HEADER" "$HUCKLEBERRY_SES_NEW_HEADER_DEFAULT"; new_header="$REPLY"
+
+            name=$(: | fzf \
+                --print-query \
+                --reverse \
+                --no-info \
+                --no-preview \
+                --prompt "$new_prompt" \
+                --header "$new_header" \
+                | head -1)
+
+            new_exit=$?
+
+            if [[ $new_exit -ne 0 ]]; then
+                continue
+            fi
+
+            if [[ -z "$name" ]]; then
+                continue
+            fi
+
+            if tmux has-session -t "=$name" 2>/dev/null; then
+                tmux switch-client -t "=$name"
+            else
+                tmux new-session -d -s "$name"
+                tmux set-window-option -t "=$name" automatic-rename off
+                tmux rename-window -t "=$name" "$name"
+                tmux switch-client -t "=$name"
+            fi
             exit 0
             ;;
     esac
