@@ -38,8 +38,10 @@ The palette opens with five categories. Press the hotkey to jump instantly, or t
 
 - **Type to filter** existing sessions
 - **Select a session** to switch to it
+- **Press Tab** on a session to drill into its windows, then select a window to switch directly to it
 - **Type a new name** and press Enter to create and switch to it
 - Current session is marked with `*`
+- Preview pane shows a clean window list with active marker, command, and pane count
 
 ### Sessions palette
 
@@ -118,6 +120,23 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-header` | `  switch or create a session` | fzf header text |
 | `@huckleberry-preview` | `right:50%` | fzf preview window layout |
 | `@huckleberry-marker` | `* ` | Prefix for the current session |
+| `@huckleberry-preview-fmt` | *(see below)* | tmux format string for preview window list |
+| `@huckleberry-tab-hint` | `  tab: show windows` | Hint text shown below the header |
+| `@huckleberry-session-windows-prompt` | `window > ` | fzf prompt for the window picker |
+| `@huckleberry-session-windows-header` | `  pick a window (esc to go back)` | fzf header for the window picker |
+| `@huckleberry-session-windows-fmt` | *(see below)* | tmux format string for window picker list |
+
+The default `@huckleberry-preview-fmt` is:
+
+```
+#{?window_active,  > ,    }#{window_index}: #{window_name} [#{pane_current_command}]#{?#{!=:#{window_panes},1}, (#{window_panes} panes),}
+```
+
+The default `@huckleberry-session-windows-fmt` is the same without the active marker:
+
+```
+#{window_index}: #{window_name} [#{pane_current_command}]#{?#{!=:#{window_panes},1}, (#{window_panes} panes),}
+```
 
 ### Sessions palette
 

@@ -45,6 +45,24 @@ HUCKLEBERRY_PREVIEW_DEFAULT="right:50%"
 HUCKLEBERRY_MARKER="@huckleberry-marker"
 HUCKLEBERRY_MARKER_DEFAULT="* "
 
+# Preview format for session window list
+HUCKLEBERRY_PREVIEW_FMT="@huckleberry-preview-fmt"
+HUCKLEBERRY_PREVIEW_FMT_DEFAULT='#{?window_active,  > ,    }#{window_index}: #{window_name} [#{pane_current_command}]#{?#{!=:#{window_panes},1}, (#{window_panes} panes),}'
+
+# Tab hint shown below the header
+HUCKLEBERRY_TAB_HINT="@huckleberry-tab-hint"
+HUCKLEBERRY_TAB_HINT_DEFAULT="  tab: show windows"
+
+# Nested window picker (shown after Tab on a session)
+HUCKLEBERRY_SESSION_WINDOWS_PROMPT="@huckleberry-session-windows-prompt"
+HUCKLEBERRY_SESSION_WINDOWS_PROMPT_DEFAULT="window > "
+
+HUCKLEBERRY_SESSION_WINDOWS_HEADER="@huckleberry-session-windows-header"
+HUCKLEBERRY_SESSION_WINDOWS_HEADER_DEFAULT="  pick a window (esc to go back)"
+
+HUCKLEBERRY_SESSION_WINDOWS_FMT="@huckleberry-session-windows-fmt"
+HUCKLEBERRY_SESSION_WINDOWS_FMT_DEFAULT='#{window_index}: #{window_name} [#{pane_current_command}]#{?#{!=:#{window_panes},1}, (#{window_panes} panes),}'
+
 # ---------------------------------------------------------------------------
 # Top-level menu
 # ---------------------------------------------------------------------------
