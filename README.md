@@ -1,6 +1,8 @@
-# tmux-huckleberry
+# :cowboy_hat_face: tmux-huckleberry
 
-Fuzzy command palette for tmux — open a popup, pick a category, then fuzzy-find an action.
+A quickdraw command palette for tmux — one keystroke opens a popup, you pick your shot, and you're there.
+
+No memorizing obscure key sequences. No digging through man pages. Just `prefix + Space` and go.
 
 ## Requirements
 
@@ -20,11 +22,11 @@ Then press `prefix + I` to install via TPM.
 
 ## Usage
 
-Press **`prefix + Space`** to open the command palette.
+Press **`prefix + Space`** to draw the command palette.
 
 ### Top-level menu
 
-The palette opens with five categories. Press the hotkey to jump instantly, or type to fuzzy-search and press Enter.
+Five categories, one keypress away. Hit the hotkey to jump straight there, or type to fuzzy-search and press Enter.
 
 | Key | Category | Description |
 |---|---|---|
@@ -36,6 +38,8 @@ The palette opens with five categories. Press the hotkey to jump instantly, or t
 
 ### Find Session palette
 
+The fastest way to get where you're going. Type to narrow down your sessions, pick one to switch, or type a name that doesn't exist yet to create it on the spot.
+
 - **Type to filter** existing sessions
 - **Select a session** to switch to it
 - **Press Tab** on a session to drill into its windows, then select a window to switch directly to it
@@ -45,6 +49,8 @@ The palette opens with five categories. Press the hotkey to jump instantly, or t
 
 ### Sessions palette
 
+Housekeeping for your sessions — rename, kill, create, or detach stale clients.
+
 - **Rename session** — type a new name for the current session
 - **Kill session** — pick another session to kill
 - **New session** — type a name to create and switch to a new session
@@ -52,11 +58,15 @@ The palette opens with five categories. Press the hotkey to jump instantly, or t
 
 ### Windows palette
 
+Wrangle your windows without leaving the saddle.
+
 - **Rename window** — opens tmux's native rename prompt
 - **Split horizontal / vertical** — split the current pane
 - **Move window left / right** — swap window position
 
 ### Panes palette
+
+Rearrange the furniture. Layouts, swaps, moves, and the occasional eviction.
 
 - **Select layout** — pick from 5 preset pane layouts
 - **Send pane to window** — move current pane to another window
@@ -67,17 +77,19 @@ The palette opens with five categories. Press the hotkey to jump instantly, or t
 
 ### Config palette
 
+Keep your setup in order without dropping to the command line.
+
 - **Reload config** — re-sources your tmux.conf
 - **TPM install plugins** — runs TPM install
 - **TPM update plugins** — runs TPM update
 
 Keybinding hints are shown in the footer at the bottom of each palette.
 
-Press **Escape** at any level to dismiss the popup.
+Press **Escape** at any level to holster the popup and get back to work.
 
 ## Configuration
 
-All options are set with `set -g` in your `~/.tmux.conf`.
+All options are set with `set -g` in your `~/.tmux.conf`. Every label, prompt, and display string is configurable — make it yours.
 
 ### Popup
 
@@ -221,7 +233,7 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 set -g @huckleberry-bind 'S'
 set -g @huckleberry-width '80%'
 set -g @huckleberry-height '60%'
-set -g @huckleberry-menu-header 'pick a category'
+set -g @huckleberry-menu-header '  Pick a Category'
 set -g @huckleberry-cat-sessions-key 's'
 ```
 
