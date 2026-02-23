@@ -40,11 +40,18 @@ get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_KEY" "$HUCKLEBERRY_CAT_CONFIG_KEY_DEFAU
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_LABEL" "$HUCKLEBERRY_CAT_CONFIG_LABEL_DEFAULT"; config_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_DESC" "$HUCKLEBERRY_CAT_CONFIG_DESC_DEFAULT"; config_desc="$REPLY"
 
+get_tmux_option "$HUCKLEBERRY_CAT_EXTENSIONS_KEY" "$HUCKLEBERRY_CAT_EXTENSIONS_KEY_DEFAULT"; extensions_key="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CAT_EXTENSIONS_LABEL" "$HUCKLEBERRY_CAT_EXTENSIONS_LABEL_DEFAULT"; extensions_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CAT_EXTENSIONS_DESC" "$HUCKLEBERRY_CAT_EXTENSIONS_DESC_DEFAULT"; extensions_desc="$REPLY"
+get_tmux_option "$HUCKLEBERRY_EXTENSIONS" ""; extensions_list="$REPLY"
+
 # --- Warn on duplicate category keys ------------------------------------------
 
 _huck_seen_keys=" "
 _huck_dup=0
-for _k in "$sessions_key" "$session_mgmt_key" "$windows_key" "$panes_key" "$config_key"; do
+_huck_dup_keys=("$sessions_key" "$session_mgmt_key" "$windows_key" "$panes_key" "$config_key")
+[[ -n "$extensions_list" ]] && _huck_dup_keys+=("$extensions_key")
+for _k in "${_huck_dup_keys[@]}"; do
     if [[ "$_huck_seen_keys" == *" ${_k} "* ]]; then
         _huck_dup=1
         break
@@ -62,12 +69,15 @@ if [[ "$session_mgmt_key" == "space" ]]; then session_mgmt_display="$space_displ
 if [[ "$windows_key" == "space" ]]; then windows_display="$space_display"; else windows_display="$windows_key"; fi
 if [[ "$panes_key" == "space" ]]; then panes_display="$space_display"; else panes_display="$panes_key"; fi
 if [[ "$config_key" == "space" ]]; then config_display="$space_display"; else config_display="$config_key"; fi
+if [[ "$extensions_key" == "space" ]]; then extensions_display="$space_display"; else extensions_display="$extensions_key"; fi
 
 # --- Build menu (dynamically aligned, no subshell) ---------------------------
 
 # Compute the max label width so the description column aligns for any labels.
 max_label=${#sessions_label}
-for _l in "$session_mgmt_label" "$windows_label" "$panes_label" "$config_label"; do
+_label_list=("$session_mgmt_label" "$windows_label" "$panes_label" "$config_label")
+[[ -n "$extensions_list" ]] && _label_list+=("$extensions_label")
+for _l in "${_label_list[@]}"; do
     (( ${#_l} > max_label )) && max_label=${#_l}
 done
 
@@ -77,6 +87,11 @@ printf -v menu '%s\n%s\n%s\n%s\n%s' \
     "$(printf '  %s  %-*s   %s' "$windows_display" "$max_label" "$windows_label" "$windows_desc")" \
     "$(printf '  %s  %-*s   %s' "$panes_display" "$max_label" "$panes_label" "$panes_desc")" \
     "$(printf '  %s  %-*s   %s' "$config_display" "$max_label" "$config_label" "$config_desc")"
+
+if [[ -n "$extensions_list" ]]; then
+    printf -v _extensions_row '  %s  %-*s   %s' "$extensions_display" "$max_label" "$extensions_label" "$extensions_desc"
+    menu+=$'\n'"$_extensions_row"
+fi
 
 # --- Strip conflicting FZF_DEFAULT_OPTS --------------------------------------
 
@@ -94,9 +109,12 @@ footer_border_args=(--footer-border)
 _dispatcher_dir="$CURRENT_DIR"
 
 while true; do
+    _expect="${sessions_key},${session_mgmt_key},${windows_key},${panes_key},${config_key}"
+    [[ -n "$extensions_list" ]] && _expect+=",${extensions_key}"
+
     fzf_output=$(echo "$menu" | fzf \
         --print-query \
-        --expect="${sessions_key},${session_mgmt_key},${windows_key},${panes_key},${config_key}" \
+        --expect="$_expect" \
         --reverse \
         --no-info \
         --no-separator \
@@ -137,6 +155,8 @@ while true; do
         palette="panes"
     elif [[ "$key" == "$config_key" ]]; then
         palette="config"
+    elif [[ -n "$extensions_list" && "$key" == "$extensions_key" ]]; then
+        palette="extensions"
     elif [[ -n "$selection" ]]; then
         # Enter pressed — match by label in the selection string.
         if [[ "$selection" == *"$sessions_label"* ]]; then
@@ -149,6 +169,8 @@ while true; do
             palette="panes"
         elif [[ "$selection" == *"$config_label"* ]]; then
             palette="config"
+        elif [[ -n "$extensions_list" && "$selection" == *"$extensions_label"* ]]; then
+            palette="extensions"
         fi
     fi
 

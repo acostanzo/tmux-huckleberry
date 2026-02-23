@@ -12,7 +12,8 @@ scripts/huckleberry.sh (top-level dispatcher)
     ├─ s Sessions     → scripts/palettes/session-mgmt.sh
     ├─ w Windows      → scripts/palettes/windows.sh
     ├─ p Panes        → scripts/palettes/panes.sh
-    └─ c Config       → scripts/palettes/config.sh
+    ├─ c Config       → scripts/palettes/config.sh
+    └─ x Extensions   → scripts/palettes/extensions.sh (conditional)
 ```
 
 1. `huckleberry.tmux` — TPM entry point; checks fzf dependency, reads user options, binds key to open popup
@@ -23,12 +24,13 @@ scripts/huckleberry.sh (top-level dispatcher)
 6. `scripts/palettes/windows.sh` — window management sub-palette (rename, split, move)
 7. `scripts/palettes/panes.sh` — pane management sub-palette (layout, swap, move panes)
 8. `scripts/palettes/config.sh` — config sub-palette (reload config, TPM install/update)
+8b. `scripts/palettes/extensions.sh` — extensions sub-palette (user-configured extension commands; conditional)
 9. `scripts/helpers.sh` — sourced utilities (`get_tmux_option`, `valid_session_name`, `strip_fzf_opts`)
 10. `scripts/variables.sh` — sourced option-name constants and defaults
 
 ## File permissions
 
-- **755** for executables: `huckleberry.tmux`, `scripts/huckleberry.sh`, `scripts/palettes/sessions.sh`, `scripts/palettes/session-mgmt.sh`, `scripts/palettes/windows.sh`, `scripts/palettes/panes.sh`, `scripts/palettes/config.sh`
+- **755** for executables: `huckleberry.tmux`, `scripts/huckleberry.sh`, `scripts/palettes/sessions.sh`, `scripts/palettes/session-mgmt.sh`, `scripts/palettes/windows.sh`, `scripts/palettes/panes.sh`, `scripts/palettes/config.sh`, `scripts/palettes/extensions.sh`
 - **644** for sourced files: `scripts/helpers.sh`, `scripts/variables.sh`, `scripts/palettes/common.sh`
 
 ## Bash conventions

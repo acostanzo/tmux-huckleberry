@@ -313,3 +313,41 @@ HUCKLEBERRY_CFG_TPM_INSTALL_DEFAULT="TPM install plugins"
 
 HUCKLEBERRY_CFG_TPM_UPDATE="@huckleberry-cfg-tpm-update"
 HUCKLEBERRY_CFG_TPM_UPDATE_DEFAULT="TPM update plugins"
+
+# ---------------------------------------------------------------------------
+# Category: Extensions (conditional — only shown when @huckleberry-extensions is set)
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_CAT_EXTENSIONS_KEY="@huckleberry-cat-extensions-key"
+HUCKLEBERRY_CAT_EXTENSIONS_KEY_DEFAULT="x"
+
+HUCKLEBERRY_CAT_EXTENSIONS_LABEL="@huckleberry-cat-extensions-label"
+HUCKLEBERRY_CAT_EXTENSIONS_LABEL_DEFAULT="Extensions"
+
+HUCKLEBERRY_CAT_EXTENSIONS_DESC="@huckleberry-cat-extensions-desc"
+HUCKLEBERRY_CAT_EXTENSIONS_DESC_DEFAULT="Run extension commands"
+
+# ---------------------------------------------------------------------------
+# Extensions sub-palette
+# ---------------------------------------------------------------------------
+
+# Comma-separated list of extension IDs (empty = palette hidden)
+HUCKLEBERRY_EXTENSIONS="@huckleberry-extensions"
+
+HUCKLEBERRY_EXTENSIONS_PROMPT="@huckleberry-extensions-prompt"
+HUCKLEBERRY_EXTENSIONS_PROMPT_DEFAULT="extension > "
+
+HUCKLEBERRY_EXTENSIONS_HEADER="@huckleberry-extensions-header"
+HUCKLEBERRY_EXTENSIONS_HEADER_DEFAULT="  Extensions"
+
+HUCKLEBERRY_EXTENSIONS_FOOTER="@huckleberry-extensions-footer"
+HUCKLEBERRY_EXTENSIONS_FOOTER_DEFAULT="  esc back"
+
+HUCKLEBERRY_EXTENSIONS_ACTIONS_PROMPT="@huckleberry-extensions-actions-prompt"
+HUCKLEBERRY_EXTENSIONS_ACTIONS_PROMPT_DEFAULT="action > "
+
+HUCKLEBERRY_EXTENSIONS_ACTIONS_HEADER_PREFIX="@huckleberry-extensions-actions-header-prefix"
+HUCKLEBERRY_EXTENSIONS_ACTIONS_HEADER_PREFIX_DEFAULT="  "
+
+HUCKLEBERRY_EXTENSIONS_ACTIONS_FOOTER="@huckleberry-extensions-actions-footer"
+HUCKLEBERRY_EXTENSIONS_ACTIONS_FOOTER_DEFAULT="  esc back"

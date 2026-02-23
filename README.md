@@ -35,6 +35,7 @@ Five categories, one keypress away. Hit the hotkey to jump straight there, or ty
 | `w` | Windows | Rename, split, move windows |
 | `p` | Panes | Layout, swap, move panes |
 | `c` | Config | Reload config, TPM install/update |
+| `x` | Extensions | Run extension commands *(only shown when configured)* |
 
 ### Find Session palette
 
@@ -82,6 +83,37 @@ Keep your setup in order without dropping to the command line.
 - **Reload config** — re-sources your tmux.conf
 - **TPM install plugins** — runs TPM install
 - **TPM update plugins** — runs TPM update
+
+### Extensions palette
+
+Bring your own tmux plugins into the command palette. Define extensions and their actions through `@huckleberry-` options — the Extensions category only appears when you've configured at least one extension.
+
+- **Select an extension** to see its available actions
+- **Select an action** to run the configured tmux command
+- **Escape** from actions returns to the extension list; Escape from the extension list returns to the top-level menu
+
+#### Setting up extensions
+
+Each extension needs an ID in the `@huckleberry-extensions` list and a set of actions. Here's tmux-resurrect as an example:
+
+```bash
+# Register extensions (comma-separated IDs)
+set -g @huckleberry-extensions 'resurrect'
+
+# Per-extension config: label, actions, and per-action label + command
+set -g @huckleberry-extension-resurrect-label 'Resurrect'
+set -g @huckleberry-extension-resurrect-actions 'save,restore'
+set -g @huckleberry-extension-resurrect-save-label 'Save Session'
+set -g @huckleberry-extension-resurrect-save-cmd 'run-shell ~/.config/tmux/plugins/tmux-resurrect/scripts/save.sh'
+set -g @huckleberry-extension-resurrect-restore-label 'Restore Session'
+set -g @huckleberry-extension-resurrect-restore-cmd 'run-shell ~/.config/tmux/plugins/tmux-resurrect/scripts/restore.sh'
+```
+
+The option naming pattern is:
+- `@huckleberry-extension-<id>-label` — display name (defaults to the ID)
+- `@huckleberry-extension-<id>-actions` — comma-separated action IDs
+- `@huckleberry-extension-<id>-<action>-label` — action display name (defaults to the action ID)
+- `@huckleberry-extension-<id>-<action>-cmd` — tmux command to run (passed to `tmux` as-is)
 
 Keybinding hints are shown in the footer at the bottom of each palette.
 
@@ -226,6 +258,30 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | `@huckleberry-cfg-reload` | `Reload config` | Label for reload action |
 | `@huckleberry-cfg-tpm-install` | `TPM install plugins` | Label for TPM install |
 | `@huckleberry-cfg-tpm-update` | `TPM update plugins` | Label for TPM update |
+
+### Extensions palette
+
+| Option | Default | Description |
+|---|---|---|
+| `@huckleberry-cat-extensions-key` | `x` | Hotkey for Extensions category |
+| `@huckleberry-cat-extensions-label` | `Extensions` | Display label for Extensions |
+| `@huckleberry-cat-extensions-desc` | `Run extension commands` | Description for Extensions |
+| `@huckleberry-extensions` | *(empty)* | Comma-separated extension IDs (empty = hidden) |
+| `@huckleberry-extensions-prompt` | `extension > ` | fzf prompt for extension list |
+| `@huckleberry-extensions-header` | `  Extensions` | fzf header for extension list |
+| `@huckleberry-extensions-footer` | `  esc back` | fzf footer for extension list |
+| `@huckleberry-extensions-actions-prompt` | `action > ` | fzf prompt for action list |
+| `@huckleberry-extensions-actions-header-prefix` | `  ` | Prefix before extension name in action header |
+| `@huckleberry-extensions-actions-footer` | `  esc back` | fzf footer for action list |
+
+Per-extension options use dynamic names constructed from the extension and action IDs:
+
+| Pattern | Description |
+|---|---|
+| `@huckleberry-extension-<id>-label` | Display name for the extension (defaults to ID) |
+| `@huckleberry-extension-<id>-actions` | Comma-separated action IDs |
+| `@huckleberry-extension-<id>-<action>-label` | Display name for the action (defaults to action ID) |
+| `@huckleberry-extension-<id>-<action>-cmd` | tmux command to execute |
 
 ### Example
 
