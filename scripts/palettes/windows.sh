@@ -66,7 +66,7 @@ while true; do
 
             rename_exit=$?
 
-            if [[ $rename_exit -ne 0 ]]; then
+            if [[ $rename_exit -eq 130 ]]; then
                 continue
             fi
 
