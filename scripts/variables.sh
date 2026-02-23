@@ -226,6 +226,15 @@ HUCKLEBERRY_SES_RENAME_PROMPT_DEFAULT="name > "
 HUCKLEBERRY_SES_RENAME_HEADER="@huckleberry-ses-rename-header"
 HUCKLEBERRY_SES_RENAME_HEADER_DEFAULT="  rename session"
 
+HUCKLEBERRY_SES_KILL="@huckleberry-ses-kill"
+HUCKLEBERRY_SES_KILL_DEFAULT="Kill session"
+
+HUCKLEBERRY_SES_KILL_PROMPT="@huckleberry-ses-kill-prompt"
+HUCKLEBERRY_SES_KILL_PROMPT_DEFAULT="session > "
+
+HUCKLEBERRY_SES_KILL_HEADER="@huckleberry-ses-kill-header"
+HUCKLEBERRY_SES_KILL_HEADER_DEFAULT="  kill session"
+
 # ---------------------------------------------------------------------------
 # Config sub-palette
 # ---------------------------------------------------------------------------

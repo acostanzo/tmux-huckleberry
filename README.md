@@ -128,6 +128,9 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-ses-rename` | `Rename session` | Label for rename action |
 | `@huckleberry-ses-rename-prompt` | `name > ` | fzf prompt for rename input |
 | `@huckleberry-ses-rename-header` | `  rename session` | fzf header for rename input |
+| `@huckleberry-ses-kill` | `Kill session` | Label for kill action |
+| `@huckleberry-ses-kill-prompt` | `session > ` | fzf prompt for kill picker |
+| `@huckleberry-ses-kill-header` | `  kill session` | fzf header for kill picker |
 
 ### Windows palette
 
