@@ -148,7 +148,7 @@ while true; do
             else
                 tmux new-session -d -s "$name"
                 tmux set-window-option -t "=$name" automatic-rename off
-                tmux rename-window -t "=$name" "$name"
+                tmux rename-window -t "=$name" -- "$name"
                 tmux switch-client -t "=$name"
             fi
             exit 0

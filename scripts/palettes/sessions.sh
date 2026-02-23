@@ -74,7 +74,7 @@ elif [[ -n "$query" ]]; then
     else
         tmux new-session -d -s "$query"
         tmux set-window-option -t "=$query" automatic-rename off
-        tmux rename-window -t "=$query" "$query"
+        tmux rename-window -t "=$query" -- "$query"
         tmux switch-client -t "=$query"
     fi
     exit 0
