@@ -244,6 +244,9 @@ HUCKLEBERRY_SES_NEW_PROMPT_DEFAULT="name > "
 HUCKLEBERRY_SES_NEW_HEADER="@huckleberry-ses-new-header"
 HUCKLEBERRY_SES_NEW_HEADER_DEFAULT="  create session"
 
+HUCKLEBERRY_SES_DETACH="@huckleberry-ses-detach"
+HUCKLEBERRY_SES_DETACH_DEFAULT="Detach other clients"
+
 # ---------------------------------------------------------------------------
 # Config sub-palette
 # ---------------------------------------------------------------------------

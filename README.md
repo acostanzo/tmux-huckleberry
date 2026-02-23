@@ -134,6 +134,7 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-ses-new` | `New session` | Label for new session action |
 | `@huckleberry-ses-new-prompt` | `name > ` | fzf prompt for new session input |
 | `@huckleberry-ses-new-header` | `  create session` | fzf header for new session input |
+| `@huckleberry-ses-detach` | `Detach other clients` | Label for detach action |
 
 ### Windows palette
 

@@ -16,12 +16,14 @@ get_tmux_option "$HUCKLEBERRY_SESSION_MGMT_HEADER" "$HUCKLEBERRY_SESSION_MGMT_HE
 get_tmux_option "$HUCKLEBERRY_SES_RENAME" "$HUCKLEBERRY_SES_RENAME_DEFAULT"; rename_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SES_KILL" "$HUCKLEBERRY_SES_KILL_DEFAULT"; kill_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SES_NEW" "$HUCKLEBERRY_SES_NEW_DEFAULT"; new_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_SES_DETACH" "$HUCKLEBERRY_SES_DETACH_DEFAULT"; detach_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
 actions="rename::${rename_label}"
 actions+=$'\n'"kill::${kill_label}"
 actions+=$'\n'"new::${new_label}"
+actions+=$'\n'"detach::${detach_label}"
 
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
@@ -137,6 +139,10 @@ while true; do
                 tmux rename-window -t "=$name" "$name"
                 tmux switch-client -t "=$name"
             fi
+            exit 0
+            ;;
+        detach)
+            tmux detach-client -a
             exit 0
             ;;
     esac
