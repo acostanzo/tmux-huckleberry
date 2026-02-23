@@ -113,7 +113,7 @@ HUCKLEBERRY_CAT_WINDOWS_LABEL="@huckleberry-cat-windows-label"
 HUCKLEBERRY_CAT_WINDOWS_LABEL_DEFAULT="Windows"
 
 HUCKLEBERRY_CAT_WINDOWS_DESC="@huckleberry-cat-windows-desc"
-HUCKLEBERRY_CAT_WINDOWS_DESC_DEFAULT="Rename, split, move windows"
+HUCKLEBERRY_CAT_WINDOWS_DESC_DEFAULT="Rename, kill, split, move windows"
 
 # Category: Panes
 HUCKLEBERRY_CAT_PANES_KEY="@huckleberry-cat-panes-key"
@@ -123,7 +123,7 @@ HUCKLEBERRY_CAT_PANES_LABEL="@huckleberry-cat-panes-label"
 HUCKLEBERRY_CAT_PANES_LABEL_DEFAULT="Panes"
 
 HUCKLEBERRY_CAT_PANES_DESC="@huckleberry-cat-panes-desc"
-HUCKLEBERRY_CAT_PANES_DESC_DEFAULT="Layout, swap, move panes"
+HUCKLEBERRY_CAT_PANES_DESC_DEFAULT="Rename, layout, swap, move panes"
 
 # Category: Session Management
 HUCKLEBERRY_CAT_SESSION_MGMT_KEY="@huckleberry-cat-session-mgmt-key"
@@ -156,7 +156,7 @@ HUCKLEBERRY_WINDOWS_HEADER="@huckleberry-windows-header"
 HUCKLEBERRY_WINDOWS_HEADER_DEFAULT="  Manage Windows"
 
 HUCKLEBERRY_WINDOWS_FOOTER="@huckleberry-windows-footer"
-HUCKLEBERRY_WINDOWS_FOOTER_DEFAULT="  esc back"
+HUCKLEBERRY_WINDOWS_FOOTER_DEFAULT="  esc back · tab pick target"
 
 HUCKLEBERRY_WIN_RENAME="@huckleberry-win-rename"
 HUCKLEBERRY_WIN_RENAME_DEFAULT="Rename window"
@@ -176,6 +176,21 @@ HUCKLEBERRY_WIN_SPLIT_V_DEFAULT="Split vertical"
 HUCKLEBERRY_WIN_MOVE_LEFT="@huckleberry-win-move-left"
 HUCKLEBERRY_WIN_MOVE_LEFT_DEFAULT="Move window left"
 
+HUCKLEBERRY_WIN_KILL="@huckleberry-win-kill"
+HUCKLEBERRY_WIN_KILL_DEFAULT="Kill window"
+
+HUCKLEBERRY_WIN_KILL_PICK_PROMPT="@huckleberry-win-kill-pick-prompt"
+HUCKLEBERRY_WIN_KILL_PICK_PROMPT_DEFAULT="window > "
+
+HUCKLEBERRY_WIN_KILL_PICK_HEADER="@huckleberry-win-kill-pick-header"
+HUCKLEBERRY_WIN_KILL_PICK_HEADER_DEFAULT="  Kill Window"
+
+HUCKLEBERRY_WIN_RENAME_PICK_PROMPT="@huckleberry-win-rename-pick-prompt"
+HUCKLEBERRY_WIN_RENAME_PICK_PROMPT_DEFAULT="window > "
+
+HUCKLEBERRY_WIN_RENAME_PICK_HEADER="@huckleberry-win-rename-pick-header"
+HUCKLEBERRY_WIN_RENAME_PICK_HEADER_DEFAULT="  Rename Window"
+
 HUCKLEBERRY_WIN_MOVE_RIGHT="@huckleberry-win-move-right"
 HUCKLEBERRY_WIN_MOVE_RIGHT_DEFAULT="Move window right"
 
@@ -190,7 +205,22 @@ HUCKLEBERRY_PANES_HEADER="@huckleberry-panes-header"
 HUCKLEBERRY_PANES_HEADER_DEFAULT="  Manage Panes"
 
 HUCKLEBERRY_PANES_FOOTER="@huckleberry-panes-footer"
-HUCKLEBERRY_PANES_FOOTER_DEFAULT="  esc back"
+HUCKLEBERRY_PANES_FOOTER_DEFAULT="  esc back · tab pick target"
+
+HUCKLEBERRY_PANE_RENAME="@huckleberry-pane-rename"
+HUCKLEBERRY_PANE_RENAME_DEFAULT="Rename pane"
+
+HUCKLEBERRY_PANE_RENAME_PROMPT="@huckleberry-pane-rename-prompt"
+HUCKLEBERRY_PANE_RENAME_PROMPT_DEFAULT="title > "
+
+HUCKLEBERRY_PANE_RENAME_HEADER="@huckleberry-pane-rename-header"
+HUCKLEBERRY_PANE_RENAME_HEADER_DEFAULT="  Rename Pane"
+
+HUCKLEBERRY_PANE_RENAME_PICK_PROMPT="@huckleberry-pane-rename-pick-prompt"
+HUCKLEBERRY_PANE_RENAME_PICK_PROMPT_DEFAULT="pane > "
+
+HUCKLEBERRY_PANE_RENAME_PICK_HEADER="@huckleberry-pane-rename-pick-header"
+HUCKLEBERRY_PANE_RENAME_PICK_HEADER_DEFAULT="  Rename Pane"
 
 HUCKLEBERRY_PANE_SELECT_LAYOUT="@huckleberry-pane-select-layout"
 HUCKLEBERRY_PANE_SELECT_LAYOUT_DEFAULT="Select layout"
@@ -249,6 +279,12 @@ HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT="  Swap Pane"
 HUCKLEBERRY_PANE_KILL="@huckleberry-pane-kill"
 HUCKLEBERRY_PANE_KILL_DEFAULT="Kill pane"
 
+HUCKLEBERRY_PANE_KILL_PICK_PROMPT="@huckleberry-pane-kill-pick-prompt"
+HUCKLEBERRY_PANE_KILL_PICK_PROMPT_DEFAULT="pane > "
+
+HUCKLEBERRY_PANE_KILL_PICK_HEADER="@huckleberry-pane-kill-pick-header"
+HUCKLEBERRY_PANE_KILL_PICK_HEADER_DEFAULT="  Kill Pane"
+
 # ---------------------------------------------------------------------------
 # Session management sub-palette
 # ---------------------------------------------------------------------------
@@ -260,7 +296,7 @@ HUCKLEBERRY_SESSION_MGMT_HEADER="@huckleberry-session-mgmt-header"
 HUCKLEBERRY_SESSION_MGMT_HEADER_DEFAULT="  Manage Sessions"
 
 HUCKLEBERRY_SESSION_MGMT_FOOTER="@huckleberry-session-mgmt-footer"
-HUCKLEBERRY_SESSION_MGMT_FOOTER_DEFAULT="  esc back"
+HUCKLEBERRY_SESSION_MGMT_FOOTER_DEFAULT="  esc back · tab pick target"
 
 HUCKLEBERRY_SES_RENAME="@huckleberry-ses-rename"
 HUCKLEBERRY_SES_RENAME_DEFAULT="Rename session"
@@ -270,6 +306,12 @@ HUCKLEBERRY_SES_RENAME_PROMPT_DEFAULT="name > "
 
 HUCKLEBERRY_SES_RENAME_HEADER="@huckleberry-ses-rename-header"
 HUCKLEBERRY_SES_RENAME_HEADER_DEFAULT="  Rename Session"
+
+HUCKLEBERRY_SES_RENAME_PICK_PROMPT="@huckleberry-ses-rename-pick-prompt"
+HUCKLEBERRY_SES_RENAME_PICK_PROMPT_DEFAULT="session > "
+
+HUCKLEBERRY_SES_RENAME_PICK_HEADER="@huckleberry-ses-rename-pick-header"
+HUCKLEBERRY_SES_RENAME_PICK_HEADER_DEFAULT="  Rename Session"
 
 HUCKLEBERRY_SES_KILL="@huckleberry-ses-kill"
 HUCKLEBERRY_SES_KILL_DEFAULT="Kill session"

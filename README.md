@@ -32,8 +32,8 @@ Five categories, one keypress away. Hit the hotkey to jump straight there, or ty
 |---|---|---|
 | `Space` | Find Session | Find, switch, create sessions |
 | `s` | Sessions | Rename, kill, create sessions |
-| `w` | Windows | Rename, split, move windows |
-| `p` | Panes | Layout, swap, move panes |
+| `w` | Windows | Rename, kill, split, move windows |
+| `p` | Panes | Rename, layout, swap, move panes |
 | `c` | Config | Reload config, TPM install/update |
 | `x` | Extensions | Run extension commands *(only shown when configured)* |
 
@@ -50,31 +50,33 @@ The fastest way to get where you're going. Type to narrow down your sessions, pi
 
 ### Sessions palette
 
-Housekeeping for your sessions — rename, kill, create, or detach stale clients.
+Housekeeping for your sessions — rename, kill, create, or detach stale clients. Press **Tab** on rename or kill to pick a different target instead of the current session.
 
-- **Rename session** — type a new name for the current session
-- **Kill session** — pick another session to kill
+- **Rename session** — Enter renames the current session; Tab opens a session picker first
+- **Kill session** — Enter kills the current session; Tab opens a session picker first
 - **New session** — type a name to create and switch to a new session
 - **Detach other clients** — detach all other clients from the current session
 
 ### Windows palette
 
-Wrangle your windows without leaving the saddle.
+Wrangle your windows without leaving the saddle. Press **Tab** on rename or kill to pick a different target instead of the current window.
 
-- **Rename window** — opens tmux's native rename prompt
+- **Rename window** — Enter renames the current window; Tab opens a window picker first
+- **Kill window** — Enter kills the current window; Tab opens a window picker first
 - **Split horizontal / vertical** — split the current pane
 - **Move window left / right** — swap window position
 
 ### Panes palette
 
-Rearrange the furniture. Layouts, swaps, moves, and the occasional eviction.
+Rearrange the furniture. Layouts, swaps, moves, and the occasional eviction. Press **Tab** on rename or kill to pick a different target instead of the current pane.
 
+- **Rename pane** — Enter renames the current pane; Tab opens a pane picker first
 - **Select layout** — pick from 5 preset pane layouts
 - **Send pane to window** — move current pane to another window
 - **Join pane from window** — pull a pane from another window into this one
 - **Break pane to window** — promote current pane to its own window
 - **Swap pane** — swap current pane with another in the same window
-- **Kill pane** — close the current pane
+- **Kill pane** — Enter kills the current pane; Tab opens a pane picker first
 
 ### Config palette
 
@@ -153,10 +155,10 @@ All options are set with `set -g` in your `~/.tmux.conf`. Every label, prompt, a
 | `@huckleberry-cat-session-mgmt-desc` | `Rename, kill, create sessions` | Description for Sessions |
 | `@huckleberry-cat-windows-key` | `w` | Hotkey for Windows category |
 | `@huckleberry-cat-windows-label` | `Windows` | Display label for Windows |
-| `@huckleberry-cat-windows-desc` | `Rename, split, move windows` | Description for Windows |
+| `@huckleberry-cat-windows-desc` | `Rename, kill, split, move windows` | Description for Windows |
 | `@huckleberry-cat-panes-key` | `p` | Hotkey for Panes category |
 | `@huckleberry-cat-panes-label` | `Panes` | Display label for Panes |
-| `@huckleberry-cat-panes-desc` | `Layout, swap, move panes` | Description for Panes |
+| `@huckleberry-cat-panes-desc` | `Rename, layout, swap, move panes` | Description for Panes |
 | `@huckleberry-cat-config-key` | `c` | Hotkey for Config category |
 | `@huckleberry-cat-config-label` | `Config` | Display label for Config |
 | `@huckleberry-cat-config-desc` | `Reload config, TPM install/update` | Description for Config |
@@ -194,13 +196,15 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 |---|---|---|
 | `@huckleberry-session-mgmt-prompt` | `session > ` | fzf prompt string |
 | `@huckleberry-session-mgmt-header` | `  Manage Sessions` | fzf header text |
-| `@huckleberry-session-mgmt-footer` | `  esc back` | fzf footer hint text |
+| `@huckleberry-session-mgmt-footer` | `  esc back · tab pick target` | fzf footer hint text |
 | `@huckleberry-ses-rename` | `Rename session` | Label for rename action |
 | `@huckleberry-ses-rename-prompt` | `name > ` | fzf prompt for rename input |
 | `@huckleberry-ses-rename-header` | `  Rename Session` | fzf header for rename input |
+| `@huckleberry-ses-rename-pick-prompt` | `session > ` | fzf prompt for Tab session picker (rename) |
+| `@huckleberry-ses-rename-pick-header` | `  Rename Session` | fzf header for Tab session picker (rename) |
 | `@huckleberry-ses-kill` | `Kill session` | Label for kill action |
-| `@huckleberry-ses-kill-prompt` | `session > ` | fzf prompt for kill picker |
-| `@huckleberry-ses-kill-header` | `  Kill Session` | fzf header for kill picker |
+| `@huckleberry-ses-kill-prompt` | `session > ` | fzf prompt for Tab session picker (kill) |
+| `@huckleberry-ses-kill-header` | `  Kill Session` | fzf header for Tab session picker (kill) |
 | `@huckleberry-ses-new` | `New session` | Label for new session action |
 | `@huckleberry-ses-new-prompt` | `name > ` | fzf prompt for new session input |
 | `@huckleberry-ses-new-header` | `  Create Session` | fzf header for new session input |
@@ -212,10 +216,15 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 |---|---|---|
 | `@huckleberry-windows-prompt` | `window > ` | fzf prompt string |
 | `@huckleberry-windows-header` | `  Manage Windows` | fzf header text |
-| `@huckleberry-windows-footer` | `  esc back` | fzf footer hint text |
+| `@huckleberry-windows-footer` | `  esc back · tab pick target` | fzf footer hint text |
 | `@huckleberry-win-rename` | `Rename window` | Label for rename action |
 | `@huckleberry-win-rename-prompt` | `name > ` | fzf prompt for rename input |
 | `@huckleberry-win-rename-header` | `  Rename Window` | fzf header for rename input |
+| `@huckleberry-win-rename-pick-prompt` | `window > ` | fzf prompt for Tab window picker (rename) |
+| `@huckleberry-win-rename-pick-header` | `  Rename Window` | fzf header for Tab window picker (rename) |
+| `@huckleberry-win-kill` | `Kill window` | Label for kill action |
+| `@huckleberry-win-kill-pick-prompt` | `window > ` | fzf prompt for Tab window picker (kill) |
+| `@huckleberry-win-kill-pick-header` | `  Kill Window` | fzf header for Tab window picker (kill) |
 | `@huckleberry-win-split-h` | `Split horizontal` | Label for horizontal split |
 | `@huckleberry-win-split-v` | `Split vertical` | Label for vertical split |
 | `@huckleberry-win-move-left` | `Move window left` | Label for move left |
@@ -227,7 +236,12 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 |---|---|---|
 | `@huckleberry-panes-prompt` | `pane > ` | fzf prompt string |
 | `@huckleberry-panes-header` | `  Manage Panes` | fzf header text |
-| `@huckleberry-panes-footer` | `  esc back` | fzf footer hint text |
+| `@huckleberry-panes-footer` | `  esc back · tab pick target` | fzf footer hint text |
+| `@huckleberry-pane-rename` | `Rename pane` | Label for rename action |
+| `@huckleberry-pane-rename-prompt` | `title > ` | fzf prompt for rename input |
+| `@huckleberry-pane-rename-header` | `  Rename Pane` | fzf header for rename input |
+| `@huckleberry-pane-rename-pick-prompt` | `pane > ` | fzf prompt for Tab pane picker (rename) |
+| `@huckleberry-pane-rename-pick-header` | `  Rename Pane` | fzf header for Tab pane picker (rename) |
 | `@huckleberry-pane-select-layout` | `Select layout` | Label for select layout action |
 | `@huckleberry-pane-layout-prompt` | `layout > ` | fzf prompt for layout picker |
 | `@huckleberry-pane-layout-header` | `  Select Layout` | fzf header for layout picker |
@@ -247,6 +261,8 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | `@huckleberry-pane-swap-prompt` | `pane > ` | fzf prompt for swap picker |
 | `@huckleberry-pane-swap-header` | `  Swap Pane` | fzf header for swap picker |
 | `@huckleberry-pane-kill` | `Kill pane` | Label for kill pane action |
+| `@huckleberry-pane-kill-pick-prompt` | `pane > ` | fzf prompt for Tab pane picker (kill) |
+| `@huckleberry-pane-kill-pick-header` | `  Kill Pane` | fzf header for Tab pane picker (kill) |
 
 ### Config palette
 

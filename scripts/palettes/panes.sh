@@ -21,6 +21,7 @@ header_border_args=(--header-border)
 footer_border_args=(--footer-border)
 [[ -n "$footer_border" ]] && footer_border_args=(--footer-border "$footer_border")
 
+get_tmux_option "$HUCKLEBERRY_PANE_RENAME" "$HUCKLEBERRY_PANE_RENAME_DEFAULT"; rename_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SELECT_LAYOUT" "$HUCKLEBERRY_PANE_SELECT_LAYOUT_DEFAULT"; select_layout_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_JOIN" "$HUCKLEBERRY_PANE_JOIN_DEFAULT"; join_label="$REPLY"
@@ -30,7 +31,8 @@ get_tmux_option "$HUCKLEBERRY_PANE_KILL" "$HUCKLEBERRY_PANE_KILL_DEFAULT"; kill_
 
 # --- Build action list --------------------------------------------------------
 
-actions="select-layout::${select_layout_label}"
+actions="rename::${rename_label}"
+actions+=$'\n'"select-layout::${select_layout_label}"
 actions+=$'\n'"send::${send_label}"
 actions+=$'\n'"join::${join_label}"
 actions+=$'\n'"break::${break_label}"
@@ -40,12 +42,13 @@ actions+=$'\n'"kill::${kill_label}"
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
 while true; do
-    selection=$(echo "$actions" | fzf \
+    fzf_output=$(echo "$actions" | fzf \
         --reverse \
         --no-info \
         --no-separator \
         --no-preview \
         --header-first \
+        --expect=tab \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
@@ -62,10 +65,78 @@ while true; do
         return 0 2>/dev/null || exit 0
     fi
 
+    # --expect outputs two lines: key pressed (empty for Enter), then the selection.
+    IFS= read -r action_key <<< "${fzf_output%%$'\n'*}"
+    IFS= read -r selection <<< "${fzf_output#*$'\n'}"
+
     # Extract the action ID (everything before the first "::").
     action="${selection%%::*}"
 
     case "$action" in
+        rename)
+            get_tmux_option "$HUCKLEBERRY_PANE_RENAME_PROMPT" "$HUCKLEBERRY_PANE_RENAME_PROMPT_DEFAULT"; rename_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RENAME_HEADER" "$HUCKLEBERRY_PANE_RENAME_HEADER_DEFAULT"; rename_header="$REPLY"
+
+            target_idx=""
+            prefill=$(tmux display-message -p '#{pane_title}')
+
+            if [[ "$action_key" == "tab" ]]; then
+                # Tab — pick a pane to rename
+                get_tmux_option "$HUCKLEBERRY_PANE_RENAME_PICK_PROMPT" "$HUCKLEBERRY_PANE_RENAME_PICK_PROMPT_DEFAULT"; pick_prompt="$REPLY"
+                get_tmux_option "$HUCKLEBERRY_PANE_RENAME_PICK_HEADER" "$HUCKLEBERRY_PANE_RENAME_PICK_HEADER_DEFAULT"; pick_header="$REPLY"
+
+                pane_list=$(tmux list-panes \
+                    -F '#{pane_index}::#{pane_index}: #{pane_current_command} (#{pane_width}x#{pane_height})')
+
+                if [[ -z "$pane_list" ]]; then
+                    continue
+                fi
+
+                if ! pane_selection=$(echo "$pane_list" | fzf \
+                    --reverse \
+                    --no-info \
+                    --no-separator \
+                    --no-preview \
+                    --header-first \
+                    --delimiter '::' \
+                    --with-nth 2 \
+                    --prompt "$pick_prompt" \
+                    --header "$pick_header"); then
+                    continue
+                fi
+
+                target_idx="${pane_selection%%::*}"
+                prefill=$(tmux display-message -t "$target_idx" -p '#{pane_title}')
+            fi
+
+            rename_output=$(: | fzf \
+                --print-query \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --query "$prefill" \
+                --prompt "$rename_prompt" \
+                --header "$rename_header")
+
+            rename_exit=$?
+
+            if [[ $rename_exit -eq 130 ]]; then
+                continue
+            fi
+
+            IFS= read -r new_title <<< "$rename_output"
+
+            if [[ -n "$new_title" ]]; then
+                if [[ -n "$target_idx" ]]; then
+                    tmux select-pane -t "$target_idx" -T "$new_title"
+                else
+                    tmux select-pane -T "$new_title"
+                fi
+            fi
+            exit 0
+            ;;
         select-layout)
             get_tmux_option "$HUCKLEBERRY_PANE_LAYOUT_PROMPT" "$HUCKLEBERRY_PANE_LAYOUT_PROMPT_DEFAULT"; layout_prompt="$REPLY"
             get_tmux_option "$HUCKLEBERRY_PANE_LAYOUT_HEADER" "$HUCKLEBERRY_PANE_LAYOUT_HEADER_DEFAULT"; layout_header="$REPLY"
@@ -226,7 +297,37 @@ while true; do
             exit 0
             ;;
         kill)
-            tmux kill-pane
+            if [[ "$action_key" == "tab" ]]; then
+                # Tab — pick a pane to kill
+                get_tmux_option "$HUCKLEBERRY_PANE_KILL_PICK_PROMPT" "$HUCKLEBERRY_PANE_KILL_PICK_PROMPT_DEFAULT"; kill_prompt="$REPLY"
+                get_tmux_option "$HUCKLEBERRY_PANE_KILL_PICK_HEADER" "$HUCKLEBERRY_PANE_KILL_PICK_HEADER_DEFAULT"; kill_header="$REPLY"
+
+                pane_list=$(tmux list-panes \
+                    -F '#{pane_index}::#{pane_index}: #{pane_current_command} (#{pane_width}x#{pane_height})')
+
+                if [[ -z "$pane_list" ]]; then
+                    continue
+                fi
+
+                if ! pane_selection=$(echo "$pane_list" | fzf \
+                    --reverse \
+                    --no-info \
+                    --no-separator \
+                    --no-preview \
+                    --header-first \
+                    --delimiter '::' \
+                    --with-nth 2 \
+                    --prompt "$kill_prompt" \
+                    --header "$kill_header"); then
+                    continue
+                fi
+
+                pane_index="${pane_selection%%::*}"
+                tmux kill-pane -t "$pane_index"
+            else
+                # Enter — kill current pane
+                tmux kill-pane
+            fi
             exit 0
             ;;
     esac

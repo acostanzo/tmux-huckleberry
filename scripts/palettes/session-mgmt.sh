@@ -36,12 +36,13 @@ actions+=$'\n'"detach::${detach_label}"
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
 while true; do
-    selection=$(echo "$actions" | fzf \
+    fzf_output=$(echo "$actions" | fzf \
         --reverse \
         --no-info \
         --no-separator \
         --no-preview \
         --header-first \
+        --expect=tab \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
@@ -58,6 +59,10 @@ while true; do
         return 0 2>/dev/null || exit 0
     fi
 
+    # --expect outputs two lines: key pressed (empty for Enter), then the selection.
+    IFS= read -r action_key <<< "${fzf_output%%$'\n'*}"
+    IFS= read -r selection <<< "${fzf_output#*$'\n'}"
+
     # Extract the action ID (everything before the first "::").
     action="${selection%%::*}"
 
@@ -66,7 +71,33 @@ while true; do
             get_tmux_option "$HUCKLEBERRY_SES_RENAME_PROMPT" "$HUCKLEBERRY_SES_RENAME_PROMPT_DEFAULT"; rename_prompt="$REPLY"
             get_tmux_option "$HUCKLEBERRY_SES_RENAME_HEADER" "$HUCKLEBERRY_SES_RENAME_HEADER_DEFAULT"; rename_header="$REPLY"
 
-            current_name=$(tmux display-message -p '#{session_name}')
+            target=""
+            prefill=$(tmux display-message -p '#{session_name}')
+
+            if [[ "$action_key" == "tab" ]]; then
+                # Tab — pick a session to rename
+                get_tmux_option "$HUCKLEBERRY_SES_RENAME_PICK_PROMPT" "$HUCKLEBERRY_SES_RENAME_PICK_PROMPT_DEFAULT"; pick_prompt="$REPLY"
+                get_tmux_option "$HUCKLEBERRY_SES_RENAME_PICK_HEADER" "$HUCKLEBERRY_SES_RENAME_PICK_HEADER_DEFAULT"; pick_header="$REPLY"
+
+                session_list=$(tmux list-sessions -F '#{session_name}')
+
+                if [[ -z "$session_list" ]]; then
+                    continue
+                fi
+
+                if ! target=$(echo "$session_list" | fzf \
+                    --reverse \
+                    --no-info \
+                    --no-separator \
+                    --no-preview \
+                    --header-first \
+                    --prompt "$pick_prompt" \
+                    --header "$pick_header"); then
+                    continue
+                fi
+
+                prefill="$target"
+            fi
 
             rename_output=$(: | fzf \
                 --print-query \
@@ -75,7 +106,7 @@ while true; do
                 --no-separator \
                 --no-preview \
                 --header-first \
-                --query "$current_name" \
+                --query "$prefill" \
                 --prompt "$rename_prompt" \
                 --header "$rename_header")
 
@@ -92,43 +123,43 @@ while true; do
                     tmux display-message "Invalid session name (cannot contain ':' or '.')"
                     continue
                 fi
-                tmux rename-session -- "$new_name"
+                if [[ -n "$target" ]]; then
+                    tmux rename-session -t "=$target" -- "$new_name"
+                else
+                    tmux rename-session -- "$new_name"
+                fi
             fi
             exit 0
             ;;
         kill)
-            get_tmux_option "$HUCKLEBERRY_SES_KILL_PROMPT" "$HUCKLEBERRY_SES_KILL_PROMPT_DEFAULT"; kill_prompt="$REPLY"
-            get_tmux_option "$HUCKLEBERRY_SES_KILL_HEADER" "$HUCKLEBERRY_SES_KILL_HEADER_DEFAULT"; kill_header="$REPLY"
+            if [[ "$action_key" == "tab" ]]; then
+                # Tab — pick a session to kill
+                get_tmux_option "$HUCKLEBERRY_SES_KILL_PROMPT" "$HUCKLEBERRY_SES_KILL_PROMPT_DEFAULT"; kill_prompt="$REPLY"
+                get_tmux_option "$HUCKLEBERRY_SES_KILL_HEADER" "$HUCKLEBERRY_SES_KILL_HEADER_DEFAULT"; kill_header="$REPLY"
 
-            current_session=$(tmux display-message -p '#{session_name}')
-            session_list=$(tmux list-sessions -F '#{session_name}' \
-                | while IFS= read -r name; do
-                    if [[ "$name" != "$current_session" ]]; then
-                        echo "$name"
-                    fi
-                done)
+                session_list=$(tmux list-sessions -F '#{session_name}')
 
-            if [[ -z "$session_list" ]]; then
-                tmux display-message "No other sessions"
-                continue
+                if [[ -z "$session_list" ]]; then
+                    tmux display-message "No sessions"
+                    continue
+                fi
+
+                if ! target=$(echo "$session_list" | fzf \
+                    --reverse \
+                    --no-info \
+                    --no-separator \
+                    --no-preview \
+                    --header-first \
+                    --prompt "$kill_prompt" \
+                    --header "$kill_header"); then
+                    continue
+                fi
+
+                tmux kill-session -t "=$target"
+            else
+                # Enter — kill current session
+                tmux kill-session
             fi
-
-            target=$(echo "$session_list" | fzf \
-                --reverse \
-                --no-info \
-                --no-separator \
-                --no-preview \
-                --header-first \
-                --prompt "$kill_prompt" \
-                --header "$kill_header")
-
-            kill_exit=$?
-
-            if [[ $kill_exit -ne 0 ]]; then
-                continue
-            fi
-
-            tmux kill-session -t "=$target"
             exit 0
             ;;
         new)
