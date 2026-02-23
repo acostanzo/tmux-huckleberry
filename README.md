@@ -24,21 +24,29 @@ Press **`prefix + Space`** to open the command palette.
 
 ### Top-level menu
 
-The palette opens with four categories. Press the hotkey to jump instantly, or type to fuzzy-search and press Enter.
+The palette opens with five categories. Press the hotkey to jump instantly, or type to fuzzy-search and press Enter.
 
 | Key | Category | Description |
 |---|---|---|
-| `Space` | Sessions | Switch or create sessions |
+| `Space` | Find Session | Find, switch, create sessions |
+| `s` | Sessions | Rename, kill, create sessions |
 | `w` | Windows | Rename, split, move windows |
 | `p` | Panes | Layout, swap, move panes |
 | `c` | Config | Reload config, TPM install/update |
 
-### Sessions palette
+### Find Session palette
 
 - **Type to filter** existing sessions
 - **Select a session** to switch to it
 - **Type a new name** and press Enter to create and switch to it
 - Current session is marked with `*`
+
+### Sessions palette
+
+- **Rename session** — type a new name for the current session
+- **Kill session** — pick another session to kill
+- **New session** — type a name to create and switch to a new session
+- **Detach other clients** — detach all other clients from the current session
 
 ### Windows palette
 
@@ -86,9 +94,12 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-menu-prompt` | `  ` | fzf prompt for category menu |
 | `@huckleberry-menu-header` | `command palette` | fzf header for category menu |
 | `@huckleberry-space-display` | `␣` | Character shown for the space key |
-| `@huckleberry-cat-sessions-key` | `space` | Hotkey for Sessions category |
-| `@huckleberry-cat-sessions-label` | `Sessions` | Display label for Sessions |
-| `@huckleberry-cat-sessions-desc` | `Switch or create sessions` | Description for Sessions |
+| `@huckleberry-cat-sessions-key` | `space` | Hotkey for Find Session category |
+| `@huckleberry-cat-sessions-label` | `Find Session` | Display label for Find Session |
+| `@huckleberry-cat-sessions-desc` | `Find, switch, create sessions` | Description for Find Session |
+| `@huckleberry-cat-session-mgmt-key` | `s` | Hotkey for Sessions category |
+| `@huckleberry-cat-session-mgmt-label` | `Sessions` | Display label for Sessions |
+| `@huckleberry-cat-session-mgmt-desc` | `Rename, kill, create sessions` | Description for Sessions |
 | `@huckleberry-cat-windows-key` | `w` | Hotkey for Windows category |
 | `@huckleberry-cat-windows-label` | `Windows` | Display label for Windows |
 | `@huckleberry-cat-windows-desc` | `Rename, split, move windows` | Description for Windows |
@@ -99,7 +110,7 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-cat-config-label` | `Config` | Display label for Config |
 | `@huckleberry-cat-config-desc` | `Reload config, TPM install/update` | Description for Config |
 
-### Sessions palette
+### Find Session palette
 
 | Option | Default | Description |
 |---|---|---|
@@ -107,6 +118,16 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | `@huckleberry-header` | `  switch or create a session` | fzf header text |
 | `@huckleberry-preview` | `right:50%` | fzf preview window layout |
 | `@huckleberry-marker` | `* ` | Prefix for the current session |
+
+### Sessions palette
+
+| Option | Default | Description |
+|---|---|---|
+| `@huckleberry-session-mgmt-prompt` | `session > ` | fzf prompt string |
+| `@huckleberry-session-mgmt-header` | `  pick a session action` | fzf header text |
+| `@huckleberry-ses-rename` | `Rename session` | Label for rename action |
+| `@huckleberry-ses-rename-prompt` | `name > ` | fzf prompt for rename input |
+| `@huckleberry-ses-rename-header` | `  rename session` | fzf header for rename input |
 
 ### Windows palette
 

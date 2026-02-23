@@ -64,10 +64,10 @@ HUCKLEBERRY_CAT_SESSIONS_KEY="@huckleberry-cat-sessions-key"
 HUCKLEBERRY_CAT_SESSIONS_KEY_DEFAULT="space"
 
 HUCKLEBERRY_CAT_SESSIONS_LABEL="@huckleberry-cat-sessions-label"
-HUCKLEBERRY_CAT_SESSIONS_LABEL_DEFAULT="Sessions"
+HUCKLEBERRY_CAT_SESSIONS_LABEL_DEFAULT="Find Session"
 
 HUCKLEBERRY_CAT_SESSIONS_DESC="@huckleberry-cat-sessions-desc"
-HUCKLEBERRY_CAT_SESSIONS_DESC_DEFAULT="Switch or create sessions"
+HUCKLEBERRY_CAT_SESSIONS_DESC_DEFAULT="Find, switch, create sessions"
 
 # Category: Windows
 HUCKLEBERRY_CAT_WINDOWS_KEY="@huckleberry-cat-windows-key"
@@ -88,6 +88,16 @@ HUCKLEBERRY_CAT_PANES_LABEL_DEFAULT="Panes"
 
 HUCKLEBERRY_CAT_PANES_DESC="@huckleberry-cat-panes-desc"
 HUCKLEBERRY_CAT_PANES_DESC_DEFAULT="Layout, swap, move panes"
+
+# Category: Session Management
+HUCKLEBERRY_CAT_SESSION_MGMT_KEY="@huckleberry-cat-session-mgmt-key"
+HUCKLEBERRY_CAT_SESSION_MGMT_KEY_DEFAULT="s"
+
+HUCKLEBERRY_CAT_SESSION_MGMT_LABEL="@huckleberry-cat-session-mgmt-label"
+HUCKLEBERRY_CAT_SESSION_MGMT_LABEL_DEFAULT="Sessions"
+
+HUCKLEBERRY_CAT_SESSION_MGMT_DESC="@huckleberry-cat-session-mgmt-desc"
+HUCKLEBERRY_CAT_SESSION_MGMT_DESC_DEFAULT="Rename, kill, create sessions"
 
 # Category: Config
 HUCKLEBERRY_CAT_CONFIG_KEY="@huckleberry-cat-config-key"
@@ -196,6 +206,25 @@ HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT="  swap with pane"
 
 HUCKLEBERRY_PANE_KILL="@huckleberry-pane-kill"
 HUCKLEBERRY_PANE_KILL_DEFAULT="Kill pane"
+
+# ---------------------------------------------------------------------------
+# Session management sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_SESSION_MGMT_PROMPT="@huckleberry-session-mgmt-prompt"
+HUCKLEBERRY_SESSION_MGMT_PROMPT_DEFAULT="session > "
+
+HUCKLEBERRY_SESSION_MGMT_HEADER="@huckleberry-session-mgmt-header"
+HUCKLEBERRY_SESSION_MGMT_HEADER_DEFAULT="  pick a session action"
+
+HUCKLEBERRY_SES_RENAME="@huckleberry-ses-rename"
+HUCKLEBERRY_SES_RENAME_DEFAULT="Rename session"
+
+HUCKLEBERRY_SES_RENAME_PROMPT="@huckleberry-ses-rename-prompt"
+HUCKLEBERRY_SES_RENAME_PROMPT_DEFAULT="name > "
+
+HUCKLEBERRY_SES_RENAME_HEADER="@huckleberry-ses-rename-header"
+HUCKLEBERRY_SES_RENAME_HEADER_DEFAULT="  rename session"
 
 # ---------------------------------------------------------------------------
 # Config sub-palette

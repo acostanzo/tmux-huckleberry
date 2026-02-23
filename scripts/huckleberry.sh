@@ -31,6 +31,10 @@ get_tmux_option "$HUCKLEBERRY_CAT_PANES_KEY" "$HUCKLEBERRY_CAT_PANES_KEY_DEFAULT
 get_tmux_option "$HUCKLEBERRY_CAT_PANES_LABEL" "$HUCKLEBERRY_CAT_PANES_LABEL_DEFAULT"; panes_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_PANES_DESC" "$HUCKLEBERRY_CAT_PANES_DESC_DEFAULT"; panes_desc="$REPLY"
 
+get_tmux_option "$HUCKLEBERRY_CAT_SESSION_MGMT_KEY" "$HUCKLEBERRY_CAT_SESSION_MGMT_KEY_DEFAULT"; session_mgmt_key="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CAT_SESSION_MGMT_LABEL" "$HUCKLEBERRY_CAT_SESSION_MGMT_LABEL_DEFAULT"; session_mgmt_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CAT_SESSION_MGMT_DESC" "$HUCKLEBERRY_CAT_SESSION_MGMT_DESC_DEFAULT"; session_mgmt_desc="$REPLY"
+
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_KEY" "$HUCKLEBERRY_CAT_CONFIG_KEY_DEFAULT"; config_key="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_LABEL" "$HUCKLEBERRY_CAT_CONFIG_LABEL_DEFAULT"; config_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_DESC" "$HUCKLEBERRY_CAT_CONFIG_DESC_DEFAULT"; config_desc="$REPLY"
@@ -38,17 +42,19 @@ get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_DESC" "$HUCKLEBERRY_CAT_CONFIG_DESC_DEF
 # --- Build display keys (render "space" as the configurable display char) ----
 
 if [[ "$sessions_key" == "space" ]]; then sessions_display="$space_display"; else sessions_display="$sessions_key"; fi
+if [[ "$session_mgmt_key" == "space" ]]; then session_mgmt_display="$space_display"; else session_mgmt_display="$session_mgmt_key"; fi
 if [[ "$windows_key" == "space" ]]; then windows_display="$space_display"; else windows_display="$windows_key"; fi
 if [[ "$panes_key" == "space" ]]; then panes_display="$space_display"; else panes_display="$panes_key"; fi
 if [[ "$config_key" == "space" ]]; then config_display="$space_display"; else config_display="$config_key"; fi
 
 # --- Build menu (pure string concat, no subshell) ----------------------------
 
-printf -v menu '%s\n%s\n%s\n%s' \
-    "  ${sessions_display}  ${sessions_label}     ${sessions_desc}" \
-    "  ${windows_display}  ${windows_label}      ${windows_desc}" \
-    "  ${panes_display}  ${panes_label}       ${panes_desc}" \
-    "  ${config_display}  ${config_label}       ${config_desc}"
+printf -v menu '%s\n%s\n%s\n%s\n%s' \
+    "  ${sessions_display}  ${sessions_label}   ${sessions_desc}" \
+    "  ${session_mgmt_display}  ${session_mgmt_label}       ${session_mgmt_desc}" \
+    "  ${windows_display}  ${windows_label}        ${windows_desc}" \
+    "  ${panes_display}  ${panes_label}          ${panes_desc}" \
+    "  ${config_display}  ${config_label}         ${config_desc}"
 
 # --- Strip conflicting FZF_DEFAULT_OPTS (bash builtins, no subprocess) -------
 
@@ -63,7 +69,7 @@ _dispatcher_dir="$CURRENT_DIR"
 while true; do
     fzf_output=$(echo "$menu" | fzf \
         --print-query \
-        --expect="${sessions_key},${windows_key},${panes_key},${config_key}" \
+        --expect="${sessions_key},${session_mgmt_key},${windows_key},${panes_key},${config_key}" \
         --reverse \
         --no-info \
         --no-preview \
@@ -91,6 +97,8 @@ while true; do
     # Hotkey takes priority.
     if [[ "$key" == "$sessions_key" ]]; then
         palette="sessions"
+    elif [[ "$key" == "$session_mgmt_key" ]]; then
+        palette="session-mgmt"
     elif [[ "$key" == "$windows_key" ]]; then
         palette="windows"
     elif [[ "$key" == "$panes_key" ]]; then
@@ -101,6 +109,8 @@ while true; do
         # Enter pressed — match by label in the selection string.
         if [[ "$selection" == *"$sessions_label"* ]]; then
             palette="sessions"
+        elif [[ "$selection" == *"$session_mgmt_label"* ]]; then
+            palette="session-mgmt"
         elif [[ "$selection" == *"$windows_label"* ]]; then
             palette="windows"
         elif [[ "$selection" == *"$panes_label"* ]]; then

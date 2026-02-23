@@ -8,25 +8,27 @@ TPM-compatible fuzzy command palette for tmux. Opens in a popup via `prefix + Sp
 [prefix + Space]
     ↓
 scripts/huckleberry.sh (top-level dispatcher)
-    ├─ ␣ Sessions → scripts/palettes/sessions.sh
-    ├─ w Windows  → scripts/palettes/windows.sh
-    ├─ p Panes    → scripts/palettes/panes.sh
-    └─ c Config   → scripts/palettes/config.sh
+    ├─ ␣ Find Session → scripts/palettes/sessions.sh
+    ├─ s Sessions     → scripts/palettes/session-mgmt.sh
+    ├─ w Windows      → scripts/palettes/windows.sh
+    ├─ p Panes        → scripts/palettes/panes.sh
+    └─ c Config       → scripts/palettes/config.sh
 ```
 
 1. `huckleberry.tmux` — TPM entry point; reads user options, binds key to open popup
 2. `scripts/huckleberry.sh` — top-level dispatcher; shows categories via fzf `--expect`, `exec`s into sub-palettes
 3. `scripts/palettes/common.sh` — sourced shared infrastructure (path resolution, `strip_fzf_opts`)
-4. `scripts/palettes/sessions.sh` — session switcher sub-palette (fuzzy-find/create sessions)
-5. `scripts/palettes/windows.sh` — window management sub-palette (rename, split, move)
-6. `scripts/palettes/panes.sh` — pane management sub-palette (layout, swap, move panes)
-7. `scripts/palettes/config.sh` — config sub-palette (reload config, TPM install/update)
-8. `scripts/helpers.sh` — sourced utility (`get_tmux_option`)
-9. `scripts/variables.sh` — sourced option-name constants and defaults
+4. `scripts/palettes/sessions.sh` — session finder sub-palette (fuzzy-find/create sessions)
+5. `scripts/palettes/session-mgmt.sh` — session management sub-palette (rename, kill, create)
+6. `scripts/palettes/windows.sh` — window management sub-palette (rename, split, move)
+7. `scripts/palettes/panes.sh` — pane management sub-palette (layout, swap, move panes)
+8. `scripts/palettes/config.sh` — config sub-palette (reload config, TPM install/update)
+9. `scripts/helpers.sh` — sourced utility (`get_tmux_option`)
+10. `scripts/variables.sh` — sourced option-name constants and defaults
 
 ## File permissions
 
-- **755** for executables: `huckleberry.tmux`, `scripts/huckleberry.sh`, `scripts/palettes/sessions.sh`, `scripts/palettes/windows.sh`, `scripts/palettes/panes.sh`, `scripts/palettes/config.sh`
+- **755** for executables: `huckleberry.tmux`, `scripts/huckleberry.sh`, `scripts/palettes/sessions.sh`, `scripts/palettes/session-mgmt.sh`, `scripts/palettes/windows.sh`, `scripts/palettes/panes.sh`, `scripts/palettes/config.sh`
 - **644** for sourced files: `scripts/helpers.sh`, `scripts/variables.sh`, `scripts/palettes/common.sh`
 
 ## Bash conventions
