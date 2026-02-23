@@ -12,6 +12,14 @@ strip_fzf_opts
 
 get_tmux_option "$HUCKLEBERRY_PANES_PROMPT" "$HUCKLEBERRY_PANES_PROMPT_DEFAULT"; prompt="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANES_HEADER" "$HUCKLEBERRY_PANES_HEADER_DEFAULT"; header="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANES_FOOTER" "$HUCKLEBERRY_PANES_FOOTER_DEFAULT"; footer="$REPLY"
+get_tmux_option "$HUCKLEBERRY_HEADER_BORDER" "$HUCKLEBERRY_HEADER_BORDER_DEFAULT"; header_border="$REPLY"
+get_tmux_option "$HUCKLEBERRY_FOOTER_BORDER" "$HUCKLEBERRY_FOOTER_BORDER_DEFAULT"; footer_border="$REPLY"
+
+header_border_args=(--header-border)
+[[ -n "$header_border" ]] && header_border_args=(--header-border "$header_border")
+footer_border_args=(--footer-border)
+[[ -n "$footer_border" ]] && footer_border_args=(--footer-border "$footer_border")
 
 get_tmux_option "$HUCKLEBERRY_PANE_SELECT_LAYOUT" "$HUCKLEBERRY_PANE_SELECT_LAYOUT_DEFAULT"; select_layout_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_label="$REPLY"
@@ -35,11 +43,16 @@ while true; do
     selection=$(echo "$actions" | fzf \
         --reverse \
         --no-info \
+        --no-separator \
         --no-preview \
+        --header-first \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
-        --header "$header")
+        --header "$header" \
+        --footer "$footer" \
+        "${header_border_args[@]}" \
+        "${footer_border_args[@]}")
 
     fzf_exit=$?
 
@@ -71,7 +84,9 @@ while true; do
             layout_selection=$(echo "$layouts" | fzf \
                 --reverse \
                 --no-info \
+                --no-separator \
                 --no-preview \
+                --header-first \
                 --delimiter '::' \
                 --with-nth 2 \
                 --prompt "$layout_prompt" \
@@ -109,7 +124,9 @@ while true; do
             win_selection=$(echo "$window_list" | fzf \
                 --reverse \
                 --no-info \
+                --no-separator \
                 --no-preview \
+                --header-first \
                 --prompt "$send_prompt" \
                 --header "$send_header")
 
@@ -146,7 +163,9 @@ while true; do
             pane_selection=$(echo "$pane_list" | fzf \
                 --reverse \
                 --no-info \
+                --no-separator \
                 --no-preview \
+                --header-first \
                 --delimiter '::' \
                 --with-nth 2 \
                 --prompt "$join_prompt" \
@@ -188,7 +207,9 @@ while true; do
             swap_selection=$(echo "$swap_list" | fzf \
                 --reverse \
                 --no-info \
+                --no-separator \
                 --no-preview \
+                --header-first \
                 --delimiter '::' \
                 --with-nth 2 \
                 --prompt "$swap_prompt" \

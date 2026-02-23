@@ -71,6 +71,8 @@ The palette opens with five categories. Press the hotkey to jump instantly, or t
 - **TPM install plugins** — runs TPM install
 - **TPM update plugins** — runs TPM update
 
+Keybinding hints are shown in the footer at the bottom of each palette.
+
 Press **Escape** at any level to dismiss the popup.
 
 ## Configuration
@@ -94,7 +96,10 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | Option | Default | Description |
 |---|---|---|
 | `@huckleberry-menu-prompt` | `  ` | fzf prompt for category menu |
-| `@huckleberry-menu-header` | `command palette` | fzf header for category menu |
+| `@huckleberry-menu-header` | `  Command Palette` | fzf header for category menu |
+| `@huckleberry-menu-footer` | `  esc close` | fzf footer hint text |
+| `@huckleberry-header-border` | `bottom` | fzf header border style (shared across palettes) |
+| `@huckleberry-footer-border` | *(fzf default)* | fzf footer border style (shared across palettes) |
 | `@huckleberry-space-display` | `␣` | Character shown for the space key |
 | `@huckleberry-cat-sessions-key` | `space` | Hotkey for Find Session category |
 | `@huckleberry-cat-sessions-label` | `Find Session` | Display label for Find Session |
@@ -117,13 +122,14 @@ All options are set with `set -g` in your `~/.tmux.conf`.
 | Option | Default | Description |
 |---|---|---|
 | `@huckleberry-prompt` | `session > ` | fzf prompt string |
-| `@huckleberry-header` | `  switch or create a session` | fzf header text |
+| `@huckleberry-header` | `  Switch or Create a Session` | fzf header text |
+| `@huckleberry-footer` | `  esc back · tab windows · enter switch` | fzf footer hint text |
 | `@huckleberry-preview` | `right:50%` | fzf preview window layout |
 | `@huckleberry-marker` | `* ` | Prefix for the current session |
 | `@huckleberry-preview-fmt` | *(see below)* | tmux format string for preview window list |
-| `@huckleberry-tab-hint` | `  tab: show windows` | Hint text shown below the header |
 | `@huckleberry-session-windows-prompt` | `window > ` | fzf prompt for the window picker |
-| `@huckleberry-session-windows-header` | `  pick a window (esc to go back)` | fzf header for the window picker |
+| `@huckleberry-session-windows-header` | `  Select a Window` | fzf header for the window picker |
+| `@huckleberry-session-windows-footer` | `  esc back · enter switch` | fzf footer for the window picker |
 | `@huckleberry-session-windows-fmt` | *(see below)* | tmux format string for window picker list |
 
 The default `@huckleberry-preview-fmt` is:
@@ -143,16 +149,17 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | Option | Default | Description |
 |---|---|---|
 | `@huckleberry-session-mgmt-prompt` | `session > ` | fzf prompt string |
-| `@huckleberry-session-mgmt-header` | `  pick a session action` | fzf header text |
+| `@huckleberry-session-mgmt-header` | `  Manage Sessions` | fzf header text |
+| `@huckleberry-session-mgmt-footer` | `  esc back` | fzf footer hint text |
 | `@huckleberry-ses-rename` | `Rename session` | Label for rename action |
 | `@huckleberry-ses-rename-prompt` | `name > ` | fzf prompt for rename input |
-| `@huckleberry-ses-rename-header` | `  rename session` | fzf header for rename input |
+| `@huckleberry-ses-rename-header` | `  Rename Session` | fzf header for rename input |
 | `@huckleberry-ses-kill` | `Kill session` | Label for kill action |
 | `@huckleberry-ses-kill-prompt` | `session > ` | fzf prompt for kill picker |
-| `@huckleberry-ses-kill-header` | `  kill session` | fzf header for kill picker |
+| `@huckleberry-ses-kill-header` | `  Kill Session` | fzf header for kill picker |
 | `@huckleberry-ses-new` | `New session` | Label for new session action |
 | `@huckleberry-ses-new-prompt` | `name > ` | fzf prompt for new session input |
-| `@huckleberry-ses-new-header` | `  create session` | fzf header for new session input |
+| `@huckleberry-ses-new-header` | `  Create Session` | fzf header for new session input |
 | `@huckleberry-ses-detach` | `Detach other clients` | Label for detach action |
 
 ### Windows palette
@@ -160,10 +167,11 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | Option | Default | Description |
 |---|---|---|
 | `@huckleberry-windows-prompt` | `window > ` | fzf prompt string |
-| `@huckleberry-windows-header` | `  pick a window action` | fzf header text |
+| `@huckleberry-windows-header` | `  Manage Windows` | fzf header text |
+| `@huckleberry-windows-footer` | `  esc back` | fzf footer hint text |
 | `@huckleberry-win-rename` | `Rename window` | Label for rename action |
 | `@huckleberry-win-rename-prompt` | `name > ` | fzf prompt for rename input |
-| `@huckleberry-win-rename-header` | `  rename window` | fzf header for rename input |
+| `@huckleberry-win-rename-header` | `  Rename Window` | fzf header for rename input |
 | `@huckleberry-win-split-h` | `Split horizontal` | Label for horizontal split |
 | `@huckleberry-win-split-v` | `Split vertical` | Label for vertical split |
 | `@huckleberry-win-move-left` | `Move window left` | Label for move left |
@@ -174,10 +182,11 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | Option | Default | Description |
 |---|---|---|
 | `@huckleberry-panes-prompt` | `pane > ` | fzf prompt string |
-| `@huckleberry-panes-header` | `  pick a pane action` | fzf header text |
+| `@huckleberry-panes-header` | `  Manage Panes` | fzf header text |
+| `@huckleberry-panes-footer` | `  esc back` | fzf footer hint text |
 | `@huckleberry-pane-select-layout` | `Select layout` | Label for select layout action |
 | `@huckleberry-pane-layout-prompt` | `layout > ` | fzf prompt for layout picker |
-| `@huckleberry-pane-layout-header` | `  pick a layout` | fzf header for layout picker |
+| `@huckleberry-pane-layout-header` | `  Select Layout` | fzf header for layout picker |
 | `@huckleberry-pane-layout-even-h` | `Even horizontal` | Label for even-horizontal layout |
 | `@huckleberry-pane-layout-even-v` | `Even vertical` | Label for even-vertical layout |
 | `@huckleberry-pane-layout-main-h` | `Main horizontal` | Label for main-horizontal layout |
@@ -185,14 +194,14 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | `@huckleberry-pane-layout-tiled` | `Tiled` | Label for tiled layout |
 | `@huckleberry-pane-send` | `Send pane to window` | Label for send pane action |
 | `@huckleberry-pane-send-prompt` | `window > ` | fzf prompt for window picker |
-| `@huckleberry-pane-send-header` | `  send pane to window` | fzf header for window picker |
+| `@huckleberry-pane-send-header` | `  Send Pane to Window` | fzf header for window picker |
 | `@huckleberry-pane-join` | `Join pane from window` | Label for join pane action |
 | `@huckleberry-pane-join-prompt` | `pane > ` | fzf prompt for pane picker |
-| `@huckleberry-pane-join-header` | `  join pane from another window` | fzf header for pane picker |
+| `@huckleberry-pane-join-header` | `  Join Pane from Window` | fzf header for pane picker |
 | `@huckleberry-pane-break` | `Break pane to window` | Label for break pane action |
 | `@huckleberry-pane-swap` | `Swap pane` | Label for swap pane action |
 | `@huckleberry-pane-swap-prompt` | `pane > ` | fzf prompt for swap picker |
-| `@huckleberry-pane-swap-header` | `  swap with pane` | fzf header for swap picker |
+| `@huckleberry-pane-swap-header` | `  Swap Pane` | fzf header for swap picker |
 | `@huckleberry-pane-kill` | `Kill pane` | Label for kill pane action |
 
 ### Config palette
@@ -200,7 +209,8 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | Option | Default | Description |
 |---|---|---|
 | `@huckleberry-config-prompt` | `config > ` | fzf prompt string |
-| `@huckleberry-config-header` | `  pick a config action` | fzf header text |
+| `@huckleberry-config-header` | `  Configuration` | fzf header text |
+| `@huckleberry-config-footer` | `  esc back` | fzf footer hint text |
 | `@huckleberry-cfg-reload` | `Reload config` | Label for reload action |
 | `@huckleberry-cfg-tpm-install` | `TPM install plugins` | Label for TPM install |
 | `@huckleberry-cfg-tpm-update` | `TPM update plugins` | Label for TPM update |

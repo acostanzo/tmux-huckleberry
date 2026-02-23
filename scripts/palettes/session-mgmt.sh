@@ -12,6 +12,14 @@ strip_fzf_opts
 
 get_tmux_option "$HUCKLEBERRY_SESSION_MGMT_PROMPT" "$HUCKLEBERRY_SESSION_MGMT_PROMPT_DEFAULT"; prompt="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SESSION_MGMT_HEADER" "$HUCKLEBERRY_SESSION_MGMT_HEADER_DEFAULT"; header="$REPLY"
+get_tmux_option "$HUCKLEBERRY_SESSION_MGMT_FOOTER" "$HUCKLEBERRY_SESSION_MGMT_FOOTER_DEFAULT"; footer="$REPLY"
+get_tmux_option "$HUCKLEBERRY_HEADER_BORDER" "$HUCKLEBERRY_HEADER_BORDER_DEFAULT"; header_border="$REPLY"
+get_tmux_option "$HUCKLEBERRY_FOOTER_BORDER" "$HUCKLEBERRY_FOOTER_BORDER_DEFAULT"; footer_border="$REPLY"
+
+header_border_args=(--header-border)
+[[ -n "$header_border" ]] && header_border_args=(--header-border "$header_border")
+footer_border_args=(--footer-border)
+[[ -n "$footer_border" ]] && footer_border_args=(--footer-border "$footer_border")
 
 get_tmux_option "$HUCKLEBERRY_SES_RENAME" "$HUCKLEBERRY_SES_RENAME_DEFAULT"; rename_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SES_KILL" "$HUCKLEBERRY_SES_KILL_DEFAULT"; kill_label="$REPLY"
@@ -31,11 +39,16 @@ while true; do
     selection=$(echo "$actions" | fzf \
         --reverse \
         --no-info \
+        --no-separator \
         --no-preview \
+        --header-first \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
-        --header "$header")
+        --header "$header" \
+        --footer "$footer" \
+        "${header_border_args[@]}" \
+        "${footer_border_args[@]}")
 
     fzf_exit=$?
 
@@ -59,7 +72,9 @@ while true; do
                 --print-query \
                 --reverse \
                 --no-info \
+                --no-separator \
                 --no-preview \
+                --header-first \
                 --query "$current_name" \
                 --prompt "$rename_prompt" \
                 --header "$rename_header")
@@ -101,7 +116,9 @@ while true; do
             target=$(echo "$session_list" | fzf \
                 --reverse \
                 --no-info \
+                --no-separator \
                 --no-preview \
+                --header-first \
                 --prompt "$kill_prompt" \
                 --header "$kill_header")
 
@@ -122,7 +139,9 @@ while true; do
                 --print-query \
                 --reverse \
                 --no-info \
+                --no-separator \
                 --no-preview \
+                --header-first \
                 --prompt "$new_prompt" \
                 --header "$new_header")
 

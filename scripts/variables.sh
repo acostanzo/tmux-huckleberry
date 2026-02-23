@@ -35,7 +35,7 @@ HUCKLEBERRY_PROMPT_DEFAULT="session > "
 
 # fzf header text
 HUCKLEBERRY_HEADER="@huckleberry-header"
-HUCKLEBERRY_HEADER_DEFAULT="  switch or create a session"
+HUCKLEBERRY_HEADER_DEFAULT="  Switch or Create a Session"
 
 # fzf preview window layout
 HUCKLEBERRY_PREVIEW="@huckleberry-preview"
@@ -49,19 +49,34 @@ HUCKLEBERRY_MARKER_DEFAULT="* "
 HUCKLEBERRY_PREVIEW_FMT="@huckleberry-preview-fmt"
 HUCKLEBERRY_PREVIEW_FMT_DEFAULT='#{?window_active,  > ,    }#{window_index}: #{window_name} [#{pane_current_command}]#{?#{!=:#{window_panes},1}, (#{window_panes} panes),}'
 
-# Tab hint shown below the header
-HUCKLEBERRY_TAB_HINT="@huckleberry-tab-hint"
-HUCKLEBERRY_TAB_HINT_DEFAULT="  tab: show windows"
-
 # Nested window picker (shown after Tab on a session)
 HUCKLEBERRY_SESSION_WINDOWS_PROMPT="@huckleberry-session-windows-prompt"
 HUCKLEBERRY_SESSION_WINDOWS_PROMPT_DEFAULT="window > "
 
 HUCKLEBERRY_SESSION_WINDOWS_HEADER="@huckleberry-session-windows-header"
-HUCKLEBERRY_SESSION_WINDOWS_HEADER_DEFAULT="  pick a window (esc to go back)"
+HUCKLEBERRY_SESSION_WINDOWS_HEADER_DEFAULT="  Select a Window"
 
 HUCKLEBERRY_SESSION_WINDOWS_FMT="@huckleberry-session-windows-fmt"
 HUCKLEBERRY_SESSION_WINDOWS_FMT_DEFAULT='#{window_index}: #{window_name} [#{pane_current_command}]#{?#{!=:#{window_panes},1}, (#{window_panes} panes),}'
+
+# ---------------------------------------------------------------------------
+# Shared layout options
+# ---------------------------------------------------------------------------
+
+# fzf header border style (applied to --header-border; empty = fzf default)
+HUCKLEBERRY_HEADER_BORDER="@huckleberry-header-border"
+HUCKLEBERRY_HEADER_BORDER_DEFAULT="bottom"
+
+# fzf footer border style (applied to --footer-border; empty = fzf default "line")
+HUCKLEBERRY_FOOTER_BORDER="@huckleberry-footer-border"
+HUCKLEBERRY_FOOTER_BORDER_DEFAULT=""
+
+# Per-palette footer text
+HUCKLEBERRY_FOOTER="@huckleberry-footer"
+HUCKLEBERRY_FOOTER_DEFAULT="  esc back · tab windows · enter switch"
+
+HUCKLEBERRY_SESSION_WINDOWS_FOOTER="@huckleberry-session-windows-footer"
+HUCKLEBERRY_SESSION_WINDOWS_FOOTER_DEFAULT="  esc back · enter switch"
 
 # ---------------------------------------------------------------------------
 # Top-level menu
@@ -71,7 +86,10 @@ HUCKLEBERRY_MENU_PROMPT="@huckleberry-menu-prompt"
 HUCKLEBERRY_MENU_PROMPT_DEFAULT="  "
 
 HUCKLEBERRY_MENU_HEADER="@huckleberry-menu-header"
-HUCKLEBERRY_MENU_HEADER_DEFAULT="command palette"
+HUCKLEBERRY_MENU_HEADER_DEFAULT="  Command Palette"
+
+HUCKLEBERRY_MENU_FOOTER="@huckleberry-menu-footer"
+HUCKLEBERRY_MENU_FOOTER_DEFAULT="  esc close"
 
 # Display character for the space key in menus
 HUCKLEBERRY_SPACE_DISPLAY="@huckleberry-space-display"
@@ -135,7 +153,10 @@ HUCKLEBERRY_WINDOWS_PROMPT="@huckleberry-windows-prompt"
 HUCKLEBERRY_WINDOWS_PROMPT_DEFAULT="window > "
 
 HUCKLEBERRY_WINDOWS_HEADER="@huckleberry-windows-header"
-HUCKLEBERRY_WINDOWS_HEADER_DEFAULT="  pick a window action"
+HUCKLEBERRY_WINDOWS_HEADER_DEFAULT="  Manage Windows"
+
+HUCKLEBERRY_WINDOWS_FOOTER="@huckleberry-windows-footer"
+HUCKLEBERRY_WINDOWS_FOOTER_DEFAULT="  esc back"
 
 HUCKLEBERRY_WIN_RENAME="@huckleberry-win-rename"
 HUCKLEBERRY_WIN_RENAME_DEFAULT="Rename window"
@@ -144,7 +165,7 @@ HUCKLEBERRY_WIN_RENAME_PROMPT="@huckleberry-win-rename-prompt"
 HUCKLEBERRY_WIN_RENAME_PROMPT_DEFAULT="name > "
 
 HUCKLEBERRY_WIN_RENAME_HEADER="@huckleberry-win-rename-header"
-HUCKLEBERRY_WIN_RENAME_HEADER_DEFAULT="  rename window"
+HUCKLEBERRY_WIN_RENAME_HEADER_DEFAULT="  Rename Window"
 
 HUCKLEBERRY_WIN_SPLIT_H="@huckleberry-win-split-h"
 HUCKLEBERRY_WIN_SPLIT_H_DEFAULT="Split horizontal"
@@ -166,7 +187,10 @@ HUCKLEBERRY_PANES_PROMPT="@huckleberry-panes-prompt"
 HUCKLEBERRY_PANES_PROMPT_DEFAULT="pane > "
 
 HUCKLEBERRY_PANES_HEADER="@huckleberry-panes-header"
-HUCKLEBERRY_PANES_HEADER_DEFAULT="  pick a pane action"
+HUCKLEBERRY_PANES_HEADER_DEFAULT="  Manage Panes"
+
+HUCKLEBERRY_PANES_FOOTER="@huckleberry-panes-footer"
+HUCKLEBERRY_PANES_FOOTER_DEFAULT="  esc back"
 
 HUCKLEBERRY_PANE_SELECT_LAYOUT="@huckleberry-pane-select-layout"
 HUCKLEBERRY_PANE_SELECT_LAYOUT_DEFAULT="Select layout"
@@ -175,7 +199,7 @@ HUCKLEBERRY_PANE_LAYOUT_PROMPT="@huckleberry-pane-layout-prompt"
 HUCKLEBERRY_PANE_LAYOUT_PROMPT_DEFAULT="layout > "
 
 HUCKLEBERRY_PANE_LAYOUT_HEADER="@huckleberry-pane-layout-header"
-HUCKLEBERRY_PANE_LAYOUT_HEADER_DEFAULT="  pick a layout"
+HUCKLEBERRY_PANE_LAYOUT_HEADER_DEFAULT="  Select Layout"
 
 HUCKLEBERRY_PANE_LAYOUT_EVEN_H="@huckleberry-pane-layout-even-h"
 HUCKLEBERRY_PANE_LAYOUT_EVEN_H_DEFAULT="Even horizontal"
@@ -199,7 +223,7 @@ HUCKLEBERRY_PANE_SEND_PROMPT="@huckleberry-pane-send-prompt"
 HUCKLEBERRY_PANE_SEND_PROMPT_DEFAULT="window > "
 
 HUCKLEBERRY_PANE_SEND_HEADER="@huckleberry-pane-send-header"
-HUCKLEBERRY_PANE_SEND_HEADER_DEFAULT="  send pane to window"
+HUCKLEBERRY_PANE_SEND_HEADER_DEFAULT="  Send Pane to Window"
 
 HUCKLEBERRY_PANE_JOIN="@huckleberry-pane-join"
 HUCKLEBERRY_PANE_JOIN_DEFAULT="Join pane from window"
@@ -208,7 +232,7 @@ HUCKLEBERRY_PANE_JOIN_PROMPT="@huckleberry-pane-join-prompt"
 HUCKLEBERRY_PANE_JOIN_PROMPT_DEFAULT="pane > "
 
 HUCKLEBERRY_PANE_JOIN_HEADER="@huckleberry-pane-join-header"
-HUCKLEBERRY_PANE_JOIN_HEADER_DEFAULT="  join pane from another window"
+HUCKLEBERRY_PANE_JOIN_HEADER_DEFAULT="  Join Pane from Window"
 
 HUCKLEBERRY_PANE_BREAK="@huckleberry-pane-break"
 HUCKLEBERRY_PANE_BREAK_DEFAULT="Break pane to window"
@@ -220,7 +244,7 @@ HUCKLEBERRY_PANE_SWAP_PROMPT="@huckleberry-pane-swap-prompt"
 HUCKLEBERRY_PANE_SWAP_PROMPT_DEFAULT="pane > "
 
 HUCKLEBERRY_PANE_SWAP_HEADER="@huckleberry-pane-swap-header"
-HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT="  swap with pane"
+HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT="  Swap Pane"
 
 HUCKLEBERRY_PANE_KILL="@huckleberry-pane-kill"
 HUCKLEBERRY_PANE_KILL_DEFAULT="Kill pane"
@@ -233,7 +257,10 @@ HUCKLEBERRY_SESSION_MGMT_PROMPT="@huckleberry-session-mgmt-prompt"
 HUCKLEBERRY_SESSION_MGMT_PROMPT_DEFAULT="session > "
 
 HUCKLEBERRY_SESSION_MGMT_HEADER="@huckleberry-session-mgmt-header"
-HUCKLEBERRY_SESSION_MGMT_HEADER_DEFAULT="  pick a session action"
+HUCKLEBERRY_SESSION_MGMT_HEADER_DEFAULT="  Manage Sessions"
+
+HUCKLEBERRY_SESSION_MGMT_FOOTER="@huckleberry-session-mgmt-footer"
+HUCKLEBERRY_SESSION_MGMT_FOOTER_DEFAULT="  esc back"
 
 HUCKLEBERRY_SES_RENAME="@huckleberry-ses-rename"
 HUCKLEBERRY_SES_RENAME_DEFAULT="Rename session"
@@ -242,7 +269,7 @@ HUCKLEBERRY_SES_RENAME_PROMPT="@huckleberry-ses-rename-prompt"
 HUCKLEBERRY_SES_RENAME_PROMPT_DEFAULT="name > "
 
 HUCKLEBERRY_SES_RENAME_HEADER="@huckleberry-ses-rename-header"
-HUCKLEBERRY_SES_RENAME_HEADER_DEFAULT="  rename session"
+HUCKLEBERRY_SES_RENAME_HEADER_DEFAULT="  Rename Session"
 
 HUCKLEBERRY_SES_KILL="@huckleberry-ses-kill"
 HUCKLEBERRY_SES_KILL_DEFAULT="Kill session"
@@ -251,7 +278,7 @@ HUCKLEBERRY_SES_KILL_PROMPT="@huckleberry-ses-kill-prompt"
 HUCKLEBERRY_SES_KILL_PROMPT_DEFAULT="session > "
 
 HUCKLEBERRY_SES_KILL_HEADER="@huckleberry-ses-kill-header"
-HUCKLEBERRY_SES_KILL_HEADER_DEFAULT="  kill session"
+HUCKLEBERRY_SES_KILL_HEADER_DEFAULT="  Kill Session"
 
 HUCKLEBERRY_SES_NEW="@huckleberry-ses-new"
 HUCKLEBERRY_SES_NEW_DEFAULT="New session"
@@ -260,7 +287,7 @@ HUCKLEBERRY_SES_NEW_PROMPT="@huckleberry-ses-new-prompt"
 HUCKLEBERRY_SES_NEW_PROMPT_DEFAULT="name > "
 
 HUCKLEBERRY_SES_NEW_HEADER="@huckleberry-ses-new-header"
-HUCKLEBERRY_SES_NEW_HEADER_DEFAULT="  create session"
+HUCKLEBERRY_SES_NEW_HEADER_DEFAULT="  Create Session"
 
 HUCKLEBERRY_SES_DETACH="@huckleberry-ses-detach"
 HUCKLEBERRY_SES_DETACH_DEFAULT="Detach other clients"
@@ -273,7 +300,10 @@ HUCKLEBERRY_CONFIG_PROMPT="@huckleberry-config-prompt"
 HUCKLEBERRY_CONFIG_PROMPT_DEFAULT="config > "
 
 HUCKLEBERRY_CONFIG_HEADER="@huckleberry-config-header"
-HUCKLEBERRY_CONFIG_HEADER_DEFAULT="  pick a config action"
+HUCKLEBERRY_CONFIG_HEADER_DEFAULT="  Configuration"
+
+HUCKLEBERRY_CONFIG_FOOTER="@huckleberry-config-footer"
+HUCKLEBERRY_CONFIG_FOOTER_DEFAULT="  esc back"
 
 HUCKLEBERRY_CFG_RELOAD="@huckleberry-cfg-reload"
 HUCKLEBERRY_CFG_RELOAD_DEFAULT="Reload config"

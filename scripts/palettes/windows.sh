@@ -12,6 +12,14 @@ strip_fzf_opts
 
 get_tmux_option "$HUCKLEBERRY_WINDOWS_PROMPT" "$HUCKLEBERRY_WINDOWS_PROMPT_DEFAULT"; prompt="$REPLY"
 get_tmux_option "$HUCKLEBERRY_WINDOWS_HEADER" "$HUCKLEBERRY_WINDOWS_HEADER_DEFAULT"; header="$REPLY"
+get_tmux_option "$HUCKLEBERRY_WINDOWS_FOOTER" "$HUCKLEBERRY_WINDOWS_FOOTER_DEFAULT"; footer="$REPLY"
+get_tmux_option "$HUCKLEBERRY_HEADER_BORDER" "$HUCKLEBERRY_HEADER_BORDER_DEFAULT"; header_border="$REPLY"
+get_tmux_option "$HUCKLEBERRY_FOOTER_BORDER" "$HUCKLEBERRY_FOOTER_BORDER_DEFAULT"; footer_border="$REPLY"
+
+header_border_args=(--header-border)
+[[ -n "$header_border" ]] && header_border_args=(--header-border "$header_border")
+footer_border_args=(--footer-border)
+[[ -n "$footer_border" ]] && footer_border_args=(--footer-border "$footer_border")
 
 get_tmux_option "$HUCKLEBERRY_WIN_RENAME" "$HUCKLEBERRY_WIN_RENAME_DEFAULT"; rename_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_WIN_SPLIT_H" "$HUCKLEBERRY_WIN_SPLIT_H_DEFAULT"; split_h_label="$REPLY"
@@ -32,11 +40,16 @@ while true; do
     selection=$(echo "$actions" | fzf \
         --reverse \
         --no-info \
+        --no-separator \
         --no-preview \
+        --header-first \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
-        --header "$header")
+        --header "$header" \
+        --footer "$footer" \
+        "${header_border_args[@]}" \
+        "${footer_border_args[@]}")
 
     fzf_exit=$?
 
@@ -62,7 +75,9 @@ while true; do
                 --header "$rename_header" \
                 --reverse \
                 --no-info \
-                --no-preview)
+                --no-separator \
+                --no-preview \
+                --header-first)
 
             rename_exit=$?
 

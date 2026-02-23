@@ -15,6 +15,9 @@ source "${CURRENT_DIR}/variables.sh"
 
 get_tmux_option "$HUCKLEBERRY_MENU_PROMPT" "$HUCKLEBERRY_MENU_PROMPT_DEFAULT"; menu_prompt="$REPLY"
 get_tmux_option "$HUCKLEBERRY_MENU_HEADER" "$HUCKLEBERRY_MENU_HEADER_DEFAULT"; menu_header="$REPLY"
+get_tmux_option "$HUCKLEBERRY_MENU_FOOTER" "$HUCKLEBERRY_MENU_FOOTER_DEFAULT"; menu_footer="$REPLY"
+get_tmux_option "$HUCKLEBERRY_HEADER_BORDER" "$HUCKLEBERRY_HEADER_BORDER_DEFAULT"; header_border="$REPLY"
+get_tmux_option "$HUCKLEBERRY_FOOTER_BORDER" "$HUCKLEBERRY_FOOTER_BORDER_DEFAULT"; footer_border="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SPACE_DISPLAY" "$HUCKLEBERRY_SPACE_DISPLAY_DEFAULT"; space_display="$REPLY"
 
 get_tmux_option "$HUCKLEBERRY_CAT_SESSIONS_KEY" "$HUCKLEBERRY_CAT_SESSIONS_KEY_DEFAULT"; sessions_key="$REPLY"
@@ -79,6 +82,13 @@ printf -v menu '%s\n%s\n%s\n%s\n%s' \
 
 strip_fzf_opts
 
+# --- Build border args for fzf ------------------------------------------------
+
+header_border_args=(--header-border)
+[[ -n "$header_border" ]] && header_border_args=(--header-border "$header_border")
+footer_border_args=(--footer-border)
+[[ -n "$footer_border" ]] && footer_border_args=(--footer-border "$footer_border")
+
 # --- Main loop — sub-palettes return here on Escape -------------------------
 # Save the scripts dir — sub-palettes overwrite CURRENT_DIR when sourced.
 _dispatcher_dir="$CURRENT_DIR"
@@ -89,9 +99,14 @@ while true; do
         --expect="${sessions_key},${session_mgmt_key},${windows_key},${panes_key},${config_key}" \
         --reverse \
         --no-info \
+        --no-separator \
         --no-preview \
+        --header-first \
         --prompt "$menu_prompt" \
-        --header "$menu_header")
+        --header "$menu_header" \
+        --footer "$menu_footer" \
+        "${header_border_args[@]}" \
+        "${footer_border_args[@]}")
 
     fzf_exit=$?
 

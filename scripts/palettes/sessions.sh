@@ -12,12 +12,15 @@ strip_fzf_opts
 
 get_tmux_option "$HUCKLEBERRY_PROMPT" "$HUCKLEBERRY_PROMPT_DEFAULT"; prompt="$REPLY"
 get_tmux_option "$HUCKLEBERRY_HEADER" "$HUCKLEBERRY_HEADER_DEFAULT"; header="$REPLY"
+get_tmux_option "$HUCKLEBERRY_FOOTER" "$HUCKLEBERRY_FOOTER_DEFAULT"; footer="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PREVIEW" "$HUCKLEBERRY_PREVIEW_DEFAULT"; preview="$REPLY"
 get_tmux_option "$HUCKLEBERRY_MARKER" "$HUCKLEBERRY_MARKER_DEFAULT"; marker="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PREVIEW_FMT" "$HUCKLEBERRY_PREVIEW_FMT_DEFAULT"; preview_fmt="$REPLY"
-get_tmux_option "$HUCKLEBERRY_TAB_HINT" "$HUCKLEBERRY_TAB_HINT_DEFAULT"; tab_hint="$REPLY"
+get_tmux_option "$HUCKLEBERRY_HEADER_BORDER" "$HUCKLEBERRY_HEADER_BORDER_DEFAULT"; header_border="$REPLY"
+get_tmux_option "$HUCKLEBERRY_FOOTER_BORDER" "$HUCKLEBERRY_FOOTER_BORDER_DEFAULT"; footer_border="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SESSION_WINDOWS_PROMPT" "$HUCKLEBERRY_SESSION_WINDOWS_PROMPT_DEFAULT"; win_prompt="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SESSION_WINDOWS_HEADER" "$HUCKLEBERRY_SESSION_WINDOWS_HEADER_DEFAULT"; win_header="$REPLY"
+get_tmux_option "$HUCKLEBERRY_SESSION_WINDOWS_FOOTER" "$HUCKLEBERRY_SESSION_WINDOWS_FOOTER_DEFAULT"; win_footer="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SESSION_WINDOWS_FMT" "$HUCKLEBERRY_SESSION_WINDOWS_FMT_DEFAULT"; win_fmt="$REPLY"
 
 current_session="$(tmux display-message -p '#{session_name}')"
@@ -39,9 +42,12 @@ session_list() {
     done
 }
 
-# Combine header and tab hint for display.
-full_header="${header}
-${tab_hint}"
+# --- Build border args for fzf ------------------------------------------------
+
+header_border_args=(--header-border)
+[[ -n "$header_border" ]] && header_border_args=(--header-border "$header_border")
+footer_border_args=(--footer-border)
+[[ -n "$footer_border" ]] && footer_border_args=(--footer-border "$footer_border")
 
 # --- Main loop — Tab drills into windows, Escape returns to dispatcher -------
 
@@ -55,8 +61,13 @@ while true; do
         --expect=tab \
         --reverse \
         --no-info \
+        --no-separator \
+        --header-first \
         --prompt "$prompt" \
-        --header "$full_header" \
+        --header "$header" \
+        --footer "$footer" \
+        "${header_border_args[@]}" \
+        "${footer_border_args[@]}" \
         --preview 'name={}; name="${name#"${name%%[a-zA-Z0-9]*}"}"; tmux list-windows -t "=$name" -F "$HUCK_PREVIEW_FMT" 2>/dev/null' \
         --preview-window "$preview")
 
@@ -92,11 +103,16 @@ while true; do
         win_selection=$(echo "$win_list" | fzf \
             --reverse \
             --no-info \
+            --no-separator \
             --no-preview \
+            --header-first \
             --delimiter '::' \
             --with-nth 2 \
             --prompt "$win_prompt" \
-            --header "$win_header")
+            --header "$win_header" \
+            --footer "$win_footer" \
+            "${header_border_args[@]}" \
+            "${footer_border_args[@]}")
 
         win_exit=$?
 

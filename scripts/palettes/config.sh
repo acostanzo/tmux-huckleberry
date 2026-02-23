@@ -12,6 +12,14 @@ strip_fzf_opts
 
 get_tmux_option "$HUCKLEBERRY_CONFIG_PROMPT" "$HUCKLEBERRY_CONFIG_PROMPT_DEFAULT"; prompt="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CONFIG_HEADER" "$HUCKLEBERRY_CONFIG_HEADER_DEFAULT"; header="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CONFIG_FOOTER" "$HUCKLEBERRY_CONFIG_FOOTER_DEFAULT"; footer="$REPLY"
+get_tmux_option "$HUCKLEBERRY_HEADER_BORDER" "$HUCKLEBERRY_HEADER_BORDER_DEFAULT"; header_border="$REPLY"
+get_tmux_option "$HUCKLEBERRY_FOOTER_BORDER" "$HUCKLEBERRY_FOOTER_BORDER_DEFAULT"; footer_border="$REPLY"
+
+header_border_args=(--header-border)
+[[ -n "$header_border" ]] && header_border_args=(--header-border "$header_border")
+footer_border_args=(--footer-border)
+[[ -n "$footer_border" ]] && footer_border_args=(--footer-border "$footer_border")
 
 get_tmux_option "$HUCKLEBERRY_CFG_RELOAD" "$HUCKLEBERRY_CFG_RELOAD_DEFAULT"; reload_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CFG_TPM_INSTALL" "$HUCKLEBERRY_CFG_TPM_INSTALL_DEFAULT"; tpm_install_label="$REPLY"
@@ -53,11 +61,16 @@ while true; do
     selection=$(echo "$actions" | fzf \
         --reverse \
         --no-info \
+        --no-separator \
         --no-preview \
+        --header-first \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
-        --header "$header")
+        --header "$header" \
+        --footer "$footer" \
+        "${header_border_args[@]}" \
+        "${footer_border_args[@]}")
 
     fzf_exit=$?
 
