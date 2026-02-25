@@ -27,10 +27,12 @@ get_tmux_option "$HUCKLEBERRY_WIN_SPLIT_H" "$HUCKLEBERRY_WIN_SPLIT_H_DEFAULT"; s
 get_tmux_option "$HUCKLEBERRY_WIN_SPLIT_V" "$HUCKLEBERRY_WIN_SPLIT_V_DEFAULT"; split_v_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_WIN_MOVE_LEFT" "$HUCKLEBERRY_WIN_MOVE_LEFT_DEFAULT"; move_left_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_WIN_MOVE_RIGHT" "$HUCKLEBERRY_WIN_MOVE_RIGHT_DEFAULT"; move_right_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_WIN_NEW" "$HUCKLEBERRY_WIN_NEW_DEFAULT"; new_label="$REPLY"
 
 # action_id::label — fzf shows only the label, but returns the full string.
 actions="rename::${rename_label}"
 actions+=$'\n'"kill::${kill_label}"
+actions+=$'\n'"new::${new_label}"
 actions+=$'\n'"split-h::${split_h_label}"
 actions+=$'\n'"split-v::${split_v_label}"
 actions+=$'\n'"move-left::${move_left_label}"
@@ -165,6 +167,36 @@ while true; do
             else
                 # Enter — kill current window
                 tmux kill-window
+            fi
+            exit 0
+            ;;
+        new)
+            get_tmux_option "$HUCKLEBERRY_WIN_NEW_PROMPT" "$HUCKLEBERRY_WIN_NEW_PROMPT_DEFAULT"; new_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_WIN_NEW_HEADER" "$HUCKLEBERRY_WIN_NEW_HEADER_DEFAULT"; new_header="$REPLY"
+
+            new_output=$(: | fzf \
+                --print-query \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --prompt "$new_prompt" \
+                --header "$new_header")
+
+            new_exit=$?
+
+            if [[ $new_exit -eq 130 ]]; then
+                continue
+            fi
+
+            IFS= read -r name <<< "$new_output"
+
+            if [[ -n "$name" ]]; then
+                tmux new-window -n "$name"
+                tmux set-window-option automatic-rename off
+            else
+                tmux new-window
             fi
             exit 0
             ;;

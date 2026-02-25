@@ -27,12 +27,14 @@ get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_
 get_tmux_option "$HUCKLEBERRY_PANE_JOIN" "$HUCKLEBERRY_PANE_JOIN_DEFAULT"; join_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_BREAK" "$HUCKLEBERRY_PANE_BREAK_DEFAULT"; break_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SWAP" "$HUCKLEBERRY_PANE_SWAP_DEFAULT"; swap_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_NEW" "$HUCKLEBERRY_PANE_NEW_DEFAULT"; new_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_KILL" "$HUCKLEBERRY_PANE_KILL_DEFAULT"; kill_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
 actions="rename::${rename_label}"
 actions+=$'\n'"select-layout::${select_layout_label}"
+actions+=$'\n'"new::${new_label}"
 actions+=$'\n'"send::${send_label}"
 actions+=$'\n'"join::${join_label}"
 actions+=$'\n'"break::${break_label}"
@@ -172,6 +174,10 @@ while true; do
 
             layout="${layout_selection%%::*}"
             tmux select-layout "$layout"
+            exit 0
+            ;;
+        new)
+            tmux split-window
             exit 0
             ;;
         send)

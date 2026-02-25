@@ -113,7 +113,7 @@ HUCKLEBERRY_CAT_WINDOWS_LABEL="@huckleberry-cat-windows-label"
 HUCKLEBERRY_CAT_WINDOWS_LABEL_DEFAULT="Windows"
 
 HUCKLEBERRY_CAT_WINDOWS_DESC="@huckleberry-cat-windows-desc"
-HUCKLEBERRY_CAT_WINDOWS_DESC_DEFAULT="Rename, kill, split, move windows"
+HUCKLEBERRY_CAT_WINDOWS_DESC_DEFAULT="Rename, new, kill, split, move windows"
 
 # Category: Panes
 HUCKLEBERRY_CAT_PANES_KEY="@huckleberry-cat-panes-key"
@@ -123,7 +123,7 @@ HUCKLEBERRY_CAT_PANES_LABEL="@huckleberry-cat-panes-label"
 HUCKLEBERRY_CAT_PANES_LABEL_DEFAULT="Panes"
 
 HUCKLEBERRY_CAT_PANES_DESC="@huckleberry-cat-panes-desc"
-HUCKLEBERRY_CAT_PANES_DESC_DEFAULT="Rename, layout, swap, move panes"
+HUCKLEBERRY_CAT_PANES_DESC_DEFAULT="Rename, new, layout, swap, move panes"
 
 # Category: Session Management
 HUCKLEBERRY_CAT_SESSION_MGMT_KEY="@huckleberry-cat-session-mgmt-key"
@@ -193,6 +193,15 @@ HUCKLEBERRY_WIN_RENAME_PICK_HEADER_DEFAULT="  Rename Window"
 
 HUCKLEBERRY_WIN_MOVE_RIGHT="@huckleberry-win-move-right"
 HUCKLEBERRY_WIN_MOVE_RIGHT_DEFAULT="Move window right"
+
+HUCKLEBERRY_WIN_NEW="@huckleberry-win-new"
+HUCKLEBERRY_WIN_NEW_DEFAULT="New window"
+
+HUCKLEBERRY_WIN_NEW_PROMPT="@huckleberry-win-new-prompt"
+HUCKLEBERRY_WIN_NEW_PROMPT_DEFAULT="name > "
+
+HUCKLEBERRY_WIN_NEW_HEADER="@huckleberry-win-new-header"
+HUCKLEBERRY_WIN_NEW_HEADER_DEFAULT="  Create Window"
 
 # ---------------------------------------------------------------------------
 # Panes sub-palette
@@ -275,6 +284,9 @@ HUCKLEBERRY_PANE_SWAP_PROMPT_DEFAULT="pane > "
 
 HUCKLEBERRY_PANE_SWAP_HEADER="@huckleberry-pane-swap-header"
 HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT="  Swap Pane"
+
+HUCKLEBERRY_PANE_NEW="@huckleberry-pane-new"
+HUCKLEBERRY_PANE_NEW_DEFAULT="New pane"
 
 HUCKLEBERRY_PANE_KILL="@huckleberry-pane-kill"
 HUCKLEBERRY_PANE_KILL_DEFAULT="Kill pane"
