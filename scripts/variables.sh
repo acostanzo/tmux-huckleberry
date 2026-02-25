@@ -135,6 +135,16 @@ HUCKLEBERRY_CAT_SESSION_MGMT_LABEL_DEFAULT="Sessions"
 HUCKLEBERRY_CAT_SESSION_MGMT_DESC="@huckleberry-cat-session-mgmt-desc"
 HUCKLEBERRY_CAT_SESSION_MGMT_DESC_DEFAULT="Rename, kill, create sessions"
 
+# Category: Buffers
+HUCKLEBERRY_CAT_BUFFERS_KEY="@huckleberry-cat-buffers-key"
+HUCKLEBERRY_CAT_BUFFERS_KEY_DEFAULT="b"
+
+HUCKLEBERRY_CAT_BUFFERS_LABEL="@huckleberry-cat-buffers-label"
+HUCKLEBERRY_CAT_BUFFERS_LABEL_DEFAULT="Buffers"
+
+HUCKLEBERRY_CAT_BUFFERS_DESC="@huckleberry-cat-buffers-desc"
+HUCKLEBERRY_CAT_BUFFERS_DESC_DEFAULT="Paste, capture, manage buffers"
+
 # Category: Toggles
 HUCKLEBERRY_CAT_TOGGLES_KEY="@huckleberry-cat-toggles-key"
 HUCKLEBERRY_CAT_TOGGLES_KEY_DEFAULT="t"
@@ -397,6 +407,55 @@ HUCKLEBERRY_SES_NEW_HEADER_DEFAULT="  Create Session"
 
 HUCKLEBERRY_SES_DETACH="@huckleberry-ses-detach"
 HUCKLEBERRY_SES_DETACH_DEFAULT="Detach other clients"
+
+# ---------------------------------------------------------------------------
+# Buffers sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_BUFFERS_PROMPT="@huckleberry-buffers-prompt"
+HUCKLEBERRY_BUFFERS_PROMPT_DEFAULT="buffer > "
+
+HUCKLEBERRY_BUFFERS_HEADER="@huckleberry-buffers-header"
+HUCKLEBERRY_BUFFERS_HEADER_DEFAULT="  Manage Buffers"
+
+HUCKLEBERRY_BUFFERS_FOOTER="@huckleberry-buffers-footer"
+HUCKLEBERRY_BUFFERS_FOOTER_DEFAULT="  esc back · 1-9 select"
+
+HUCKLEBERRY_BUF_PASTE="@huckleberry-buf-paste"
+HUCKLEBERRY_BUF_PASTE_DEFAULT="Paste buffer"
+
+HUCKLEBERRY_BUF_CHOOSE="@huckleberry-buf-choose"
+HUCKLEBERRY_BUF_CHOOSE_DEFAULT="Choose buffer"
+
+HUCKLEBERRY_BUF_CHOOSE_PROMPT="@huckleberry-buf-choose-prompt"
+HUCKLEBERRY_BUF_CHOOSE_PROMPT_DEFAULT="buffer > "
+
+HUCKLEBERRY_BUF_CHOOSE_HEADER="@huckleberry-buf-choose-header"
+HUCKLEBERRY_BUF_CHOOSE_HEADER_DEFAULT="  Choose Buffer"
+
+HUCKLEBERRY_BUF_CHOOSE_PREVIEW="@huckleberry-buf-choose-preview"
+HUCKLEBERRY_BUF_CHOOSE_PREVIEW_DEFAULT="right:50%"
+
+HUCKLEBERRY_BUF_CAPTURE="@huckleberry-buf-capture"
+HUCKLEBERRY_BUF_CAPTURE_DEFAULT="Capture pane to buffer"
+
+HUCKLEBERRY_BUF_DELETE="@huckleberry-buf-delete"
+HUCKLEBERRY_BUF_DELETE_DEFAULT="Delete buffer"
+
+HUCKLEBERRY_BUF_DELETE_PROMPT="@huckleberry-buf-delete-prompt"
+HUCKLEBERRY_BUF_DELETE_PROMPT_DEFAULT="buffer > "
+
+HUCKLEBERRY_BUF_DELETE_HEADER="@huckleberry-buf-delete-header"
+HUCKLEBERRY_BUF_DELETE_HEADER_DEFAULT="  Delete Buffer"
+
+HUCKLEBERRY_BUF_SAVE="@huckleberry-buf-save"
+HUCKLEBERRY_BUF_SAVE_DEFAULT="Save buffer to file"
+
+HUCKLEBERRY_BUF_SAVE_PROMPT="@huckleberry-buf-save-prompt"
+HUCKLEBERRY_BUF_SAVE_PROMPT_DEFAULT="path > "
+
+HUCKLEBERRY_BUF_SAVE_HEADER="@huckleberry-buf-save-header"
+HUCKLEBERRY_BUF_SAVE_HEADER_DEFAULT="  Save Buffer to File"
 
 # ---------------------------------------------------------------------------
 # Toggles sub-palette
