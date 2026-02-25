@@ -448,6 +448,24 @@ HUCKLEBERRY_SES_NEW_PROMPT_DEFAULT="name > "
 HUCKLEBERRY_SES_NEW_HEADER="@huckleberry-ses-new-header"
 HUCKLEBERRY_SES_NEW_HEADER_DEFAULT="  Create Session"
 
+HUCKLEBERRY_SES_LIST_CLIENTS="@huckleberry-ses-list-clients"
+HUCKLEBERRY_SES_LIST_CLIENTS_DEFAULT="List clients"
+
+HUCKLEBERRY_SES_LIST_CLIENTS_PROMPT="@huckleberry-ses-list-clients-prompt"
+HUCKLEBERRY_SES_LIST_CLIENTS_PROMPT_DEFAULT="client > "
+
+HUCKLEBERRY_SES_LIST_CLIENTS_HEADER="@huckleberry-ses-list-clients-header"
+HUCKLEBERRY_SES_LIST_CLIENTS_HEADER_DEFAULT="  Attached Clients (read-only)"
+
+HUCKLEBERRY_SES_DETACH_CLIENT="@huckleberry-ses-detach-client"
+HUCKLEBERRY_SES_DETACH_CLIENT_DEFAULT="Detach client"
+
+HUCKLEBERRY_SES_DETACH_CLIENT_PROMPT="@huckleberry-ses-detach-client-prompt"
+HUCKLEBERRY_SES_DETACH_CLIENT_PROMPT_DEFAULT="client > "
+
+HUCKLEBERRY_SES_DETACH_CLIENT_HEADER="@huckleberry-ses-detach-client-header"
+HUCKLEBERRY_SES_DETACH_CLIENT_HEADER_DEFAULT="  Detach Client"
+
 HUCKLEBERRY_SES_DETACH="@huckleberry-ses-detach"
 HUCKLEBERRY_SES_DETACH_DEFAULT="Detach other clients"
 

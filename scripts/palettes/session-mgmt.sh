@@ -24,12 +24,16 @@ footer_border_args=(--footer-border)
 get_tmux_option "$HUCKLEBERRY_SES_RENAME" "$HUCKLEBERRY_SES_RENAME_DEFAULT"; rename_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SES_KILL" "$HUCKLEBERRY_SES_KILL_DEFAULT"; kill_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SES_NEW" "$HUCKLEBERRY_SES_NEW_DEFAULT"; new_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_SES_LIST_CLIENTS" "$HUCKLEBERRY_SES_LIST_CLIENTS_DEFAULT"; list_clients_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_SES_DETACH_CLIENT" "$HUCKLEBERRY_SES_DETACH_CLIENT_DEFAULT"; detach_client_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SES_DETACH" "$HUCKLEBERRY_SES_DETACH_DEFAULT"; detach_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
 actions="new::${new_label}"
 actions+=$'\n'"rename::${rename_label}"
+actions+=$'\n'"list-clients::${list_clients_label}"
+actions+=$'\n'"detach-client::${detach_client_label}"
 actions+=$'\n'"detach::${detach_label}"
 actions+=$'\n'"kill::${kill_label}"
 
@@ -208,6 +212,57 @@ while true; do
                 tmux rename-window -t "=$name" -- "$name"
                 tmux switch-client -t "=$name"
             fi
+            exit 0
+            ;;
+        list-clients)
+            get_tmux_option "$HUCKLEBERRY_SES_LIST_CLIENTS_PROMPT" "$HUCKLEBERRY_SES_LIST_CLIENTS_PROMPT_DEFAULT"; lc_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_SES_LIST_CLIENTS_HEADER" "$HUCKLEBERRY_SES_LIST_CLIENTS_HEADER_DEFAULT"; lc_header="$REPLY"
+
+            client_list=$(tmux list-clients -F '#{client_name}: #{session_name} (#{client_width}x#{client_height})' 2>/dev/null)
+
+            if [[ -z "$client_list" ]]; then
+                tmux display-message "No clients attached"
+                continue
+            fi
+
+            # Read-only fzf browser — no action on selection, Escape goes back.
+            echo "$client_list" | fzf \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --prompt "$lc_prompt" \
+                --header "$lc_header" > /dev/null
+
+            continue
+            ;;
+        detach-client)
+            get_tmux_option "$HUCKLEBERRY_SES_DETACH_CLIENT_PROMPT" "$HUCKLEBERRY_SES_DETACH_CLIENT_PROMPT_DEFAULT"; dc_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_SES_DETACH_CLIENT_HEADER" "$HUCKLEBERRY_SES_DETACH_CLIENT_HEADER_DEFAULT"; dc_header="$REPLY"
+
+            client_list=$(tmux list-clients -F '#{client_name}::#{client_name}: #{session_name} (#{client_width}x#{client_height})' 2>/dev/null)
+
+            if [[ -z "$client_list" ]]; then
+                tmux display-message "No clients attached"
+                continue
+            fi
+
+            if ! client_selection=$(echo "$client_list" | fzf \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --delimiter '::' \
+                --with-nth 2 \
+                --prompt "$dc_prompt" \
+                --header "$dc_header"); then
+                continue
+            fi
+
+            client_name="${client_selection%%::*}"
+            tmux detach-client -t "$client_name"
             exit 0
             ;;
         detach)
