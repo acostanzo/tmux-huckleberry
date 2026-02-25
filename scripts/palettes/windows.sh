@@ -30,13 +30,13 @@ get_tmux_option "$HUCKLEBERRY_WIN_MOVE_RIGHT" "$HUCKLEBERRY_WIN_MOVE_RIGHT_DEFAU
 get_tmux_option "$HUCKLEBERRY_WIN_NEW" "$HUCKLEBERRY_WIN_NEW_DEFAULT"; new_label="$REPLY"
 
 # action_id::label — fzf shows only the label, but returns the full string.
-actions="rename::${rename_label}"
-actions+=$'\n'"kill::${kill_label}"
-actions+=$'\n'"new::${new_label}"
+actions="new::${new_label}"
+actions+=$'\n'"rename::${rename_label}"
 actions+=$'\n'"split-h::${split_h_label}"
 actions+=$'\n'"split-v::${split_v_label}"
 actions+=$'\n'"move-left::${move_left_label}"
 actions+=$'\n'"move-right::${move_right_label}"
+actions+=$'\n'"kill::${kill_label}"
 
 # --- Number actions for hotkey display -----------------------------------------
 

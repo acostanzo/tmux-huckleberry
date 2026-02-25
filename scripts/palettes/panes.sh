@@ -32,13 +32,13 @@ get_tmux_option "$HUCKLEBERRY_PANE_KILL" "$HUCKLEBERRY_PANE_KILL_DEFAULT"; kill_
 
 # --- Build action list --------------------------------------------------------
 
-actions="rename::${rename_label}"
+actions="new::${new_label}"
 actions+=$'\n'"select-layout::${select_layout_label}"
-actions+=$'\n'"new::${new_label}"
+actions+=$'\n'"swap::${swap_label}"
 actions+=$'\n'"send::${send_label}"
 actions+=$'\n'"join::${join_label}"
 actions+=$'\n'"break::${break_label}"
-actions+=$'\n'"swap::${swap_label}"
+actions+=$'\n'"rename::${rename_label}"
 actions+=$'\n'"kill::${kill_label}"
 
 # --- Number actions for hotkey display -----------------------------------------

@@ -28,10 +28,10 @@ get_tmux_option "$HUCKLEBERRY_SES_DETACH" "$HUCKLEBERRY_SES_DETACH_DEFAULT"; det
 
 # --- Build action list --------------------------------------------------------
 
-actions="rename::${rename_label}"
-actions+=$'\n'"kill::${kill_label}"
-actions+=$'\n'"new::${new_label}"
+actions="new::${new_label}"
+actions+=$'\n'"rename::${rename_label}"
 actions+=$'\n'"detach::${detach_label}"
+actions+=$'\n'"kill::${kill_label}"
 
 # --- Number actions for hotkey display -----------------------------------------
 
