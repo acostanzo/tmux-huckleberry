@@ -34,6 +34,7 @@ get_tmux_option "$HUCKLEBERRY_PANE_DISPLAY_NUMBERS" "$HUCKLEBERRY_PANE_DISPLAY_N
 get_tmux_option "$HUCKLEBERRY_PANE_CLEAR_HISTORY" "$HUCKLEBERRY_PANE_CLEAR_HISTORY_DEFAULT"; clear_history_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_COPY_MODE" "$HUCKLEBERRY_PANE_COPY_MODE_DEFAULT"; copy_mode_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_RESPAWN" "$HUCKLEBERRY_PANE_RESPAWN_DEFAULT"; respawn_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_MARK" "$HUCKLEBERRY_PANE_MARK_DEFAULT"; mark_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_NEW" "$HUCKLEBERRY_PANE_NEW_DEFAULT"; new_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_KILL" "$HUCKLEBERRY_PANE_KILL_DEFAULT"; kill_label="$REPLY"
 
@@ -51,6 +52,7 @@ actions+=$'\n'"break::${break_label}"
 actions+=$'\n'"copy-mode::${copy_mode_label}"
 actions+=$'\n'"clear-history::${clear_history_label}"
 actions+=$'\n'"display-numbers::${display_numbers_label}"
+actions+=$'\n'"mark::${mark_label}"
 actions+=$'\n'"respawn::${respawn_label}"
 actions+=$'\n'"rename::${rename_label}"
 actions+=$'\n'"kill::${kill_label}"
@@ -263,6 +265,15 @@ while true; do
             ;;
         respawn)
             tmux respawn-pane -k
+            exit 0
+            ;;
+        mark)
+            # Toggle pane mark: -m marks, -M unmarks.
+            if tmux display-message -p '#{pane_marked}' | grep -q '^1$'; then
+                tmux select-pane -M
+            else
+                tmux select-pane -m
+            fi
             exit 0
             ;;
         send)

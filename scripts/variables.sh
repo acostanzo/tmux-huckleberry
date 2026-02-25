@@ -135,6 +135,16 @@ HUCKLEBERRY_CAT_SESSION_MGMT_LABEL_DEFAULT="Sessions"
 HUCKLEBERRY_CAT_SESSION_MGMT_DESC="@huckleberry-cat-session-mgmt-desc"
 HUCKLEBERRY_CAT_SESSION_MGMT_DESC_DEFAULT="Rename, kill, create sessions"
 
+# Category: Find Window
+HUCKLEBERRY_CAT_FIND_WINDOW_KEY="@huckleberry-cat-find-window-key"
+HUCKLEBERRY_CAT_FIND_WINDOW_KEY_DEFAULT="f"
+
+HUCKLEBERRY_CAT_FIND_WINDOW_LABEL="@huckleberry-cat-find-window-label"
+HUCKLEBERRY_CAT_FIND_WINDOW_LABEL_DEFAULT="Find Window"
+
+HUCKLEBERRY_CAT_FIND_WINDOW_DESC="@huckleberry-cat-find-window-desc"
+HUCKLEBERRY_CAT_FIND_WINDOW_DESC_DEFAULT="Search windows across all sessions"
+
 # Category: Buffers
 HUCKLEBERRY_CAT_BUFFERS_KEY="@huckleberry-cat-buffers-key"
 HUCKLEBERRY_CAT_BUFFERS_KEY_DEFAULT="b"
@@ -347,6 +357,9 @@ HUCKLEBERRY_PANE_COPY_MODE_DEFAULT="Enter copy mode"
 HUCKLEBERRY_PANE_RESPAWN="@huckleberry-pane-respawn"
 HUCKLEBERRY_PANE_RESPAWN_DEFAULT="Respawn pane"
 
+HUCKLEBERRY_PANE_MARK="@huckleberry-pane-mark"
+HUCKLEBERRY_PANE_MARK_DEFAULT="Toggle mark"
+
 HUCKLEBERRY_PANE_NEW="@huckleberry-pane-new"
 HUCKLEBERRY_PANE_NEW_DEFAULT="New pane"
 
@@ -407,6 +420,28 @@ HUCKLEBERRY_SES_NEW_HEADER_DEFAULT="  Create Session"
 
 HUCKLEBERRY_SES_DETACH="@huckleberry-ses-detach"
 HUCKLEBERRY_SES_DETACH_DEFAULT="Detach other clients"
+
+# ---------------------------------------------------------------------------
+# Find Window sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_FIND_WINDOW_PROMPT="@huckleberry-find-window-prompt"
+HUCKLEBERRY_FIND_WINDOW_PROMPT_DEFAULT="window > "
+
+HUCKLEBERRY_FIND_WINDOW_HEADER="@huckleberry-find-window-header"
+HUCKLEBERRY_FIND_WINDOW_HEADER_DEFAULT="  Find Window"
+
+HUCKLEBERRY_FIND_WINDOW_FOOTER="@huckleberry-find-window-footer"
+HUCKLEBERRY_FIND_WINDOW_FOOTER_DEFAULT="  esc back · enter switch"
+
+HUCKLEBERRY_FIND_WINDOW_FMT="@huckleberry-find-window-fmt"
+HUCKLEBERRY_FIND_WINDOW_FMT_DEFAULT='#{session_name} > #{window_index}: #{window_name} [#{pane_current_command}]'
+
+HUCKLEBERRY_FIND_WINDOW_PREVIEW="@huckleberry-find-window-preview"
+HUCKLEBERRY_FIND_WINDOW_PREVIEW_DEFAULT="right:40%"
+
+HUCKLEBERRY_FIND_WINDOW_PREVIEW_FMT="@huckleberry-find-window-preview-fmt"
+HUCKLEBERRY_FIND_WINDOW_PREVIEW_FMT_DEFAULT='#{pane_index}: #{pane_current_command} (#{pane_width}x#{pane_height})'
 
 # ---------------------------------------------------------------------------
 # Buffers sub-palette
