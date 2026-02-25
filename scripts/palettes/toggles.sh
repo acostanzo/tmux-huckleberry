@@ -29,14 +29,14 @@ get_tmux_option "$HUCKLEBERRY_TOGGLE_STATUS" "$HUCKLEBERRY_TOGGLE_STATUS_DEFAULT
 get_tmux_option "$HUCKLEBERRY_TOGGLE_PANE_BORDER" "$HUCKLEBERRY_TOGGLE_PANE_BORDER_DEFAULT"; pane_border_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_TOGGLE_MONITOR_ACTIVITY" "$HUCKLEBERRY_TOGGLE_MONITOR_ACTIVITY_DEFAULT"; monitor_activity_label="$REPLY"
 
-# --- Helper: read current toggle state and return indicator -----------------
+# --- Helper: read current toggle state and set REPLY to indicator ----------
+# Uses the REPLY variable pattern to avoid subshell forks from $(...).
 
 _toggle_indicator() {
-    local value="$1"
-    if [[ "$value" == "on" || "$value" == "top" || "$value" == "bottom" ]]; then
-        printf '%s' "$on_indicator"
+    if [[ "$1" == "on" || "$1" == "top" || "$1" == "bottom" ]]; then
+        REPLY="$on_indicator"
     else
-        printf '%s' "$off_indicator"
+        REPLY="$off_indicator"
     fi
 }
 
@@ -50,11 +50,11 @@ while true; do
     pane_border_val=$(tmux show-window-option -v pane-border-status 2>/dev/null)
     monitor_val=$(tmux show-window-option -v monitor-activity 2>/dev/null)
 
-    actions="sync-panes::${sync_panes_label} $(_toggle_indicator "$sync_val")"
-    actions+=$'\n'"mouse::${mouse_label} $(_toggle_indicator "$mouse_val")"
-    actions+=$'\n'"status::${status_label} $(_toggle_indicator "$status_val")"
-    actions+=$'\n'"pane-border::${pane_border_label} $(_toggle_indicator "$pane_border_val")"
-    actions+=$'\n'"monitor-activity::${monitor_activity_label} $(_toggle_indicator "$monitor_val")"
+    _toggle_indicator "$sync_val";    actions="sync-panes::${sync_panes_label} ${REPLY}"
+    _toggle_indicator "$mouse_val";  actions+=$'\n'"mouse::${mouse_label} ${REPLY}"
+    _toggle_indicator "$status_val"; actions+=$'\n'"status::${status_label} ${REPLY}"
+    _toggle_indicator "$pane_border_val"; actions+=$'\n'"pane-border::${pane_border_label} ${REPLY}"
+    _toggle_indicator "$monitor_val"; actions+=$'\n'"monitor-activity::${monitor_activity_label} ${REPLY}"
 
     _huck_number_actions "$actions"
     actions="$REPLY"

@@ -237,11 +237,7 @@ while true; do
 
             current_session=$(tmux display-message -p '#{session_name}')
             session_list=$(tmux list-sessions -F '#{session_name}' \
-                | while IFS= read -r name; do
-                    if [[ "$name" != "$current_session" ]]; then
-                        echo "$name"
-                    fi
-                done)
+                | grep -vxF "$current_session")
 
             if [[ -z "$session_list" ]]; then
                 tmux display-message "No other sessions"

@@ -31,6 +31,7 @@ export HUCK_FW_PREVIEW_FMT="$preview_fmt"
 
 while true; do
     # Build window list: session:window_index as target ID, then formatted label.
+    # NOTE: If a custom win_fmt contains "::", the delimiter parsing below will break.
     win_list=$(tmux list-windows -a -F "#{session_name}:#{window_index}::${win_fmt}")
 
     if [[ -z "$win_list" ]]; then
