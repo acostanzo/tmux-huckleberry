@@ -262,7 +262,7 @@ while true; do
             fi
 
             client_name="${client_selection%%::*}"
-            tmux detach-client -t "$client_name"
+            tmux detach-client -t "=$client_name"
             exit 0
             ;;
         detach)

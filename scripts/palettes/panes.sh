@@ -247,7 +247,8 @@ while true; do
                 left)  tmux resize-pane -L "$resize_step" ;;
                 right) tmux resize-pane -R "$resize_step" ;;
             esac
-            exit 0
+            # Loop back to allow repeated resizes.
+            continue
             ;;
         rotate)
             tmux rotate-window
@@ -301,7 +302,11 @@ while true; do
             IFS= read -r pipe_path <<< "$pipe_output"
 
             if [[ -n "$pipe_path" ]]; then
-                tmux pipe-pane -o "cat >> '${pipe_path//\'/\'\\\'\'}'"
+                # Expand leading tilde (tmux doesn't expand ~).
+                pipe_path="${pipe_path/#\~/$HOME}"
+                # Shell-escape the path so pipe-pane's spawned shell is safe.
+                printf -v _escaped_path '%q' "$pipe_path"
+                tmux pipe-pane -o "cat >> ${_escaped_path}"
                 tmux display-message "Piping pane to ${pipe_path}"
             else
                 # Empty path stops piping.

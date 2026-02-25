@@ -176,6 +176,8 @@ while true; do
             IFS= read -r save_path <<< "$save_output"
 
             if [[ -n "$save_path" ]]; then
+                # Expand leading tilde (tmux doesn't expand ~).
+                save_path="${save_path/#\~/$HOME}"
                 tmux save-buffer "$save_path"
                 tmux display-message "Buffer saved to ${save_path}"
             fi
