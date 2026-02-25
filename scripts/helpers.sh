@@ -58,11 +58,13 @@ strip_fzf_opts() {
 }
 
 # Prepend 1-based number prefixes to action labels for hotkey display.
+# fzf --expect only supports single-character keys, so hotkeys cap at 9.
+# Actions 10+ still display but require Enter to select.
 #   $1 — newline-delimited action_id::label string
 # Sets:
 #   REPLY              — numbered actions string (pipe to fzf)
 #   _huck_action_ids   — indexed array of action IDs
-#   _huck_expect_keys  — comma-separated number keys for --expect
+#   _huck_expect_keys  — comma-separated number keys for --expect (max 9)
 _huck_number_actions() {
     _huck_action_ids=()
     local numbered="" n=0
@@ -70,12 +72,16 @@ _huck_number_actions() {
         (( n++ ))
         _huck_action_ids+=("${_line%%::*}")
         [[ -n "$numbered" ]] && numbered+=$'\n'
-        numbered+="${_line%%::*}::${n}  ${_line#*::}"
+        if (( n <= 9 )); then
+            numbered+="${_line%%::*}::${n}  ${_line#*::}"
+        else
+            numbered+="${_line%%::*}::   ${_line#*::}"
+        fi
     done <<< "$1"
     REPLY="$numbered"
     _huck_expect_keys=""
-    local i
-    for (( i=1; i<=n; i++ )); do
+    local i cap=$(( n < 9 ? n : 9 ))
+    for (( i=1; i<=cap; i++ )); do
         [[ -n "$_huck_expect_keys" ]] && _huck_expect_keys+=","
         _huck_expect_keys+="${i}"
     done
