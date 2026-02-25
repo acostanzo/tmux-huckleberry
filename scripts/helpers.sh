@@ -56,3 +56,43 @@ strip_fzf_opts() {
     FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS//--border*([^ ])/}"
     export FZF_DEFAULT_OPTS
 }
+
+# Prepend 1-based number prefixes to action labels for hotkey display.
+#   $1 — newline-delimited action_id::label string
+# Sets:
+#   REPLY              — numbered actions string (pipe to fzf)
+#   _huck_action_ids   — indexed array of action IDs
+#   _huck_expect_keys  — comma-separated number keys for --expect
+_huck_number_actions() {
+    _huck_action_ids=()
+    local numbered="" n=0
+    while IFS= read -r _line; do
+        (( n++ ))
+        _huck_action_ids+=("${_line%%::*}")
+        [[ -n "$numbered" ]] && numbered+=$'\n'
+        numbered+="${_line%%::*}::${n}  ${_line#*::}"
+    done <<< "$1"
+    REPLY="$numbered"
+    _huck_expect_keys=""
+    local i
+    for (( i=1; i<=n; i++ )); do
+        [[ -n "$_huck_expect_keys" ]] && _huck_expect_keys+=","
+        _huck_expect_keys+="${i}"
+    done
+}
+
+# Resolve a number hotkey to an action ID, or fall through to selection.
+#   $1 — action_key from fzf --expect output
+#   $2 — selection line from fzf output
+# Sets:
+#   REPLY              — resolved action ID
+#   _huck_resolved_key — effective key ("" for number hotkeys, original key otherwise)
+_huck_resolve_hotkey() {
+    if [[ "$1" =~ ^[0-9]+$ ]]; then
+        REPLY="${_huck_action_ids[$(($1 - 1))]}"
+        _huck_resolved_key=""
+    else
+        REPLY="${2%%::*}"
+        _huck_resolved_key="$1"
+    fi
+}

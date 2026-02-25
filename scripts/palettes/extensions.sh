@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091  # sourced files are resolved at runtime
+# shellcheck disable=SC1091,SC2154  # sourced files; helper-set vars
 # Extensions sub-palette — two-level drill-down: extension list → action list → execute.
 # Only reachable when @huckleberry-extensions is non-empty (dispatcher guards this).
 
@@ -67,15 +67,23 @@ if [[ -z "$ext_list" ]]; then
     return 0 2>/dev/null || exit 0
 fi
 
+# --- Number extension list for hotkey display ----------------------------------
+
+_huck_number_actions "$ext_list"
+ext_list="$REPLY"
+_ext_expect_keys="$_huck_expect_keys"
+_ext_action_ids=("${_huck_action_ids[@]}")
+
 # --- Outer loop — extension picker ---------------------------------------------
 
 while true; do
-    ext_selection=$(echo "$ext_list" | fzf \
+    fzf_output=$(echo "$ext_list" | fzf \
         --reverse \
         --no-info \
         --no-separator \
         --no-preview \
         --header-first \
+        --expect="$_ext_expect_keys" \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$extensions_prompt" \
@@ -92,8 +100,16 @@ while true; do
         return 0 2>/dev/null || exit 0
     fi
 
-    selected_id="${ext_selection%%::*}"
-    selected_label="${ext_selection#*::}"
+    # --expect outputs two lines: key pressed, then selection.
+    IFS= read -r ext_key <<< "${fzf_output%%$'\n'*}"
+    IFS= read -r ext_selection <<< "${fzf_output#*$'\n'}"
+
+    if [[ "$ext_key" =~ ^[0-9]+$ ]]; then
+        selected_id="${_ext_action_ids[$((ext_key - 1))]}"
+    else
+        selected_id="${ext_selection%%::*}"
+    fi
+    get_tmux_option "@huckleberry-extension-${selected_id}-label" "$selected_id"; selected_label="$REPLY"
 
     # Read actions CSV for this extension
     get_tmux_option "@huckleberry-extension-${selected_id}-actions" ""; actions_csv="$REPLY"
@@ -129,15 +145,20 @@ while true; do
         continue
     fi
 
+    # Number the action list for hotkey display.
+    _huck_number_actions "$action_list"
+    action_list="$REPLY"
+
     # --- Inner loop — action picker for the selected extension -----------------
 
     while true; do
-        action_selection=$(echo "$action_list" | fzf \
+        fzf_output=$(echo "$action_list" | fzf \
             --reverse \
             --no-info \
             --no-separator \
             --no-preview \
             --header-first \
+            --expect="$_huck_expect_keys" \
             --delimiter '::' \
             --with-nth 2 \
             --prompt "$actions_prompt" \
@@ -153,7 +174,12 @@ while true; do
             break
         fi
 
-        action_id="${action_selection%%::*}"
+        # --expect outputs two lines: key pressed, then selection.
+        IFS= read -r action_key <<< "${fzf_output%%$'\n'*}"
+        IFS= read -r action_selection <<< "${fzf_output#*$'\n'}"
+
+        _huck_resolve_hotkey "$action_key" "$action_selection"
+        action_id="$REPLY"
 
         get_tmux_option "@huckleberry-extension-${selected_id}-${action_id}-cmd" ""; cmd="$REPLY"
 

@@ -156,7 +156,7 @@ HUCKLEBERRY_WINDOWS_HEADER="@huckleberry-windows-header"
 HUCKLEBERRY_WINDOWS_HEADER_DEFAULT="  Manage Windows"
 
 HUCKLEBERRY_WINDOWS_FOOTER="@huckleberry-windows-footer"
-HUCKLEBERRY_WINDOWS_FOOTER_DEFAULT="  esc back · tab pick target"
+HUCKLEBERRY_WINDOWS_FOOTER_DEFAULT="  esc back · 1-9 select · tab target"
 
 HUCKLEBERRY_WIN_RENAME="@huckleberry-win-rename"
 HUCKLEBERRY_WIN_RENAME_DEFAULT="Rename window"
@@ -214,7 +214,7 @@ HUCKLEBERRY_PANES_HEADER="@huckleberry-panes-header"
 HUCKLEBERRY_PANES_HEADER_DEFAULT="  Manage Panes"
 
 HUCKLEBERRY_PANES_FOOTER="@huckleberry-panes-footer"
-HUCKLEBERRY_PANES_FOOTER_DEFAULT="  esc back · tab pick target"
+HUCKLEBERRY_PANES_FOOTER_DEFAULT="  esc back · 1-9 select · tab target"
 
 HUCKLEBERRY_PANE_RENAME="@huckleberry-pane-rename"
 HUCKLEBERRY_PANE_RENAME_DEFAULT="Rename pane"
@@ -308,7 +308,7 @@ HUCKLEBERRY_SESSION_MGMT_HEADER="@huckleberry-session-mgmt-header"
 HUCKLEBERRY_SESSION_MGMT_HEADER_DEFAULT="  Manage Sessions"
 
 HUCKLEBERRY_SESSION_MGMT_FOOTER="@huckleberry-session-mgmt-footer"
-HUCKLEBERRY_SESSION_MGMT_FOOTER_DEFAULT="  esc back · tab pick target"
+HUCKLEBERRY_SESSION_MGMT_FOOTER_DEFAULT="  esc back · 1-9 select · tab target"
 
 HUCKLEBERRY_SES_RENAME="@huckleberry-ses-rename"
 HUCKLEBERRY_SES_RENAME_DEFAULT="Rename session"
@@ -357,7 +357,7 @@ HUCKLEBERRY_CONFIG_HEADER="@huckleberry-config-header"
 HUCKLEBERRY_CONFIG_HEADER_DEFAULT="  Configuration"
 
 HUCKLEBERRY_CONFIG_FOOTER="@huckleberry-config-footer"
-HUCKLEBERRY_CONFIG_FOOTER_DEFAULT="  esc back"
+HUCKLEBERRY_CONFIG_FOOTER_DEFAULT="  esc back · 1-9 select"
 
 HUCKLEBERRY_CFG_RELOAD="@huckleberry-cfg-reload"
 HUCKLEBERRY_CFG_RELOAD_DEFAULT="Reload config"
@@ -395,7 +395,7 @@ HUCKLEBERRY_EXTENSIONS_HEADER="@huckleberry-extensions-header"
 HUCKLEBERRY_EXTENSIONS_HEADER_DEFAULT="  Extensions"
 
 HUCKLEBERRY_EXTENSIONS_FOOTER="@huckleberry-extensions-footer"
-HUCKLEBERRY_EXTENSIONS_FOOTER_DEFAULT="  esc back"
+HUCKLEBERRY_EXTENSIONS_FOOTER_DEFAULT="  esc back · 1-9 select"
 
 HUCKLEBERRY_EXTENSIONS_ACTIONS_PROMPT="@huckleberry-extensions-actions-prompt"
 HUCKLEBERRY_EXTENSIONS_ACTIONS_PROMPT_DEFAULT="action > "
@@ -404,4 +404,4 @@ HUCKLEBERRY_EXTENSIONS_ACTIONS_HEADER_PREFIX="@huckleberry-extensions-actions-he
 HUCKLEBERRY_EXTENSIONS_ACTIONS_HEADER_PREFIX_DEFAULT="  "
 
 HUCKLEBERRY_EXTENSIONS_ACTIONS_FOOTER="@huckleberry-extensions-actions-footer"
-HUCKLEBERRY_EXTENSIONS_ACTIONS_FOOTER_DEFAULT="  esc back"
+HUCKLEBERRY_EXTENSIONS_ACTIONS_FOOTER_DEFAULT="  esc back · 1-9 select"

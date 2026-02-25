@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091  # sourced files are resolved at runtime
+# shellcheck disable=SC1091,SC2154  # sourced files; helper-set vars
 # Config sub-palette — reload config and manage TPM plugins via fzf.
 # Uses a while-true loop so Escape in sub-pickers returns to the action list.
 
@@ -55,15 +55,21 @@ if [[ -n "$tpm_path" ]]; then
     actions+=$'\n'"tpm-update::${tpm_update_label}"
 fi
 
+# --- Number actions for hotkey display -----------------------------------------
+
+_huck_number_actions "$actions"
+actions="$REPLY"
+
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
 while true; do
-    selection=$(echo "$actions" | fzf \
+    fzf_output=$(echo "$actions" | fzf \
         --reverse \
         --no-info \
         --no-separator \
         --no-preview \
         --header-first \
+        --expect="$_huck_expect_keys" \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
@@ -80,7 +86,13 @@ while true; do
         return 0 2>/dev/null || exit 0
     fi
 
-    action="${selection%%::*}"
+    # --expect outputs two lines: key pressed (empty for Enter), then the selection.
+    IFS= read -r action_key <<< "${fzf_output%%$'\n'*}"
+    IFS= read -r selection <<< "${fzf_output#*$'\n'}"
+
+    # Resolve number hotkeys to action IDs.
+    _huck_resolve_hotkey "$action_key" "$selection"
+    action="$REPLY"
 
     case "$action" in
         reload)

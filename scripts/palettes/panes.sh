@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091  # sourced files are resolved at runtime
+# shellcheck disable=SC1091,SC2154  # sourced files; helper-set vars
 # Panes sub-palette — pane management actions via fzf.
 # Uses a while-true loop so Escape in sub-pickers returns to the action list.
 
@@ -41,6 +41,11 @@ actions+=$'\n'"break::${break_label}"
 actions+=$'\n'"swap::${swap_label}"
 actions+=$'\n'"kill::${kill_label}"
 
+# --- Number actions for hotkey display -----------------------------------------
+
+_huck_number_actions "$actions"
+actions="$REPLY"
+
 # --- Main loop — sub-pickers return here on Escape ----------------------------
 
 while true; do
@@ -50,7 +55,7 @@ while true; do
         --no-separator \
         --no-preview \
         --header-first \
-        --expect=tab \
+        --expect="tab,${_huck_expect_keys}" \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
@@ -71,8 +76,10 @@ while true; do
     IFS= read -r action_key <<< "${fzf_output%%$'\n'*}"
     IFS= read -r selection <<< "${fzf_output#*$'\n'}"
 
-    # Extract the action ID (everything before the first "::").
-    action="${selection%%::*}"
+    # Resolve number hotkeys to action IDs; pass through Enter/Tab.
+    _huck_resolve_hotkey "$action_key" "$selection"
+    action="$REPLY"
+    action_key="$_huck_resolved_key"
 
     case "$action" in
         rename)
