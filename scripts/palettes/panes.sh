@@ -27,17 +27,29 @@ get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_
 get_tmux_option "$HUCKLEBERRY_PANE_JOIN" "$HUCKLEBERRY_PANE_JOIN_DEFAULT"; join_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_BREAK" "$HUCKLEBERRY_PANE_BREAK_DEFAULT"; break_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SWAP" "$HUCKLEBERRY_PANE_SWAP_DEFAULT"; swap_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_ZOOM" "$HUCKLEBERRY_PANE_ZOOM_DEFAULT"; zoom_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_ROTATE" "$HUCKLEBERRY_PANE_ROTATE_DEFAULT"; rotate_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_DISPLAY_NUMBERS" "$HUCKLEBERRY_PANE_DISPLAY_NUMBERS_DEFAULT"; display_numbers_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_CLEAR_HISTORY" "$HUCKLEBERRY_PANE_CLEAR_HISTORY_DEFAULT"; clear_history_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_COPY_MODE" "$HUCKLEBERRY_PANE_COPY_MODE_DEFAULT"; copy_mode_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_RESPAWN" "$HUCKLEBERRY_PANE_RESPAWN_DEFAULT"; respawn_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_NEW" "$HUCKLEBERRY_PANE_NEW_DEFAULT"; new_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_KILL" "$HUCKLEBERRY_PANE_KILL_DEFAULT"; kill_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
 actions="new::${new_label}"
+actions+=$'\n'"zoom::${zoom_label}"
 actions+=$'\n'"select-layout::${select_layout_label}"
 actions+=$'\n'"swap::${swap_label}"
+actions+=$'\n'"rotate::${rotate_label}"
 actions+=$'\n'"send::${send_label}"
 actions+=$'\n'"join::${join_label}"
 actions+=$'\n'"break::${break_label}"
+actions+=$'\n'"copy-mode::${copy_mode_label}"
+actions+=$'\n'"clear-history::${clear_history_label}"
+actions+=$'\n'"display-numbers::${display_numbers_label}"
+actions+=$'\n'"respawn::${respawn_label}"
 actions+=$'\n'"rename::${rename_label}"
 actions+=$'\n'"kill::${kill_label}"
 
@@ -185,6 +197,30 @@ while true; do
             ;;
         new)
             tmux split-window
+            exit 0
+            ;;
+        zoom)
+            tmux resize-pane -Z
+            exit 0
+            ;;
+        rotate)
+            tmux rotate-window
+            exit 0
+            ;;
+        display-numbers)
+            tmux display-panes
+            exit 0
+            ;;
+        clear-history)
+            tmux clear-history
+            exit 0
+            ;;
+        copy-mode)
+            tmux copy-mode
+            exit 0
+            ;;
+        respawn)
+            tmux respawn-pane -k
             exit 0
             ;;
         send)

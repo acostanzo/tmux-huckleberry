@@ -285,6 +285,24 @@ HUCKLEBERRY_PANE_SWAP_PROMPT_DEFAULT="pane > "
 HUCKLEBERRY_PANE_SWAP_HEADER="@huckleberry-pane-swap-header"
 HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT="  Swap Pane"
 
+HUCKLEBERRY_PANE_ZOOM="@huckleberry-pane-zoom"
+HUCKLEBERRY_PANE_ZOOM_DEFAULT="Toggle zoom"
+
+HUCKLEBERRY_PANE_ROTATE="@huckleberry-pane-rotate"
+HUCKLEBERRY_PANE_ROTATE_DEFAULT="Rotate panes"
+
+HUCKLEBERRY_PANE_DISPLAY_NUMBERS="@huckleberry-pane-display-numbers"
+HUCKLEBERRY_PANE_DISPLAY_NUMBERS_DEFAULT="Display pane numbers"
+
+HUCKLEBERRY_PANE_CLEAR_HISTORY="@huckleberry-pane-clear-history"
+HUCKLEBERRY_PANE_CLEAR_HISTORY_DEFAULT="Clear scrollback"
+
+HUCKLEBERRY_PANE_COPY_MODE="@huckleberry-pane-copy-mode"
+HUCKLEBERRY_PANE_COPY_MODE_DEFAULT="Enter copy mode"
+
+HUCKLEBERRY_PANE_RESPAWN="@huckleberry-pane-respawn"
+HUCKLEBERRY_PANE_RESPAWN_DEFAULT="Respawn pane"
+
 HUCKLEBERRY_PANE_NEW="@huckleberry-pane-new"
 HUCKLEBERRY_PANE_NEW_DEFAULT="New pane"
 
