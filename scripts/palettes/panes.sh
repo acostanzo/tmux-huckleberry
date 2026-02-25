@@ -27,6 +27,7 @@ get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_
 get_tmux_option "$HUCKLEBERRY_PANE_JOIN" "$HUCKLEBERRY_PANE_JOIN_DEFAULT"; join_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_BREAK" "$HUCKLEBERRY_PANE_BREAK_DEFAULT"; break_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SWAP" "$HUCKLEBERRY_PANE_SWAP_DEFAULT"; swap_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_RESIZE" "$HUCKLEBERRY_PANE_RESIZE_DEFAULT"; resize_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_ZOOM" "$HUCKLEBERRY_PANE_ZOOM_DEFAULT"; zoom_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_ROTATE" "$HUCKLEBERRY_PANE_ROTATE_DEFAULT"; rotate_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_DISPLAY_NUMBERS" "$HUCKLEBERRY_PANE_DISPLAY_NUMBERS_DEFAULT"; display_numbers_label="$REPLY"
@@ -40,6 +41,7 @@ get_tmux_option "$HUCKLEBERRY_PANE_KILL" "$HUCKLEBERRY_PANE_KILL_DEFAULT"; kill_
 
 actions="new::${new_label}"
 actions+=$'\n'"zoom::${zoom_label}"
+actions+=$'\n'"resize::${resize_label}"
 actions+=$'\n'"select-layout::${select_layout_label}"
 actions+=$'\n'"swap::${swap_label}"
 actions+=$'\n'"rotate::${rotate_label}"
@@ -201,6 +203,46 @@ while true; do
             ;;
         zoom)
             tmux resize-pane -Z
+            exit 0
+            ;;
+        resize)
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_PROMPT" "$HUCKLEBERRY_PANE_RESIZE_PROMPT_DEFAULT"; resize_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_HEADER" "$HUCKLEBERRY_PANE_RESIZE_HEADER_DEFAULT"; resize_header="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_STEP" "$HUCKLEBERRY_PANE_RESIZE_STEP_DEFAULT"; resize_step="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_UP" "$HUCKLEBERRY_PANE_RESIZE_UP_DEFAULT"; resize_up_label="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_DOWN" "$HUCKLEBERRY_PANE_RESIZE_DOWN_DEFAULT"; resize_down_label="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_LEFT" "$HUCKLEBERRY_PANE_RESIZE_LEFT_DEFAULT"; resize_left_label="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_RIGHT" "$HUCKLEBERRY_PANE_RESIZE_RIGHT_DEFAULT"; resize_right_label="$REPLY"
+
+            directions="up::${resize_up_label}"
+            directions+=$'\n'"down::${resize_down_label}"
+            directions+=$'\n'"left::${resize_left_label}"
+            directions+=$'\n'"right::${resize_right_label}"
+
+            dir_selection=$(echo "$directions" | fzf \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --delimiter '::' \
+                --with-nth 2 \
+                --prompt "$resize_prompt" \
+                --header "$resize_header")
+
+            dir_exit=$?
+
+            if [[ $dir_exit -ne 0 ]]; then
+                continue
+            fi
+
+            direction="${dir_selection%%::*}"
+            case "$direction" in
+                up)    tmux resize-pane -U "$resize_step" ;;
+                down)  tmux resize-pane -D "$resize_step" ;;
+                left)  tmux resize-pane -L "$resize_step" ;;
+                right) tmux resize-pane -R "$resize_step" ;;
+            esac
             exit 0
             ;;
         rotate)
