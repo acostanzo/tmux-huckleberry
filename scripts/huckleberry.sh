@@ -36,6 +36,10 @@ get_tmux_option "$HUCKLEBERRY_CAT_SESSION_MGMT_KEY" "$HUCKLEBERRY_CAT_SESSION_MG
 get_tmux_option "$HUCKLEBERRY_CAT_SESSION_MGMT_LABEL" "$HUCKLEBERRY_CAT_SESSION_MGMT_LABEL_DEFAULT"; session_mgmt_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_SESSION_MGMT_DESC" "$HUCKLEBERRY_CAT_SESSION_MGMT_DESC_DEFAULT"; session_mgmt_desc="$REPLY"
 
+get_tmux_option "$HUCKLEBERRY_CAT_TOGGLES_KEY" "$HUCKLEBERRY_CAT_TOGGLES_KEY_DEFAULT"; toggles_key="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CAT_TOGGLES_LABEL" "$HUCKLEBERRY_CAT_TOGGLES_LABEL_DEFAULT"; toggles_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CAT_TOGGLES_DESC" "$HUCKLEBERRY_CAT_TOGGLES_DESC_DEFAULT"; toggles_desc="$REPLY"
+
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_KEY" "$HUCKLEBERRY_CAT_CONFIG_KEY_DEFAULT"; config_key="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_LABEL" "$HUCKLEBERRY_CAT_CONFIG_LABEL_DEFAULT"; config_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_CONFIG_DESC" "$HUCKLEBERRY_CAT_CONFIG_DESC_DEFAULT"; config_desc="$REPLY"
@@ -49,7 +53,7 @@ get_tmux_option "$HUCKLEBERRY_EXTENSIONS" ""; extensions_list="$REPLY"
 
 _huck_seen_keys=" "
 _huck_dup=0
-_huck_dup_keys=("$sessions_key" "$session_mgmt_key" "$windows_key" "$panes_key" "$config_key")
+_huck_dup_keys=("$sessions_key" "$session_mgmt_key" "$windows_key" "$panes_key" "$toggles_key" "$config_key")
 [[ -n "$extensions_list" ]] && _huck_dup_keys+=("$extensions_key")
 for _k in "${_huck_dup_keys[@]}"; do
     if [[ "$_huck_seen_keys" == *" ${_k} "* ]]; then
@@ -68,6 +72,7 @@ if [[ "$sessions_key" == "space" ]]; then sessions_display="$space_display"; els
 if [[ "$session_mgmt_key" == "space" ]]; then session_mgmt_display="$space_display"; else session_mgmt_display="$session_mgmt_key"; fi
 if [[ "$windows_key" == "space" ]]; then windows_display="$space_display"; else windows_display="$windows_key"; fi
 if [[ "$panes_key" == "space" ]]; then panes_display="$space_display"; else panes_display="$panes_key"; fi
+if [[ "$toggles_key" == "space" ]]; then toggles_display="$space_display"; else toggles_display="$toggles_key"; fi
 if [[ "$config_key" == "space" ]]; then config_display="$space_display"; else config_display="$config_key"; fi
 if [[ "$extensions_key" == "space" ]]; then extensions_display="$space_display"; else extensions_display="$extensions_key"; fi
 
@@ -75,17 +80,18 @@ if [[ "$extensions_key" == "space" ]]; then extensions_display="$space_display";
 
 # Compute the max label width so the description column aligns for any labels.
 max_label=${#sessions_label}
-_label_list=("$session_mgmt_label" "$windows_label" "$panes_label" "$config_label")
+_label_list=("$session_mgmt_label" "$windows_label" "$panes_label" "$toggles_label" "$config_label")
 [[ -n "$extensions_list" ]] && _label_list+=("$extensions_label")
 for _l in "${_label_list[@]}"; do
     (( ${#_l} > max_label )) && max_label=${#_l}
 done
 
-printf -v menu '%s\n%s\n%s\n%s\n%s' \
+printf -v menu '%s\n%s\n%s\n%s\n%s\n%s' \
     "$(printf '  %s  %-*s   %s' "$sessions_display" "$max_label" "$sessions_label" "$sessions_desc")" \
     "$(printf '  %s  %-*s   %s' "$session_mgmt_display" "$max_label" "$session_mgmt_label" "$session_mgmt_desc")" \
     "$(printf '  %s  %-*s   %s' "$windows_display" "$max_label" "$windows_label" "$windows_desc")" \
     "$(printf '  %s  %-*s   %s' "$panes_display" "$max_label" "$panes_label" "$panes_desc")" \
+    "$(printf '  %s  %-*s   %s' "$toggles_display" "$max_label" "$toggles_label" "$toggles_desc")" \
     "$(printf '  %s  %-*s   %s' "$config_display" "$max_label" "$config_label" "$config_desc")"
 
 if [[ -n "$extensions_list" ]]; then
@@ -109,7 +115,7 @@ footer_border_args=(--footer-border)
 _dispatcher_dir="$CURRENT_DIR"
 
 while true; do
-    _expect="${sessions_key},${session_mgmt_key},${windows_key},${panes_key},${config_key}"
+    _expect="${sessions_key},${session_mgmt_key},${windows_key},${panes_key},${toggles_key},${config_key}"
     [[ -n "$extensions_list" ]] && _expect+=",${extensions_key}"
 
     fzf_output=$(echo "$menu" | fzf \
@@ -153,6 +159,8 @@ while true; do
         palette="windows"
     elif [[ "$key" == "$panes_key" ]]; then
         palette="panes"
+    elif [[ "$key" == "$toggles_key" ]]; then
+        palette="toggles"
     elif [[ "$key" == "$config_key" ]]; then
         palette="config"
     elif [[ -n "$extensions_list" && "$key" == "$extensions_key" ]]; then
@@ -167,6 +175,8 @@ while true; do
             palette="windows"
         elif [[ "$selection" == *"$panes_label"* ]]; then
             palette="panes"
+        elif [[ "$selection" == *"$toggles_label"* ]]; then
+            palette="toggles"
         elif [[ "$selection" == *"$config_label"* ]]; then
             palette="config"
         elif [[ -n "$extensions_list" && "$selection" == *"$extensions_label"* ]]; then

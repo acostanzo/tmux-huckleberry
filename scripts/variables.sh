@@ -135,6 +135,16 @@ HUCKLEBERRY_CAT_SESSION_MGMT_LABEL_DEFAULT="Sessions"
 HUCKLEBERRY_CAT_SESSION_MGMT_DESC="@huckleberry-cat-session-mgmt-desc"
 HUCKLEBERRY_CAT_SESSION_MGMT_DESC_DEFAULT="Rename, kill, create sessions"
 
+# Category: Toggles
+HUCKLEBERRY_CAT_TOGGLES_KEY="@huckleberry-cat-toggles-key"
+HUCKLEBERRY_CAT_TOGGLES_KEY_DEFAULT="t"
+
+HUCKLEBERRY_CAT_TOGGLES_LABEL="@huckleberry-cat-toggles-label"
+HUCKLEBERRY_CAT_TOGGLES_LABEL_DEFAULT="Toggles"
+
+HUCKLEBERRY_CAT_TOGGLES_DESC="@huckleberry-cat-toggles-desc"
+HUCKLEBERRY_CAT_TOGGLES_DESC_DEFAULT="Toggle tmux options on/off"
+
 # Category: Config
 HUCKLEBERRY_CAT_CONFIG_KEY="@huckleberry-cat-config-key"
 HUCKLEBERRY_CAT_CONFIG_KEY_DEFAULT="c"
@@ -387,6 +397,40 @@ HUCKLEBERRY_SES_NEW_HEADER_DEFAULT="  Create Session"
 
 HUCKLEBERRY_SES_DETACH="@huckleberry-ses-detach"
 HUCKLEBERRY_SES_DETACH_DEFAULT="Detach other clients"
+
+# ---------------------------------------------------------------------------
+# Toggles sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_TOGGLES_PROMPT="@huckleberry-toggles-prompt"
+HUCKLEBERRY_TOGGLES_PROMPT_DEFAULT="toggle > "
+
+HUCKLEBERRY_TOGGLES_HEADER="@huckleberry-toggles-header"
+HUCKLEBERRY_TOGGLES_HEADER_DEFAULT="  Toggle Options"
+
+HUCKLEBERRY_TOGGLES_FOOTER="@huckleberry-toggles-footer"
+HUCKLEBERRY_TOGGLES_FOOTER_DEFAULT="  esc back · 1-9 select"
+
+HUCKLEBERRY_TOGGLE_ON_INDICATOR="@huckleberry-toggle-on-indicator"
+HUCKLEBERRY_TOGGLE_ON_INDICATOR_DEFAULT="[on]"
+
+HUCKLEBERRY_TOGGLE_OFF_INDICATOR="@huckleberry-toggle-off-indicator"
+HUCKLEBERRY_TOGGLE_OFF_INDICATOR_DEFAULT="[off]"
+
+HUCKLEBERRY_TOGGLE_SYNC_PANES="@huckleberry-toggle-sync-panes"
+HUCKLEBERRY_TOGGLE_SYNC_PANES_DEFAULT="Synchronized panes"
+
+HUCKLEBERRY_TOGGLE_MOUSE="@huckleberry-toggle-mouse"
+HUCKLEBERRY_TOGGLE_MOUSE_DEFAULT="Mouse mode"
+
+HUCKLEBERRY_TOGGLE_STATUS="@huckleberry-toggle-status"
+HUCKLEBERRY_TOGGLE_STATUS_DEFAULT="Status bar"
+
+HUCKLEBERRY_TOGGLE_PANE_BORDER="@huckleberry-toggle-pane-border"
+HUCKLEBERRY_TOGGLE_PANE_BORDER_DEFAULT="Pane border status"
+
+HUCKLEBERRY_TOGGLE_MONITOR_ACTIVITY="@huckleberry-toggle-monitor-activity"
+HUCKLEBERRY_TOGGLE_MONITOR_ACTIVITY_DEFAULT="Monitor activity"
 
 # ---------------------------------------------------------------------------
 # Config sub-palette
