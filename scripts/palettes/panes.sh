@@ -35,6 +35,7 @@ get_tmux_option "$HUCKLEBERRY_PANE_CLEAR_HISTORY" "$HUCKLEBERRY_PANE_CLEAR_HISTO
 get_tmux_option "$HUCKLEBERRY_PANE_COPY_MODE" "$HUCKLEBERRY_PANE_COPY_MODE_DEFAULT"; copy_mode_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_RESPAWN" "$HUCKLEBERRY_PANE_RESPAWN_DEFAULT"; respawn_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_MARK" "$HUCKLEBERRY_PANE_MARK_DEFAULT"; mark_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_PIPE" "$HUCKLEBERRY_PANE_PIPE_DEFAULT"; pipe_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_NEW" "$HUCKLEBERRY_PANE_NEW_DEFAULT"; new_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_KILL" "$HUCKLEBERRY_PANE_KILL_DEFAULT"; kill_label="$REPLY"
 
@@ -53,6 +54,7 @@ actions+=$'\n'"copy-mode::${copy_mode_label}"
 actions+=$'\n'"clear-history::${clear_history_label}"
 actions+=$'\n'"display-numbers::${display_numbers_label}"
 actions+=$'\n'"mark::${mark_label}"
+actions+=$'\n'"pipe::${pipe_label}"
 actions+=$'\n'"respawn::${respawn_label}"
 actions+=$'\n'"rename::${rename_label}"
 actions+=$'\n'"kill::${kill_label}"
@@ -273,6 +275,38 @@ while true; do
                 tmux select-pane -M
             else
                 tmux select-pane -m
+            fi
+            exit 0
+            ;;
+        pipe)
+            get_tmux_option "$HUCKLEBERRY_PANE_PIPE_PROMPT" "$HUCKLEBERRY_PANE_PIPE_PROMPT_DEFAULT"; pipe_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_PIPE_HEADER" "$HUCKLEBERRY_PANE_PIPE_HEADER_DEFAULT"; pipe_header="$REPLY"
+
+            pipe_output=$(: | fzf \
+                --print-query \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --prompt "$pipe_prompt" \
+                --header "$pipe_header")
+
+            pipe_exit=$?
+
+            if [[ $pipe_exit -eq 130 ]]; then
+                continue
+            fi
+
+            IFS= read -r pipe_path <<< "$pipe_output"
+
+            if [[ -n "$pipe_path" ]]; then
+                tmux pipe-pane -o "cat >> '${pipe_path//\'/\'\\\'\'}'"
+                tmux display-message "Piping pane to ${pipe_path}"
+            else
+                # Empty path stops piping.
+                tmux pipe-pane
+                tmux display-message "Pane piping stopped"
             fi
             exit 0
             ;;

@@ -224,6 +224,27 @@ HUCKLEBERRY_WIN_RENAME_PICK_HEADER_DEFAULT="  Rename Window"
 HUCKLEBERRY_WIN_MOVE_RIGHT="@huckleberry-win-move-right"
 HUCKLEBERRY_WIN_MOVE_RIGHT_DEFAULT="Move window right"
 
+HUCKLEBERRY_WIN_LINK="@huckleberry-win-link"
+HUCKLEBERRY_WIN_LINK_DEFAULT="Link window from session"
+
+HUCKLEBERRY_WIN_LINK_SESSION_PROMPT="@huckleberry-win-link-session-prompt"
+HUCKLEBERRY_WIN_LINK_SESSION_PROMPT_DEFAULT="session > "
+
+HUCKLEBERRY_WIN_LINK_SESSION_HEADER="@huckleberry-win-link-session-header"
+HUCKLEBERRY_WIN_LINK_SESSION_HEADER_DEFAULT="  Link Window — Pick Session"
+
+HUCKLEBERRY_WIN_LINK_WINDOW_PROMPT="@huckleberry-win-link-window-prompt"
+HUCKLEBERRY_WIN_LINK_WINDOW_PROMPT_DEFAULT="window > "
+
+HUCKLEBERRY_WIN_LINK_WINDOW_HEADER="@huckleberry-win-link-window-header"
+HUCKLEBERRY_WIN_LINK_WINDOW_HEADER_DEFAULT="  Link Window — Pick Window"
+
+HUCKLEBERRY_WIN_UNLINK="@huckleberry-win-unlink"
+HUCKLEBERRY_WIN_UNLINK_DEFAULT="Unlink window"
+
+HUCKLEBERRY_WIN_RESPAWN="@huckleberry-win-respawn"
+HUCKLEBERRY_WIN_RESPAWN_DEFAULT="Respawn window"
+
 HUCKLEBERRY_WIN_NEW="@huckleberry-win-new"
 HUCKLEBERRY_WIN_NEW_DEFAULT="New window"
 
@@ -359,6 +380,15 @@ HUCKLEBERRY_PANE_RESPAWN_DEFAULT="Respawn pane"
 
 HUCKLEBERRY_PANE_MARK="@huckleberry-pane-mark"
 HUCKLEBERRY_PANE_MARK_DEFAULT="Toggle mark"
+
+HUCKLEBERRY_PANE_PIPE="@huckleberry-pane-pipe"
+HUCKLEBERRY_PANE_PIPE_DEFAULT="Pipe pane to file"
+
+HUCKLEBERRY_PANE_PIPE_PROMPT="@huckleberry-pane-pipe-prompt"
+HUCKLEBERRY_PANE_PIPE_PROMPT_DEFAULT="path > "
+
+HUCKLEBERRY_PANE_PIPE_HEADER="@huckleberry-pane-pipe-header"
+HUCKLEBERRY_PANE_PIPE_HEADER_DEFAULT="  Pipe Pane to File (empty to stop)"
 
 HUCKLEBERRY_PANE_NEW="@huckleberry-pane-new"
 HUCKLEBERRY_PANE_NEW_DEFAULT="New pane"
@@ -547,6 +577,18 @@ HUCKLEBERRY_CFG_TPM_INSTALL_DEFAULT="TPM install plugins"
 
 HUCKLEBERRY_CFG_TPM_UPDATE="@huckleberry-cfg-tpm-update"
 HUCKLEBERRY_CFG_TPM_UPDATE_DEFAULT="TPM update plugins"
+
+HUCKLEBERRY_CFG_BROWSE_KEYS="@huckleberry-cfg-browse-keys"
+HUCKLEBERRY_CFG_BROWSE_KEYS_DEFAULT="Browse key bindings"
+
+HUCKLEBERRY_CFG_BROWSE_KEYS_PROMPT="@huckleberry-cfg-browse-keys-prompt"
+HUCKLEBERRY_CFG_BROWSE_KEYS_PROMPT_DEFAULT="key > "
+
+HUCKLEBERRY_CFG_BROWSE_KEYS_HEADER="@huckleberry-cfg-browse-keys-header"
+HUCKLEBERRY_CFG_BROWSE_KEYS_HEADER_DEFAULT="  Key Bindings (read-only)"
+
+HUCKLEBERRY_CFG_COMMAND_PROMPT="@huckleberry-cfg-command-prompt"
+HUCKLEBERRY_CFG_COMMAND_PROMPT_DEFAULT="Command prompt"
 
 # ---------------------------------------------------------------------------
 # Category: Extensions (conditional — only shown when @huckleberry-extensions is set)

@@ -27,6 +27,9 @@ get_tmux_option "$HUCKLEBERRY_WIN_SPLIT_H" "$HUCKLEBERRY_WIN_SPLIT_H_DEFAULT"; s
 get_tmux_option "$HUCKLEBERRY_WIN_SPLIT_V" "$HUCKLEBERRY_WIN_SPLIT_V_DEFAULT"; split_v_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_WIN_MOVE_LEFT" "$HUCKLEBERRY_WIN_MOVE_LEFT_DEFAULT"; move_left_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_WIN_MOVE_RIGHT" "$HUCKLEBERRY_WIN_MOVE_RIGHT_DEFAULT"; move_right_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_WIN_LINK" "$HUCKLEBERRY_WIN_LINK_DEFAULT"; link_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_WIN_UNLINK" "$HUCKLEBERRY_WIN_UNLINK_DEFAULT"; unlink_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_WIN_RESPAWN" "$HUCKLEBERRY_WIN_RESPAWN_DEFAULT"; respawn_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_WIN_NEW" "$HUCKLEBERRY_WIN_NEW_DEFAULT"; new_label="$REPLY"
 
 # action_id::label — fzf shows only the label, but returns the full string.
@@ -36,6 +39,9 @@ actions+=$'\n'"split-h::${split_h_label}"
 actions+=$'\n'"split-v::${split_v_label}"
 actions+=$'\n'"move-left::${move_left_label}"
 actions+=$'\n'"move-right::${move_right_label}"
+actions+=$'\n'"link::${link_label}"
+actions+=$'\n'"unlink::${unlink_label}"
+actions+=$'\n'"respawn::${respawn_label}"
 actions+=$'\n'"kill::${kill_label}"
 
 # --- Number actions for hotkey display -----------------------------------------
@@ -221,6 +227,69 @@ while true; do
             ;;
         move-right)
             tmux swap-window -t +1 \; select-window -t +1
+            exit 0
+            ;;
+        link)
+            get_tmux_option "$HUCKLEBERRY_WIN_LINK_SESSION_PROMPT" "$HUCKLEBERRY_WIN_LINK_SESSION_PROMPT_DEFAULT"; link_ses_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_WIN_LINK_SESSION_HEADER" "$HUCKLEBERRY_WIN_LINK_SESSION_HEADER_DEFAULT"; link_ses_header="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_WIN_LINK_WINDOW_PROMPT" "$HUCKLEBERRY_WIN_LINK_WINDOW_PROMPT_DEFAULT"; link_win_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_WIN_LINK_WINDOW_HEADER" "$HUCKLEBERRY_WIN_LINK_WINDOW_HEADER_DEFAULT"; link_win_header="$REPLY"
+
+            current_session=$(tmux display-message -p '#{session_name}')
+            session_list=$(tmux list-sessions -F '#{session_name}' \
+                | while IFS= read -r name; do
+                    if [[ "$name" != "$current_session" ]]; then
+                        echo "$name"
+                    fi
+                done)
+
+            if [[ -z "$session_list" ]]; then
+                tmux display-message "No other sessions"
+                continue
+            fi
+
+            if ! ses_selection=$(echo "$session_list" | fzf \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --prompt "$link_ses_prompt" \
+                --header "$link_ses_header"); then
+                continue
+            fi
+
+            window_list=$(tmux list-windows -t "=$ses_selection" \
+                -F '#{window_index}::#{window_index}: #{window_name}')
+
+            if [[ -z "$window_list" ]]; then
+                tmux display-message "No windows in session"
+                continue
+            fi
+
+            if ! win_selection=$(echo "$window_list" | fzf \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --delimiter '::' \
+                --with-nth 2 \
+                --prompt "$link_win_prompt" \
+                --header "$link_win_header"); then
+                continue
+            fi
+
+            win_index="${win_selection%%::*}"
+            tmux link-window -s "=${ses_selection}:=${win_index}"
+            exit 0
+            ;;
+        unlink)
+            tmux unlink-window
+            exit 0
+            ;;
+        respawn)
+            tmux respawn-window -k
             exit 0
             ;;
     esac
