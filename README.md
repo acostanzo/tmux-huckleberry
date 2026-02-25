@@ -26,15 +26,18 @@ Press **`prefix + Space`** to draw the command palette.
 
 ### Top-level menu
 
-Five categories, one keypress away. Hit the hotkey to jump straight there, or type to fuzzy-search and press Enter.
+Nine categories, one keypress away. Hit the hotkey to jump straight there, or type to fuzzy-search and press Enter.
 
 | Key | Category | Description |
 |---|---|---|
 | `Space` | Find Session | Find, switch, create sessions |
-| `s` | Sessions | Rename, kill, create sessions |
-| `w` | Windows | Rename, kill, split, move windows |
-| `p` | Panes | Rename, layout, swap, move panes |
-| `c` | Config | Reload config, TPM install/update |
+| `s` | Sessions | Rename, kill, create, manage clients |
+| `w` | Windows | Rename, kill, split, move, link windows |
+| `p` | Panes | Zoom, resize, layout, swap, pipe, mark panes |
+| `f` | Find Window | Search windows across all sessions |
+| `b` | Buffers | Paste, capture, manage buffers |
+| `t` | Toggles | Toggle tmux options on/off |
+| `c` | Config | Reload config, browse keys, TPM |
 | `x` | Extensions | Run extension commands *(only shown when configured)* |
 
 ### Find Session palette
@@ -50,33 +53,77 @@ The fastest way to get where you're going. Type to narrow down your sessions, pi
 
 ### Sessions palette
 
-Housekeeping for your sessions — rename, kill, create, or detach stale clients. Press **Tab** on rename or kill to pick a different target instead of the current session.
+Housekeeping for your sessions — rename, kill, create, or manage attached clients. Press **Tab** on rename or kill to pick a different target instead of the current session.
 
-- **Rename session** — Enter renames the current session; Tab opens a session picker first
-- **Kill session** — Enter kills the current session; Tab opens a session picker first
 - **New session** — type a name to create and switch to a new session
+- **Rename session** — Enter renames the current session; Tab opens a session picker first
+- **List clients** — browse all attached clients (read-only)
+- **Detach client** — pick a specific client to detach
 - **Detach other clients** — detach all other clients from the current session
+- **Kill session** — Enter kills the current session; Tab opens a session picker first
 
 ### Windows palette
 
 Wrangle your windows without leaving the saddle. Press **Tab** on rename or kill to pick a different target instead of the current window.
 
+- **New window** — create a new window (optionally named)
 - **Rename window** — Enter renames the current window; Tab opens a window picker first
-- **Kill window** — Enter kills the current window; Tab opens a window picker first
 - **Split horizontal / vertical** — split the current pane
 - **Move window left / right** — swap window position
+- **Link window from session** — pick a session and window to link into the current session
+- **Unlink window** — unlink the current window
+- **Respawn window** — restart a dead/stuck window
+- **Kill window** — Enter kills the current window; Tab opens a window picker first
 
 ### Panes palette
 
 Rearrange the furniture. Layouts, swaps, moves, and the occasional eviction. Press **Tab** on rename or kill to pick a different target instead of the current pane.
 
-- **Rename pane** — Enter renames the current pane; Tab opens a pane picker first
+- **New pane** — split the current window
+- **Toggle zoom** — zoom/unzoom the current pane
+- **Resize pane** — pick a direction (up/down/left/right) to resize by a configurable step
 - **Select layout** — pick from 5 preset pane layouts
+- **Swap pane** — swap current pane with another in the same window
+- **Rotate panes** — cycle pane positions within the window
 - **Send pane to window** — move current pane to another window
 - **Join pane from window** — pull a pane from another window into this one
 - **Break pane to window** — promote current pane to its own window
-- **Swap pane** — swap current pane with another in the same window
+- **Enter copy mode** — enter copy mode in the current pane
+- **Clear scrollback** — clear the current pane's scrollback buffer
+- **Display pane numbers** — briefly show pane indices
+- **Toggle mark** — mark/unmark the current pane (for swap/join operations)
+- **Pipe pane to file** — start piping pane output to a file (empty path stops piping)
+- **Respawn pane** — restart a dead/stuck pane
+- **Rename pane** — Enter renames the current pane; Tab opens a pane picker first
 - **Kill pane** — Enter kills the current pane; Tab opens a pane picker first
+
+### Find Window palette
+
+Search across your entire tmux estate. All windows from all sessions in one fuzzy-searchable list with a pane preview.
+
+- **Type to filter** windows by session name, window name, or running command
+- **Select a window** to switch directly to it
+- Preview shows the pane list for the highlighted window
+
+### Buffers palette
+
+Clipboard and buffer management — paste, capture, browse, and save.
+
+- **Paste buffer** — paste the most recent buffer
+- **Choose buffer** — browse all buffers with a content preview, then paste the selected one
+- **Capture pane to buffer** — capture the current pane's visible content
+- **Delete buffer** — pick a buffer to delete
+- **Save buffer to file** — type a file path to save the current buffer
+
+### Toggles palette
+
+Flip common tmux options on and off. The action list shows live `[on]`/`[off]` state indicators that update after each toggle.
+
+- **Synchronized panes** — type to all panes simultaneously
+- **Mouse mode** — enable/disable mouse support
+- **Status bar** — show/hide the status bar
+- **Pane border status** — show/hide pane border labels
+- **Monitor activity** — enable/disable activity monitoring
 
 ### Config palette
 
@@ -85,6 +132,8 @@ Keep your setup in order without dropping to the command line.
 - **Reload config** — re-sources your tmux.conf
 - **TPM install plugins** — runs TPM install
 - **TPM update plugins** — runs TPM update
+- **Browse key bindings** — searchable read-only viewer of all tmux key bindings
+- **Command prompt** — open the tmux command prompt
 
 ### Extensions palette
 
@@ -159,6 +208,15 @@ All options are set with `set -g` in your `~/.tmux.conf`. Every label, prompt, a
 | `@huckleberry-cat-panes-key` | `p` | Hotkey for Panes category |
 | `@huckleberry-cat-panes-label` | `Panes` | Display label for Panes |
 | `@huckleberry-cat-panes-desc` | `Rename, layout, swap, move panes` | Description for Panes |
+| `@huckleberry-cat-find-window-key` | `f` | Hotkey for Find Window category |
+| `@huckleberry-cat-find-window-label` | `Find Window` | Display label for Find Window |
+| `@huckleberry-cat-find-window-desc` | `Search windows across all sessions` | Description for Find Window |
+| `@huckleberry-cat-buffers-key` | `b` | Hotkey for Buffers category |
+| `@huckleberry-cat-buffers-label` | `Buffers` | Display label for Buffers |
+| `@huckleberry-cat-buffers-desc` | `Paste, capture, manage buffers` | Description for Buffers |
+| `@huckleberry-cat-toggles-key` | `t` | Hotkey for Toggles category |
+| `@huckleberry-cat-toggles-label` | `Toggles` | Display label for Toggles |
+| `@huckleberry-cat-toggles-desc` | `Toggle tmux options on/off` | Description for Toggles |
 | `@huckleberry-cat-config-key` | `c` | Hotkey for Config category |
 | `@huckleberry-cat-config-label` | `Config` | Display label for Config |
 | `@huckleberry-cat-config-desc` | `Reload config, TPM install/update` | Description for Config |
@@ -208,7 +266,13 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | `@huckleberry-ses-new` | `New session` | Label for new session action |
 | `@huckleberry-ses-new-prompt` | `name > ` | fzf prompt for new session input |
 | `@huckleberry-ses-new-header` | `  Create Session` | fzf header for new session input |
-| `@huckleberry-ses-detach` | `Detach other clients` | Label for detach action |
+| `@huckleberry-ses-list-clients` | `List clients` | Label for list clients action |
+| `@huckleberry-ses-list-clients-prompt` | `client > ` | fzf prompt for client browser |
+| `@huckleberry-ses-list-clients-header` | `  Attached Clients (read-only)` | fzf header for client browser |
+| `@huckleberry-ses-detach-client` | `Detach client` | Label for detach client action |
+| `@huckleberry-ses-detach-client-prompt` | `client > ` | fzf prompt for client picker |
+| `@huckleberry-ses-detach-client-header` | `  Detach Client` | fzf header for client picker |
+| `@huckleberry-ses-detach` | `Detach other clients` | Label for detach all action |
 
 ### Windows palette
 
@@ -229,6 +293,13 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | `@huckleberry-win-split-v` | `Split vertical` | Label for vertical split |
 | `@huckleberry-win-move-left` | `Move window left` | Label for move left |
 | `@huckleberry-win-move-right` | `Move window right` | Label for move right |
+| `@huckleberry-win-link` | `Link window from session` | Label for link window action |
+| `@huckleberry-win-link-session-prompt` | `session > ` | fzf prompt for session picker (link) |
+| `@huckleberry-win-link-session-header` | `  Link Window — Pick Session` | fzf header for session picker (link) |
+| `@huckleberry-win-link-window-prompt` | `window > ` | fzf prompt for window picker (link) |
+| `@huckleberry-win-link-window-header` | `  Link Window — Pick Window` | fzf header for window picker (link) |
+| `@huckleberry-win-unlink` | `Unlink window` | Label for unlink window action |
+| `@huckleberry-win-respawn` | `Respawn window` | Label for respawn window action |
 
 ### Panes palette
 
@@ -242,6 +313,24 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | `@huckleberry-pane-rename-header` | `  Rename Pane` | fzf header for rename input |
 | `@huckleberry-pane-rename-pick-prompt` | `pane > ` | fzf prompt for Tab pane picker (rename) |
 | `@huckleberry-pane-rename-pick-header` | `  Rename Pane` | fzf header for Tab pane picker (rename) |
+| `@huckleberry-pane-zoom` | `Toggle zoom` | Label for zoom action |
+| `@huckleberry-pane-resize` | `Resize pane` | Label for resize action |
+| `@huckleberry-pane-resize-prompt` | `direction > ` | fzf prompt for direction picker |
+| `@huckleberry-pane-resize-header` | `  Resize Pane` | fzf header for direction picker |
+| `@huckleberry-pane-resize-step` | `5` | Number of cells per resize |
+| `@huckleberry-pane-resize-up` | `Grow up` | Label for resize up |
+| `@huckleberry-pane-resize-down` | `Grow down` | Label for resize down |
+| `@huckleberry-pane-resize-left` | `Grow left` | Label for resize left |
+| `@huckleberry-pane-resize-right` | `Grow right` | Label for resize right |
+| `@huckleberry-pane-rotate` | `Rotate panes` | Label for rotate action |
+| `@huckleberry-pane-display-numbers` | `Display pane numbers` | Label for display numbers action |
+| `@huckleberry-pane-clear-history` | `Clear scrollback` | Label for clear history action |
+| `@huckleberry-pane-copy-mode` | `Enter copy mode` | Label for copy mode action |
+| `@huckleberry-pane-respawn` | `Respawn pane` | Label for respawn action |
+| `@huckleberry-pane-mark` | `Toggle mark` | Label for mark pane action |
+| `@huckleberry-pane-pipe` | `Pipe pane to file` | Label for pipe pane action |
+| `@huckleberry-pane-pipe-prompt` | `path > ` | fzf prompt for pipe path input |
+| `@huckleberry-pane-pipe-header` | `  Pipe Pane to File (empty to stop)` | fzf header for pipe path input |
 | `@huckleberry-pane-select-layout` | `Select layout` | Label for select layout action |
 | `@huckleberry-pane-layout-prompt` | `layout > ` | fzf prompt for layout picker |
 | `@huckleberry-pane-layout-header` | `  Select Layout` | fzf header for layout picker |
@@ -264,6 +353,64 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | `@huckleberry-pane-kill-pick-prompt` | `pane > ` | fzf prompt for Tab pane picker (kill) |
 | `@huckleberry-pane-kill-pick-header` | `  Kill Pane` | fzf header for Tab pane picker (kill) |
 
+### Find Window palette
+
+| Option | Default | Description |
+|---|---|---|
+| `@huckleberry-find-window-prompt` | `window > ` | fzf prompt string |
+| `@huckleberry-find-window-header` | `  Find Window` | fzf header text |
+| `@huckleberry-find-window-footer` | `  esc back · enter switch` | fzf footer hint text |
+| `@huckleberry-find-window-fmt` | *(see below)* | tmux format string for window list |
+| `@huckleberry-find-window-preview` | `right:40%` | fzf preview window layout |
+| `@huckleberry-find-window-preview-fmt` | *(see below)* | tmux format string for pane preview |
+
+The default `@huckleberry-find-window-fmt` is:
+
+```
+#{session_name} > #{window_index}: #{window_name} [#{pane_current_command}]
+```
+
+The default `@huckleberry-find-window-preview-fmt` is:
+
+```
+#{pane_index}: #{pane_current_command} (#{pane_width}x#{pane_height})
+```
+
+### Buffers palette
+
+| Option | Default | Description |
+|---|---|---|
+| `@huckleberry-buffers-prompt` | `buffer > ` | fzf prompt string |
+| `@huckleberry-buffers-header` | `  Manage Buffers` | fzf header text |
+| `@huckleberry-buffers-footer` | `  esc back` | fzf footer hint text |
+| `@huckleberry-buf-paste` | `Paste buffer` | Label for paste action |
+| `@huckleberry-buf-choose` | `Choose buffer` | Label for choose action |
+| `@huckleberry-buf-choose-prompt` | `buffer > ` | fzf prompt for buffer picker |
+| `@huckleberry-buf-choose-header` | `  Choose Buffer` | fzf header for buffer picker |
+| `@huckleberry-buf-choose-preview` | `right:50%` | fzf preview layout for buffer contents |
+| `@huckleberry-buf-capture` | `Capture pane to buffer` | Label for capture action |
+| `@huckleberry-buf-delete` | `Delete buffer` | Label for delete action |
+| `@huckleberry-buf-delete-prompt` | `buffer > ` | fzf prompt for delete picker |
+| `@huckleberry-buf-delete-header` | `  Delete Buffer` | fzf header for delete picker |
+| `@huckleberry-buf-save` | `Save buffer to file` | Label for save action |
+| `@huckleberry-buf-save-prompt` | `path > ` | fzf prompt for save path input |
+| `@huckleberry-buf-save-header` | `  Save Buffer to File` | fzf header for save path input |
+
+### Toggles palette
+
+| Option | Default | Description |
+|---|---|---|
+| `@huckleberry-toggles-prompt` | `toggle > ` | fzf prompt string |
+| `@huckleberry-toggles-header` | `  Toggle Options` | fzf header text |
+| `@huckleberry-toggles-footer` | `  esc back` | fzf footer hint text |
+| `@huckleberry-toggle-on-indicator` | `[on]` | Text shown when a toggle is on |
+| `@huckleberry-toggle-off-indicator` | `[off]` | Text shown when a toggle is off |
+| `@huckleberry-toggle-sync-panes` | `Synchronized panes` | Label for sync panes toggle |
+| `@huckleberry-toggle-mouse` | `Mouse mode` | Label for mouse toggle |
+| `@huckleberry-toggle-status` | `Status bar` | Label for status bar toggle |
+| `@huckleberry-toggle-pane-border` | `Pane border status` | Label for pane border toggle |
+| `@huckleberry-toggle-monitor-activity` | `Monitor activity` | Label for monitor activity toggle |
+
 ### Config palette
 
 | Option | Default | Description |
@@ -274,6 +421,10 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | `@huckleberry-cfg-reload` | `Reload config` | Label for reload action |
 | `@huckleberry-cfg-tpm-install` | `TPM install plugins` | Label for TPM install |
 | `@huckleberry-cfg-tpm-update` | `TPM update plugins` | Label for TPM update |
+| `@huckleberry-cfg-browse-keys` | `Browse key bindings` | Label for browse keys action |
+| `@huckleberry-cfg-browse-keys-prompt` | `key > ` | fzf prompt for key browser |
+| `@huckleberry-cfg-browse-keys-header` | `  Key Bindings (read-only)` | fzf header for key browser |
+| `@huckleberry-cfg-command-prompt` | `Command prompt` | Label for command prompt action |
 
 ### Extensions palette
 
