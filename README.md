@@ -26,7 +26,7 @@ Press **`prefix + Space`** to draw the command palette.
 
 ### Top-level menu
 
-Nine categories, one keypress away. Hit the hotkey to jump straight there, or type to fuzzy-search and press Enter.
+Nine categories, one keypress away. Hit the hotkey to jump straight there, or type to fuzzy-search and press Enter. Inside each sub-palette, actions are numbered 1–9 for quickdraw access — press the number key to fire without scrolling.
 
 | Key | Category | Description |
 |---|---|---|
@@ -204,10 +204,10 @@ All options are set with `set -g` in your `~/.tmux.conf`. Every label, prompt, a
 | `@huckleberry-cat-session-mgmt-desc` | `Rename, kill, create sessions` | Description for Sessions |
 | `@huckleberry-cat-windows-key` | `w` | Hotkey for Windows category |
 | `@huckleberry-cat-windows-label` | `Windows` | Display label for Windows |
-| `@huckleberry-cat-windows-desc` | `Rename, kill, split, move windows` | Description for Windows |
+| `@huckleberry-cat-windows-desc` | `Rename, new, kill, split, move windows` | Description for Windows |
 | `@huckleberry-cat-panes-key` | `p` | Hotkey for Panes category |
 | `@huckleberry-cat-panes-label` | `Panes` | Display label for Panes |
-| `@huckleberry-cat-panes-desc` | `Rename, layout, swap, move panes` | Description for Panes |
+| `@huckleberry-cat-panes-desc` | `Rename, new, layout, swap, move panes` | Description for Panes |
 | `@huckleberry-cat-find-window-key` | `f` | Hotkey for Find Window category |
 | `@huckleberry-cat-find-window-label` | `Find Window` | Display label for Find Window |
 | `@huckleberry-cat-find-window-desc` | `Search windows across all sessions` | Description for Find Window |
@@ -254,7 +254,7 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 |---|---|---|
 | `@huckleberry-session-mgmt-prompt` | `session > ` | fzf prompt string |
 | `@huckleberry-session-mgmt-header` | `  Manage Sessions` | fzf header text |
-| `@huckleberry-session-mgmt-footer` | `  esc back · tab pick target` | fzf footer hint text |
+| `@huckleberry-session-mgmt-footer` | `  esc back · 1-9 select · tab target` | fzf footer hint text |
 | `@huckleberry-ses-rename` | `Rename session` | Label for rename action |
 | `@huckleberry-ses-rename-prompt` | `name > ` | fzf prompt for rename input |
 | `@huckleberry-ses-rename-header` | `  Rename Session` | fzf header for rename input |
@@ -280,7 +280,10 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 |---|---|---|
 | `@huckleberry-windows-prompt` | `window > ` | fzf prompt string |
 | `@huckleberry-windows-header` | `  Manage Windows` | fzf header text |
-| `@huckleberry-windows-footer` | `  esc back · tab pick target` | fzf footer hint text |
+| `@huckleberry-windows-footer` | `  esc back · 1-9 select · tab target` | fzf footer hint text |
+| `@huckleberry-win-new` | `New window` | Label for new window action |
+| `@huckleberry-win-new-prompt` | `name > ` | fzf prompt for new window input |
+| `@huckleberry-win-new-header` | `  Create Window` | fzf header for new window input |
 | `@huckleberry-win-rename` | `Rename window` | Label for rename action |
 | `@huckleberry-win-rename-prompt` | `name > ` | fzf prompt for rename input |
 | `@huckleberry-win-rename-header` | `  Rename Window` | fzf header for rename input |
@@ -307,7 +310,8 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 |---|---|---|
 | `@huckleberry-panes-prompt` | `pane > ` | fzf prompt string |
 | `@huckleberry-panes-header` | `  Manage Panes` | fzf header text |
-| `@huckleberry-panes-footer` | `  esc back · tab pick target` | fzf footer hint text |
+| `@huckleberry-panes-footer` | `  esc back · 1-9 select · tab target` | fzf footer hint text |
+| `@huckleberry-pane-new` | `New pane` | Label for new pane action |
 | `@huckleberry-pane-rename` | `Rename pane` | Label for rename action |
 | `@huckleberry-pane-rename-prompt` | `title > ` | fzf prompt for rename input |
 | `@huckleberry-pane-rename-header` | `  Rename Pane` | fzf header for rename input |
@@ -382,7 +386,7 @@ The default `@huckleberry-find-window-preview-fmt` is:
 |---|---|---|
 | `@huckleberry-buffers-prompt` | `buffer > ` | fzf prompt string |
 | `@huckleberry-buffers-header` | `  Manage Buffers` | fzf header text |
-| `@huckleberry-buffers-footer` | `  esc back` | fzf footer hint text |
+| `@huckleberry-buffers-footer` | `  esc back · 1-9 select` | fzf footer hint text |
 | `@huckleberry-buf-paste` | `Paste buffer` | Label for paste action |
 | `@huckleberry-buf-choose` | `Choose buffer` | Label for choose action |
 | `@huckleberry-buf-choose-prompt` | `buffer > ` | fzf prompt for buffer picker |
@@ -402,7 +406,7 @@ The default `@huckleberry-find-window-preview-fmt` is:
 |---|---|---|
 | `@huckleberry-toggles-prompt` | `toggle > ` | fzf prompt string |
 | `@huckleberry-toggles-header` | `  Toggle Options` | fzf header text |
-| `@huckleberry-toggles-footer` | `  esc back` | fzf footer hint text |
+| `@huckleberry-toggles-footer` | `  esc back · 1-9 select` | fzf footer hint text |
 | `@huckleberry-toggle-on-indicator` | `[on]` | Text shown when a toggle is on |
 | `@huckleberry-toggle-off-indicator` | `[off]` | Text shown when a toggle is off |
 | `@huckleberry-toggle-sync-panes` | `Synchronized panes` | Label for sync panes toggle |
@@ -417,7 +421,7 @@ The default `@huckleberry-find-window-preview-fmt` is:
 |---|---|---|
 | `@huckleberry-config-prompt` | `config > ` | fzf prompt string |
 | `@huckleberry-config-header` | `  Configuration` | fzf header text |
-| `@huckleberry-config-footer` | `  esc back` | fzf footer hint text |
+| `@huckleberry-config-footer` | `  esc back · 1-9 select` | fzf footer hint text |
 | `@huckleberry-cfg-reload` | `Reload config` | Label for reload action |
 | `@huckleberry-cfg-tpm-install` | `TPM install plugins` | Label for TPM install |
 | `@huckleberry-cfg-tpm-update` | `TPM update plugins` | Label for TPM update |
@@ -436,10 +440,10 @@ The default `@huckleberry-find-window-preview-fmt` is:
 | `@huckleberry-extensions` | *(empty)* | Comma-separated extension IDs (empty = hidden) |
 | `@huckleberry-extensions-prompt` | `extension > ` | fzf prompt for extension list |
 | `@huckleberry-extensions-header` | `  Extensions` | fzf header for extension list |
-| `@huckleberry-extensions-footer` | `  esc back` | fzf footer for extension list |
+| `@huckleberry-extensions-footer` | `  esc back · 1-9 select` | fzf footer for extension list |
 | `@huckleberry-extensions-actions-prompt` | `action > ` | fzf prompt for action list |
 | `@huckleberry-extensions-actions-header-prefix` | `  ` | Prefix before extension name in action header |
-| `@huckleberry-extensions-actions-footer` | `  esc back` | fzf footer for action list |
+| `@huckleberry-extensions-actions-footer` | `  esc back · 1-9 select` | fzf footer for action list |
 
 Per-extension options use dynamic names constructed from the extension and action IDs:
 
