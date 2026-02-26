@@ -27,17 +27,35 @@ get_tmux_option "$HUCKLEBERRY_PANE_SEND" "$HUCKLEBERRY_PANE_SEND_DEFAULT"; send_
 get_tmux_option "$HUCKLEBERRY_PANE_JOIN" "$HUCKLEBERRY_PANE_JOIN_DEFAULT"; join_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_BREAK" "$HUCKLEBERRY_PANE_BREAK_DEFAULT"; break_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_SWAP" "$HUCKLEBERRY_PANE_SWAP_DEFAULT"; swap_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_RESIZE" "$HUCKLEBERRY_PANE_RESIZE_DEFAULT"; resize_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_ZOOM" "$HUCKLEBERRY_PANE_ZOOM_DEFAULT"; zoom_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_ROTATE" "$HUCKLEBERRY_PANE_ROTATE_DEFAULT"; rotate_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_DISPLAY_NUMBERS" "$HUCKLEBERRY_PANE_DISPLAY_NUMBERS_DEFAULT"; display_numbers_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_CLEAR_HISTORY" "$HUCKLEBERRY_PANE_CLEAR_HISTORY_DEFAULT"; clear_history_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_COPY_MODE" "$HUCKLEBERRY_PANE_COPY_MODE_DEFAULT"; copy_mode_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_RESPAWN" "$HUCKLEBERRY_PANE_RESPAWN_DEFAULT"; respawn_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_MARK" "$HUCKLEBERRY_PANE_MARK_DEFAULT"; mark_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_PANE_PIPE" "$HUCKLEBERRY_PANE_PIPE_DEFAULT"; pipe_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_NEW" "$HUCKLEBERRY_PANE_NEW_DEFAULT"; new_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_PANE_KILL" "$HUCKLEBERRY_PANE_KILL_DEFAULT"; kill_label="$REPLY"
 
 # --- Build action list --------------------------------------------------------
 
 actions="new::${new_label}"
+actions+=$'\n'"zoom::${zoom_label}"
+actions+=$'\n'"resize::${resize_label}"
 actions+=$'\n'"select-layout::${select_layout_label}"
 actions+=$'\n'"swap::${swap_label}"
+actions+=$'\n'"rotate::${rotate_label}"
 actions+=$'\n'"send::${send_label}"
 actions+=$'\n'"join::${join_label}"
 actions+=$'\n'"break::${break_label}"
+actions+=$'\n'"copy-mode::${copy_mode_label}"
+actions+=$'\n'"clear-history::${clear_history_label}"
+actions+=$'\n'"display-numbers::${display_numbers_label}"
+actions+=$'\n'"mark::${mark_label}"
+actions+=$'\n'"pipe::${pipe_label}"
+actions+=$'\n'"respawn::${respawn_label}"
 actions+=$'\n'"rename::${rename_label}"
 actions+=$'\n'"kill::${kill_label}"
 
@@ -185,6 +203,116 @@ while true; do
             ;;
         new)
             tmux split-window
+            exit 0
+            ;;
+        zoom)
+            tmux resize-pane -Z
+            exit 0
+            ;;
+        resize)
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_PROMPT" "$HUCKLEBERRY_PANE_RESIZE_PROMPT_DEFAULT"; resize_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_HEADER" "$HUCKLEBERRY_PANE_RESIZE_HEADER_DEFAULT"; resize_header="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_STEP" "$HUCKLEBERRY_PANE_RESIZE_STEP_DEFAULT"; resize_step="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_UP" "$HUCKLEBERRY_PANE_RESIZE_UP_DEFAULT"; resize_up_label="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_DOWN" "$HUCKLEBERRY_PANE_RESIZE_DOWN_DEFAULT"; resize_down_label="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_LEFT" "$HUCKLEBERRY_PANE_RESIZE_LEFT_DEFAULT"; resize_left_label="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_RESIZE_RIGHT" "$HUCKLEBERRY_PANE_RESIZE_RIGHT_DEFAULT"; resize_right_label="$REPLY"
+
+            directions="up::${resize_up_label}"
+            directions+=$'\n'"down::${resize_down_label}"
+            directions+=$'\n'"left::${resize_left_label}"
+            directions+=$'\n'"right::${resize_right_label}"
+
+            dir_selection=$(echo "$directions" | fzf \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --delimiter '::' \
+                --with-nth 2 \
+                --prompt "$resize_prompt" \
+                --header "$resize_header")
+
+            dir_exit=$?
+
+            if [[ $dir_exit -ne 0 ]]; then
+                continue
+            fi
+
+            direction="${dir_selection%%::*}"
+            case "$direction" in
+                up)    tmux resize-pane -U "$resize_step" ;;
+                down)  tmux resize-pane -D "$resize_step" ;;
+                left)  tmux resize-pane -L "$resize_step" ;;
+                right) tmux resize-pane -R "$resize_step" ;;
+            esac
+            # Loop back to allow repeated resizes.
+            continue
+            ;;
+        rotate)
+            tmux rotate-window
+            exit 0
+            ;;
+        display-numbers)
+            tmux display-panes
+            exit 0
+            ;;
+        clear-history)
+            tmux clear-history
+            exit 0
+            ;;
+        copy-mode)
+            tmux copy-mode
+            exit 0
+            ;;
+        respawn)
+            tmux respawn-pane -k
+            exit 0
+            ;;
+        mark)
+            # Toggle pane mark: -m marks, -M unmarks.
+            if tmux display-message -p '#{pane_marked}' | grep -q '^1$'; then
+                tmux select-pane -M
+            else
+                tmux select-pane -m
+            fi
+            exit 0
+            ;;
+        pipe)
+            get_tmux_option "$HUCKLEBERRY_PANE_PIPE_PROMPT" "$HUCKLEBERRY_PANE_PIPE_PROMPT_DEFAULT"; pipe_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_PANE_PIPE_HEADER" "$HUCKLEBERRY_PANE_PIPE_HEADER_DEFAULT"; pipe_header="$REPLY"
+
+            pipe_output=$(: | fzf \
+                --print-query \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --prompt "$pipe_prompt" \
+                --header "$pipe_header")
+
+            pipe_exit=$?
+
+            if [[ $pipe_exit -eq 130 ]]; then
+                continue
+            fi
+
+            IFS= read -r pipe_path <<< "$pipe_output"
+
+            if [[ -n "$pipe_path" ]]; then
+                # Expand leading tilde (tmux doesn't expand ~).
+                pipe_path="${pipe_path/#\~/$HOME}"
+                # Shell-escape the path so pipe-pane's spawned shell is safe.
+                printf -v _escaped_path '%q' "$pipe_path"
+                tmux pipe-pane -o "cat >> ${_escaped_path}"
+                tmux display-message "Piping pane to ${pipe_path}"
+            else
+                # Empty path stops piping.
+                tmux pipe-pane
+                tmux display-message "Pane piping stopped"
+            fi
             exit 0
             ;;
         send)

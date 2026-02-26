@@ -24,6 +24,8 @@ footer_border_args=(--footer-border)
 get_tmux_option "$HUCKLEBERRY_CFG_RELOAD" "$HUCKLEBERRY_CFG_RELOAD_DEFAULT"; reload_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CFG_TPM_INSTALL" "$HUCKLEBERRY_CFG_TPM_INSTALL_DEFAULT"; tpm_install_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CFG_TPM_UPDATE" "$HUCKLEBERRY_CFG_TPM_UPDATE_DEFAULT"; tpm_update_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CFG_BROWSE_KEYS" "$HUCKLEBERRY_CFG_BROWSE_KEYS_DEFAULT"; browse_keys_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_CFG_COMMAND_PROMPT" "$HUCKLEBERRY_CFG_COMMAND_PROMPT_DEFAULT"; command_prompt_label="$REPLY"
 
 # --- Detect config path (respect XDG_CONFIG_HOME) ----------------------------
 
@@ -54,6 +56,8 @@ if [[ -n "$tpm_path" ]]; then
     actions+=$'\n'"tpm-install::${tpm_install_label}"
     actions+=$'\n'"tpm-update::${tpm_update_label}"
 fi
+actions+=$'\n'"browse-keys::${browse_keys_label}"
+actions+=$'\n'"command-prompt::${command_prompt_label}"
 
 # --- Number actions for hotkey display -----------------------------------------
 
@@ -109,6 +113,33 @@ while true; do
             ;;
         tpm-update)
             tmux run-shell "${tpm_path}/bindings/update_plugins"
+            exit 0
+            ;;
+        browse-keys)
+            get_tmux_option "$HUCKLEBERRY_CFG_BROWSE_KEYS_PROMPT" "$HUCKLEBERRY_CFG_BROWSE_KEYS_PROMPT_DEFAULT"; keys_prompt="$REPLY"
+            get_tmux_option "$HUCKLEBERRY_CFG_BROWSE_KEYS_HEADER" "$HUCKLEBERRY_CFG_BROWSE_KEYS_HEADER_DEFAULT"; keys_header="$REPLY"
+
+            key_list=$(tmux list-keys 2>/dev/null)
+
+            if [[ -z "$key_list" ]]; then
+                tmux display-message "No key bindings found"
+                continue
+            fi
+
+            # Read-only fzf browser — no action on selection, Escape goes back.
+            echo "$key_list" | fzf \
+                --reverse \
+                --no-info \
+                --no-separator \
+                --no-preview \
+                --header-first \
+                --prompt "$keys_prompt" \
+                --header "$keys_header" > /dev/null
+
+            continue
+            ;;
+        command-prompt)
+            tmux command-prompt
             exit 0
             ;;
     esac

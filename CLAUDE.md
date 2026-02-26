@@ -12,6 +12,9 @@ scripts/huckleberry.sh (top-level dispatcher)
     ├─ s Sessions     → scripts/palettes/session-mgmt.sh
     ├─ w Windows      → scripts/palettes/windows.sh
     ├─ p Panes        → scripts/palettes/panes.sh
+    ├─ f Find Window  → scripts/palettes/find-window.sh
+    ├─ b Buffers      → scripts/palettes/buffers.sh
+    ├─ t Toggles      → scripts/palettes/toggles.sh
     ├─ c Config       → scripts/palettes/config.sh
     └─ x Extensions   → scripts/palettes/extensions.sh (conditional)
 ```
@@ -20,17 +23,20 @@ scripts/huckleberry.sh (top-level dispatcher)
 2. `scripts/huckleberry.sh` — top-level dispatcher; shows categories via fzf `--expect`, `source`s into sub-palettes
 3. `scripts/palettes/common.sh` — sourced shared infrastructure (path resolution, conditional re-source guard)
 4. `scripts/palettes/sessions.sh` — session finder sub-palette (fuzzy-find/create sessions)
-5. `scripts/palettes/session-mgmt.sh` — session management sub-palette (rename, kill, create)
-6. `scripts/palettes/windows.sh` — window management sub-palette (rename, split, move)
-7. `scripts/palettes/panes.sh` — pane management sub-palette (layout, swap, move panes)
-8. `scripts/palettes/config.sh` — config sub-palette (reload config, TPM install/update)
-8b. `scripts/palettes/extensions.sh` — extensions sub-palette (user-configured extension commands; conditional)
-9. `scripts/helpers.sh` — sourced utilities (`get_tmux_option`, `valid_session_name`, `strip_fzf_opts`)
-10. `scripts/variables.sh` — sourced option-name constants and defaults
+5. `scripts/palettes/session-mgmt.sh` — session management sub-palette (rename, kill, create, client management)
+6. `scripts/palettes/windows.sh` — window management sub-palette (rename, split, move, link, respawn)
+7. `scripts/palettes/panes.sh` — pane management sub-palette (zoom, resize, layout, swap, pipe, mark panes)
+8. `scripts/palettes/find-window.sh` — cross-session window finder sub-palette
+9. `scripts/palettes/buffers.sh` — clipboard/buffer management sub-palette (paste, choose, capture, delete, save)
+10. `scripts/palettes/toggles.sh` — toggle sub-palette (sync-panes, mouse, status, etc. with live indicators)
+11. `scripts/palettes/config.sh` — config sub-palette (reload config, browse keys, TPM install/update)
+11b. `scripts/palettes/extensions.sh` — extensions sub-palette (user-configured extension commands; conditional)
+12. `scripts/helpers.sh` — sourced utilities (`get_tmux_option`, `valid_session_name`, `strip_fzf_opts`)
+13. `scripts/variables.sh` — sourced option-name constants and defaults
 
 ## File permissions
 
-- **755** for executables: `huckleberry.tmux`, `scripts/huckleberry.sh`, `scripts/palettes/sessions.sh`, `scripts/palettes/session-mgmt.sh`, `scripts/palettes/windows.sh`, `scripts/palettes/panes.sh`, `scripts/palettes/config.sh`, `scripts/palettes/extensions.sh`
+- **755** for executables: `huckleberry.tmux`, `scripts/huckleberry.sh`, `scripts/palettes/sessions.sh`, `scripts/palettes/session-mgmt.sh`, `scripts/palettes/windows.sh`, `scripts/palettes/panes.sh`, `scripts/palettes/find-window.sh`, `scripts/palettes/buffers.sh`, `scripts/palettes/toggles.sh`, `scripts/palettes/config.sh`, `scripts/palettes/extensions.sh`
 - **644** for sourced files: `scripts/helpers.sh`, `scripts/variables.sh`, `scripts/palettes/common.sh`
 
 ## Bash conventions

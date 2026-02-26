@@ -135,6 +135,36 @@ HUCKLEBERRY_CAT_SESSION_MGMT_LABEL_DEFAULT="Sessions"
 HUCKLEBERRY_CAT_SESSION_MGMT_DESC="@huckleberry-cat-session-mgmt-desc"
 HUCKLEBERRY_CAT_SESSION_MGMT_DESC_DEFAULT="Rename, kill, create sessions"
 
+# Category: Find Window
+HUCKLEBERRY_CAT_FIND_WINDOW_KEY="@huckleberry-cat-find-window-key"
+HUCKLEBERRY_CAT_FIND_WINDOW_KEY_DEFAULT="f"
+
+HUCKLEBERRY_CAT_FIND_WINDOW_LABEL="@huckleberry-cat-find-window-label"
+HUCKLEBERRY_CAT_FIND_WINDOW_LABEL_DEFAULT="Find Window"
+
+HUCKLEBERRY_CAT_FIND_WINDOW_DESC="@huckleberry-cat-find-window-desc"
+HUCKLEBERRY_CAT_FIND_WINDOW_DESC_DEFAULT="Search windows across all sessions"
+
+# Category: Buffers
+HUCKLEBERRY_CAT_BUFFERS_KEY="@huckleberry-cat-buffers-key"
+HUCKLEBERRY_CAT_BUFFERS_KEY_DEFAULT="b"
+
+HUCKLEBERRY_CAT_BUFFERS_LABEL="@huckleberry-cat-buffers-label"
+HUCKLEBERRY_CAT_BUFFERS_LABEL_DEFAULT="Buffers"
+
+HUCKLEBERRY_CAT_BUFFERS_DESC="@huckleberry-cat-buffers-desc"
+HUCKLEBERRY_CAT_BUFFERS_DESC_DEFAULT="Paste, capture, manage buffers"
+
+# Category: Toggles
+HUCKLEBERRY_CAT_TOGGLES_KEY="@huckleberry-cat-toggles-key"
+HUCKLEBERRY_CAT_TOGGLES_KEY_DEFAULT="t"
+
+HUCKLEBERRY_CAT_TOGGLES_LABEL="@huckleberry-cat-toggles-label"
+HUCKLEBERRY_CAT_TOGGLES_LABEL_DEFAULT="Toggles"
+
+HUCKLEBERRY_CAT_TOGGLES_DESC="@huckleberry-cat-toggles-desc"
+HUCKLEBERRY_CAT_TOGGLES_DESC_DEFAULT="Toggle tmux options on/off"
+
 # Category: Config
 HUCKLEBERRY_CAT_CONFIG_KEY="@huckleberry-cat-config-key"
 HUCKLEBERRY_CAT_CONFIG_KEY_DEFAULT="c"
@@ -193,6 +223,27 @@ HUCKLEBERRY_WIN_RENAME_PICK_HEADER_DEFAULT="  Rename Window"
 
 HUCKLEBERRY_WIN_MOVE_RIGHT="@huckleberry-win-move-right"
 HUCKLEBERRY_WIN_MOVE_RIGHT_DEFAULT="Move window right"
+
+HUCKLEBERRY_WIN_LINK="@huckleberry-win-link"
+HUCKLEBERRY_WIN_LINK_DEFAULT="Link window from session"
+
+HUCKLEBERRY_WIN_LINK_SESSION_PROMPT="@huckleberry-win-link-session-prompt"
+HUCKLEBERRY_WIN_LINK_SESSION_PROMPT_DEFAULT="session > "
+
+HUCKLEBERRY_WIN_LINK_SESSION_HEADER="@huckleberry-win-link-session-header"
+HUCKLEBERRY_WIN_LINK_SESSION_HEADER_DEFAULT="  Link Window — Pick Session"
+
+HUCKLEBERRY_WIN_LINK_WINDOW_PROMPT="@huckleberry-win-link-window-prompt"
+HUCKLEBERRY_WIN_LINK_WINDOW_PROMPT_DEFAULT="window > "
+
+HUCKLEBERRY_WIN_LINK_WINDOW_HEADER="@huckleberry-win-link-window-header"
+HUCKLEBERRY_WIN_LINK_WINDOW_HEADER_DEFAULT="  Link Window — Pick Window"
+
+HUCKLEBERRY_WIN_UNLINK="@huckleberry-win-unlink"
+HUCKLEBERRY_WIN_UNLINK_DEFAULT="Unlink window"
+
+HUCKLEBERRY_WIN_RESPAWN="@huckleberry-win-respawn"
+HUCKLEBERRY_WIN_RESPAWN_DEFAULT="Respawn window"
 
 HUCKLEBERRY_WIN_NEW="@huckleberry-win-new"
 HUCKLEBERRY_WIN_NEW_DEFAULT="New window"
@@ -285,6 +336,60 @@ HUCKLEBERRY_PANE_SWAP_PROMPT_DEFAULT="pane > "
 HUCKLEBERRY_PANE_SWAP_HEADER="@huckleberry-pane-swap-header"
 HUCKLEBERRY_PANE_SWAP_HEADER_DEFAULT="  Swap Pane"
 
+HUCKLEBERRY_PANE_RESIZE="@huckleberry-pane-resize"
+HUCKLEBERRY_PANE_RESIZE_DEFAULT="Resize pane"
+
+HUCKLEBERRY_PANE_RESIZE_PROMPT="@huckleberry-pane-resize-prompt"
+HUCKLEBERRY_PANE_RESIZE_PROMPT_DEFAULT="direction > "
+
+HUCKLEBERRY_PANE_RESIZE_HEADER="@huckleberry-pane-resize-header"
+HUCKLEBERRY_PANE_RESIZE_HEADER_DEFAULT="  Resize Pane"
+
+HUCKLEBERRY_PANE_RESIZE_STEP="@huckleberry-pane-resize-step"
+HUCKLEBERRY_PANE_RESIZE_STEP_DEFAULT="5"
+
+HUCKLEBERRY_PANE_RESIZE_UP="@huckleberry-pane-resize-up"
+HUCKLEBERRY_PANE_RESIZE_UP_DEFAULT="Grow up"
+
+HUCKLEBERRY_PANE_RESIZE_DOWN="@huckleberry-pane-resize-down"
+HUCKLEBERRY_PANE_RESIZE_DOWN_DEFAULT="Grow down"
+
+HUCKLEBERRY_PANE_RESIZE_LEFT="@huckleberry-pane-resize-left"
+HUCKLEBERRY_PANE_RESIZE_LEFT_DEFAULT="Grow left"
+
+HUCKLEBERRY_PANE_RESIZE_RIGHT="@huckleberry-pane-resize-right"
+HUCKLEBERRY_PANE_RESIZE_RIGHT_DEFAULT="Grow right"
+
+HUCKLEBERRY_PANE_ZOOM="@huckleberry-pane-zoom"
+HUCKLEBERRY_PANE_ZOOM_DEFAULT="Toggle zoom"
+
+HUCKLEBERRY_PANE_ROTATE="@huckleberry-pane-rotate"
+HUCKLEBERRY_PANE_ROTATE_DEFAULT="Rotate panes"
+
+HUCKLEBERRY_PANE_DISPLAY_NUMBERS="@huckleberry-pane-display-numbers"
+HUCKLEBERRY_PANE_DISPLAY_NUMBERS_DEFAULT="Display pane numbers"
+
+HUCKLEBERRY_PANE_CLEAR_HISTORY="@huckleberry-pane-clear-history"
+HUCKLEBERRY_PANE_CLEAR_HISTORY_DEFAULT="Clear scrollback"
+
+HUCKLEBERRY_PANE_COPY_MODE="@huckleberry-pane-copy-mode"
+HUCKLEBERRY_PANE_COPY_MODE_DEFAULT="Enter copy mode"
+
+HUCKLEBERRY_PANE_RESPAWN="@huckleberry-pane-respawn"
+HUCKLEBERRY_PANE_RESPAWN_DEFAULT="Respawn pane"
+
+HUCKLEBERRY_PANE_MARK="@huckleberry-pane-mark"
+HUCKLEBERRY_PANE_MARK_DEFAULT="Toggle mark"
+
+HUCKLEBERRY_PANE_PIPE="@huckleberry-pane-pipe"
+HUCKLEBERRY_PANE_PIPE_DEFAULT="Pipe pane to file"
+
+HUCKLEBERRY_PANE_PIPE_PROMPT="@huckleberry-pane-pipe-prompt"
+HUCKLEBERRY_PANE_PIPE_PROMPT_DEFAULT="path > "
+
+HUCKLEBERRY_PANE_PIPE_HEADER="@huckleberry-pane-pipe-header"
+HUCKLEBERRY_PANE_PIPE_HEADER_DEFAULT="  Pipe Pane to File (empty to stop)"
+
 HUCKLEBERRY_PANE_NEW="@huckleberry-pane-new"
 HUCKLEBERRY_PANE_NEW_DEFAULT="New pane"
 
@@ -343,8 +448,131 @@ HUCKLEBERRY_SES_NEW_PROMPT_DEFAULT="name > "
 HUCKLEBERRY_SES_NEW_HEADER="@huckleberry-ses-new-header"
 HUCKLEBERRY_SES_NEW_HEADER_DEFAULT="  Create Session"
 
+HUCKLEBERRY_SES_LIST_CLIENTS="@huckleberry-ses-list-clients"
+HUCKLEBERRY_SES_LIST_CLIENTS_DEFAULT="List clients"
+
+HUCKLEBERRY_SES_LIST_CLIENTS_PROMPT="@huckleberry-ses-list-clients-prompt"
+HUCKLEBERRY_SES_LIST_CLIENTS_PROMPT_DEFAULT="client > "
+
+HUCKLEBERRY_SES_LIST_CLIENTS_HEADER="@huckleberry-ses-list-clients-header"
+HUCKLEBERRY_SES_LIST_CLIENTS_HEADER_DEFAULT="  Attached Clients (read-only)"
+
+HUCKLEBERRY_SES_DETACH_CLIENT="@huckleberry-ses-detach-client"
+HUCKLEBERRY_SES_DETACH_CLIENT_DEFAULT="Detach client"
+
+HUCKLEBERRY_SES_DETACH_CLIENT_PROMPT="@huckleberry-ses-detach-client-prompt"
+HUCKLEBERRY_SES_DETACH_CLIENT_PROMPT_DEFAULT="client > "
+
+HUCKLEBERRY_SES_DETACH_CLIENT_HEADER="@huckleberry-ses-detach-client-header"
+HUCKLEBERRY_SES_DETACH_CLIENT_HEADER_DEFAULT="  Detach Client"
+
 HUCKLEBERRY_SES_DETACH="@huckleberry-ses-detach"
 HUCKLEBERRY_SES_DETACH_DEFAULT="Detach other clients"
+
+# ---------------------------------------------------------------------------
+# Find Window sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_FIND_WINDOW_PROMPT="@huckleberry-find-window-prompt"
+HUCKLEBERRY_FIND_WINDOW_PROMPT_DEFAULT="window > "
+
+HUCKLEBERRY_FIND_WINDOW_HEADER="@huckleberry-find-window-header"
+HUCKLEBERRY_FIND_WINDOW_HEADER_DEFAULT="  Find Window"
+
+HUCKLEBERRY_FIND_WINDOW_FOOTER="@huckleberry-find-window-footer"
+HUCKLEBERRY_FIND_WINDOW_FOOTER_DEFAULT="  esc back · enter switch"
+
+HUCKLEBERRY_FIND_WINDOW_FMT="@huckleberry-find-window-fmt"
+HUCKLEBERRY_FIND_WINDOW_FMT_DEFAULT='#{session_name} > #{window_index}: #{window_name} [#{pane_current_command}]'
+
+HUCKLEBERRY_FIND_WINDOW_PREVIEW="@huckleberry-find-window-preview"
+HUCKLEBERRY_FIND_WINDOW_PREVIEW_DEFAULT="right:40%"
+
+HUCKLEBERRY_FIND_WINDOW_PREVIEW_FMT="@huckleberry-find-window-preview-fmt"
+HUCKLEBERRY_FIND_WINDOW_PREVIEW_FMT_DEFAULT='#{pane_index}: #{pane_current_command} (#{pane_width}x#{pane_height})'
+
+# ---------------------------------------------------------------------------
+# Buffers sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_BUFFERS_PROMPT="@huckleberry-buffers-prompt"
+HUCKLEBERRY_BUFFERS_PROMPT_DEFAULT="buffer > "
+
+HUCKLEBERRY_BUFFERS_HEADER="@huckleberry-buffers-header"
+HUCKLEBERRY_BUFFERS_HEADER_DEFAULT="  Manage Buffers"
+
+HUCKLEBERRY_BUFFERS_FOOTER="@huckleberry-buffers-footer"
+HUCKLEBERRY_BUFFERS_FOOTER_DEFAULT="  esc back · 1-9 select"
+
+HUCKLEBERRY_BUF_PASTE="@huckleberry-buf-paste"
+HUCKLEBERRY_BUF_PASTE_DEFAULT="Paste buffer"
+
+HUCKLEBERRY_BUF_CHOOSE="@huckleberry-buf-choose"
+HUCKLEBERRY_BUF_CHOOSE_DEFAULT="Choose buffer"
+
+HUCKLEBERRY_BUF_CHOOSE_PROMPT="@huckleberry-buf-choose-prompt"
+HUCKLEBERRY_BUF_CHOOSE_PROMPT_DEFAULT="buffer > "
+
+HUCKLEBERRY_BUF_CHOOSE_HEADER="@huckleberry-buf-choose-header"
+HUCKLEBERRY_BUF_CHOOSE_HEADER_DEFAULT="  Choose Buffer"
+
+HUCKLEBERRY_BUF_CHOOSE_PREVIEW="@huckleberry-buf-choose-preview"
+HUCKLEBERRY_BUF_CHOOSE_PREVIEW_DEFAULT="right:50%"
+
+HUCKLEBERRY_BUF_CAPTURE="@huckleberry-buf-capture"
+HUCKLEBERRY_BUF_CAPTURE_DEFAULT="Capture pane to buffer"
+
+HUCKLEBERRY_BUF_DELETE="@huckleberry-buf-delete"
+HUCKLEBERRY_BUF_DELETE_DEFAULT="Delete buffer"
+
+HUCKLEBERRY_BUF_DELETE_PROMPT="@huckleberry-buf-delete-prompt"
+HUCKLEBERRY_BUF_DELETE_PROMPT_DEFAULT="buffer > "
+
+HUCKLEBERRY_BUF_DELETE_HEADER="@huckleberry-buf-delete-header"
+HUCKLEBERRY_BUF_DELETE_HEADER_DEFAULT="  Delete Buffer"
+
+HUCKLEBERRY_BUF_SAVE="@huckleberry-buf-save"
+HUCKLEBERRY_BUF_SAVE_DEFAULT="Save buffer to file"
+
+HUCKLEBERRY_BUF_SAVE_PROMPT="@huckleberry-buf-save-prompt"
+HUCKLEBERRY_BUF_SAVE_PROMPT_DEFAULT="path > "
+
+HUCKLEBERRY_BUF_SAVE_HEADER="@huckleberry-buf-save-header"
+HUCKLEBERRY_BUF_SAVE_HEADER_DEFAULT="  Save Buffer to File"
+
+# ---------------------------------------------------------------------------
+# Toggles sub-palette
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_TOGGLES_PROMPT="@huckleberry-toggles-prompt"
+HUCKLEBERRY_TOGGLES_PROMPT_DEFAULT="toggle > "
+
+HUCKLEBERRY_TOGGLES_HEADER="@huckleberry-toggles-header"
+HUCKLEBERRY_TOGGLES_HEADER_DEFAULT="  Toggle Options"
+
+HUCKLEBERRY_TOGGLES_FOOTER="@huckleberry-toggles-footer"
+HUCKLEBERRY_TOGGLES_FOOTER_DEFAULT="  esc back · 1-9 select"
+
+HUCKLEBERRY_TOGGLE_ON_INDICATOR="@huckleberry-toggle-on-indicator"
+HUCKLEBERRY_TOGGLE_ON_INDICATOR_DEFAULT="[on]"
+
+HUCKLEBERRY_TOGGLE_OFF_INDICATOR="@huckleberry-toggle-off-indicator"
+HUCKLEBERRY_TOGGLE_OFF_INDICATOR_DEFAULT="[off]"
+
+HUCKLEBERRY_TOGGLE_SYNC_PANES="@huckleberry-toggle-sync-panes"
+HUCKLEBERRY_TOGGLE_SYNC_PANES_DEFAULT="Synchronized panes"
+
+HUCKLEBERRY_TOGGLE_MOUSE="@huckleberry-toggle-mouse"
+HUCKLEBERRY_TOGGLE_MOUSE_DEFAULT="Mouse mode"
+
+HUCKLEBERRY_TOGGLE_STATUS="@huckleberry-toggle-status"
+HUCKLEBERRY_TOGGLE_STATUS_DEFAULT="Status bar"
+
+HUCKLEBERRY_TOGGLE_PANE_BORDER="@huckleberry-toggle-pane-border"
+HUCKLEBERRY_TOGGLE_PANE_BORDER_DEFAULT="Pane border status"
+
+HUCKLEBERRY_TOGGLE_MONITOR_ACTIVITY="@huckleberry-toggle-monitor-activity"
+HUCKLEBERRY_TOGGLE_MONITOR_ACTIVITY_DEFAULT="Monitor activity"
 
 # ---------------------------------------------------------------------------
 # Config sub-palette
@@ -367,6 +595,18 @@ HUCKLEBERRY_CFG_TPM_INSTALL_DEFAULT="TPM install plugins"
 
 HUCKLEBERRY_CFG_TPM_UPDATE="@huckleberry-cfg-tpm-update"
 HUCKLEBERRY_CFG_TPM_UPDATE_DEFAULT="TPM update plugins"
+
+HUCKLEBERRY_CFG_BROWSE_KEYS="@huckleberry-cfg-browse-keys"
+HUCKLEBERRY_CFG_BROWSE_KEYS_DEFAULT="Browse key bindings"
+
+HUCKLEBERRY_CFG_BROWSE_KEYS_PROMPT="@huckleberry-cfg-browse-keys-prompt"
+HUCKLEBERRY_CFG_BROWSE_KEYS_PROMPT_DEFAULT="key > "
+
+HUCKLEBERRY_CFG_BROWSE_KEYS_HEADER="@huckleberry-cfg-browse-keys-header"
+HUCKLEBERRY_CFG_BROWSE_KEYS_HEADER_DEFAULT="  Key Bindings (read-only)"
+
+HUCKLEBERRY_CFG_COMMAND_PROMPT="@huckleberry-cfg-command-prompt"
+HUCKLEBERRY_CFG_COMMAND_PROMPT_DEFAULT="Command prompt"
 
 # ---------------------------------------------------------------------------
 # Category: Extensions (conditional — only shown when @huckleberry-extensions is set)
