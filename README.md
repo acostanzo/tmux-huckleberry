@@ -53,7 +53,7 @@ The fastest way to get where you're going. Type to narrow down your sessions, pi
 
 ### Sessions palette
 
-Housekeeping for your sessions — rename, kill, create, or manage attached clients. Press **Tab** on rename or kill to pick a different target instead of the current session.
+Housekeeping for your sessions — rename, kill, create, or manage attached clients. Press **Space** to jump to Find Session, or **Tab** on rename or kill to pick a different target instead of the current session.
 
 - **New session** — type a name to create and switch to a new session
 - **Rename session** — Enter renames the current session; Tab opens a session picker first
@@ -64,7 +64,7 @@ Housekeeping for your sessions — rename, kill, create, or manage attached clie
 
 ### Windows palette
 
-Wrangle your windows without leaving the saddle. Press **Tab** on rename or kill to pick a different target instead of the current window.
+Wrangle your windows without leaving the saddle. Press **Space** to fuzzy-find windows in the current session; press **Space** again to expand to all sessions. **Tab** on rename or kill picks a different target instead of the current window.
 
 - **New window** — create a new window (optionally named)
 - **Rename window** — Enter renames the current window; Tab opens a window picker first
@@ -254,7 +254,7 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 |---|---|---|
 | `@huckleberry-session-mgmt-prompt` | `session > ` | fzf prompt string |
 | `@huckleberry-session-mgmt-header` | `  Manage Sessions` | fzf header text |
-| `@huckleberry-session-mgmt-footer` | `  esc back · 1-9 select · tab target` | fzf footer hint text |
+| `@huckleberry-session-mgmt-footer` | `  esc back · ␣ find · 1-9 select · tab target` | fzf footer hint text |
 | `@huckleberry-ses-rename` | `Rename session` | Label for rename action |
 | `@huckleberry-ses-rename-prompt` | `name > ` | fzf prompt for rename input |
 | `@huckleberry-ses-rename-header` | `  Rename Session` | fzf header for rename input |
@@ -280,7 +280,7 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 |---|---|---|
 | `@huckleberry-windows-prompt` | `window > ` | fzf prompt string |
 | `@huckleberry-windows-header` | `  Manage Windows` | fzf header text |
-| `@huckleberry-windows-footer` | `  esc back · 1-9 select · tab target` | fzf footer hint text |
+| `@huckleberry-windows-footer` | `  esc back · ␣ find · 1-9 select · tab target` | fzf footer hint text |
 | `@huckleberry-win-new` | `New window` | Label for new window action |
 | `@huckleberry-win-new-prompt` | `name > ` | fzf prompt for new window input |
 | `@huckleberry-win-new-header` | `  Create Window` | fzf header for new window input |
@@ -364,6 +364,8 @@ The default `@huckleberry-session-windows-fmt` is the same without the active ma
 | `@huckleberry-find-window-prompt` | `window > ` | fzf prompt string |
 | `@huckleberry-find-window-header` | `  Find Window` | fzf header text |
 | `@huckleberry-find-window-footer` | `  esc back · enter switch` | fzf footer hint text |
+| `@huckleberry-find-window-session-header` | `  Find Window (session)` | fzf header for session-scoped finder |
+| `@huckleberry-find-window-session-footer` | `  esc back · ␣ all sessions · enter switch` | fzf footer for session-scoped finder |
 | `@huckleberry-find-window-fmt` | *(see below)* | tmux format string for window list |
 | `@huckleberry-find-window-preview` | `right:40%` | fzf preview window layout |
 | `@huckleberry-find-window-preview-fmt` | *(see below)* | tmux format string for pane preview |

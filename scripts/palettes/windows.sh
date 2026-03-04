@@ -58,7 +58,7 @@ while true; do
         --no-separator \
         --no-preview \
         --header-first \
-        --expect="tab,${_huck_expect_keys}" \
+        --expect="space,tab,${_huck_expect_keys}" \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
@@ -83,6 +83,71 @@ while true; do
     _huck_resolve_hotkey "$action_key" "$selection"
     action="$REPLY"
     action_key="$_huck_resolved_key"
+
+    # Space — session-scoped window finder; Space again expands to all sessions.
+    if [[ "$action_key" == "space" ]]; then
+        _saved_prompt="$prompt" _saved_header="$header" _saved_footer="$footer"
+
+        get_tmux_option "$HUCKLEBERRY_FIND_WINDOW_PROMPT" "$HUCKLEBERRY_FIND_WINDOW_PROMPT_DEFAULT"; fw_prompt="$REPLY"
+        get_tmux_option "$HUCKLEBERRY_FIND_WINDOW_SESSION_HEADER" "$HUCKLEBERRY_FIND_WINDOW_SESSION_HEADER_DEFAULT"; fw_header="$REPLY"
+        get_tmux_option "$HUCKLEBERRY_FIND_WINDOW_SESSION_FOOTER" "$HUCKLEBERRY_FIND_WINDOW_SESSION_FOOTER_DEFAULT"; fw_footer="$REPLY"
+        get_tmux_option "$HUCKLEBERRY_FIND_WINDOW_FMT" "$HUCKLEBERRY_FIND_WINDOW_FMT_DEFAULT"; fw_fmt="$REPLY"
+        get_tmux_option "$HUCKLEBERRY_FIND_WINDOW_PREVIEW" "$HUCKLEBERRY_FIND_WINDOW_PREVIEW_DEFAULT"; fw_preview="$REPLY"
+        get_tmux_option "$HUCKLEBERRY_FIND_WINDOW_PREVIEW_FMT" "$HUCKLEBERRY_FIND_WINDOW_PREVIEW_FMT_DEFAULT"; fw_preview_fmt="$REPLY"
+
+        export HUCK_FW_PREVIEW_FMT="$fw_preview_fmt"
+
+        current_session=$(tmux display-message -p '#{session_name}')
+        win_list=$(tmux list-windows -t "=$current_session" -F "#{session_name}:#{window_index}::${fw_fmt}")
+
+        if [[ -z "$win_list" ]]; then
+            tmux display-message "No windows found"
+            prompt="$_saved_prompt" header="$_saved_header" footer="$_saved_footer"
+            continue
+        fi
+
+        # shellcheck disable=SC2016
+        fw_output=$(echo "$win_list" | SHELL="$BASH" fzf \
+            --reverse \
+            --no-info \
+            --no-separator \
+            --header-first \
+            --expect="space" \
+            --delimiter '::' \
+            --with-nth 2 \
+            --prompt "$fw_prompt" \
+            --header "$fw_header" \
+            --footer "$fw_footer" \
+            "${header_border_args[@]}" \
+            "${footer_border_args[@]}" \
+            --preview 'target={}; target="${target%%::*}"; tmux list-panes -t "$target" -F "$HUCK_FW_PREVIEW_FMT" 2>/dev/null' \
+            --preview-window "$fw_preview")
+
+        fw_exit=$?
+
+        if [[ $fw_exit -ne 0 ]]; then
+            # Escape — back to windows action list
+            prompt="$_saved_prompt" header="$_saved_header" footer="$_saved_footer"
+            continue
+        fi
+
+        IFS= read -r fw_key <<< "${fw_output%%$'\n'*}"
+        IFS= read -r fw_selection <<< "${fw_output#*$'\n'}"
+
+        if [[ "$fw_key" == "space" ]]; then
+            # Expand to all sessions
+            source "${CURRENT_DIR}/find-window.sh"
+            prompt="$_saved_prompt" header="$_saved_header" footer="$_saved_footer"
+            continue
+        fi
+
+        # Enter — switch to selected window
+        fw_target="${fw_selection%%::*}"
+        fw_session="${fw_target%%:*}"
+        fw_win_index="${fw_target#*:}"
+        tmux switch-client -t "=${fw_session}:=${fw_win_index}"
+        exit 0
+    fi
 
     case "$action" in
         rename)
