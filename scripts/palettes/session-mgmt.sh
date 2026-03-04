@@ -51,7 +51,7 @@ while true; do
         --no-separator \
         --no-preview \
         --header-first \
-        --expect="tab,${_huck_expect_keys}" \
+        --expect="space,tab,${_huck_expect_keys}" \
         --delimiter '::' \
         --with-nth 2 \
         --prompt "$prompt" \
@@ -76,6 +76,14 @@ while true; do
     _huck_resolve_hotkey "$action_key" "$selection"
     action="$REPLY"
     action_key="$_huck_resolved_key"
+
+    # Space — jump to Find Session fuzzy finder, then return here on Escape.
+    if [[ "$action_key" == "space" ]]; then
+        _saved_prompt="$prompt" _saved_header="$header" _saved_footer="$footer"
+        source "${CURRENT_DIR}/sessions.sh"
+        prompt="$_saved_prompt" header="$_saved_header" footer="$_saved_footer"
+        continue
+    fi
 
     case "$action" in
         rename)

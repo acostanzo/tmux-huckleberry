@@ -186,7 +186,7 @@ HUCKLEBERRY_WINDOWS_HEADER="@huckleberry-windows-header"
 HUCKLEBERRY_WINDOWS_HEADER_DEFAULT="  Manage Windows"
 
 HUCKLEBERRY_WINDOWS_FOOTER="@huckleberry-windows-footer"
-HUCKLEBERRY_WINDOWS_FOOTER_DEFAULT="  esc back · 1-9 select · tab target"
+HUCKLEBERRY_WINDOWS_FOOTER_DEFAULT="  esc back · ␣ find · 1-9 select · tab target"
 
 HUCKLEBERRY_WIN_RENAME="@huckleberry-win-rename"
 HUCKLEBERRY_WIN_RENAME_DEFAULT="Rename window"
@@ -413,7 +413,7 @@ HUCKLEBERRY_SESSION_MGMT_HEADER="@huckleberry-session-mgmt-header"
 HUCKLEBERRY_SESSION_MGMT_HEADER_DEFAULT="  Manage Sessions"
 
 HUCKLEBERRY_SESSION_MGMT_FOOTER="@huckleberry-session-mgmt-footer"
-HUCKLEBERRY_SESSION_MGMT_FOOTER_DEFAULT="  esc back · 1-9 select · tab target"
+HUCKLEBERRY_SESSION_MGMT_FOOTER_DEFAULT="  esc back · ␣ find · 1-9 select · tab target"
 
 HUCKLEBERRY_SES_RENAME="@huckleberry-ses-rename"
 HUCKLEBERRY_SES_RENAME_DEFAULT="Rename session"
@@ -481,6 +481,13 @@ HUCKLEBERRY_FIND_WINDOW_HEADER_DEFAULT="  Find Window"
 
 HUCKLEBERRY_FIND_WINDOW_FOOTER="@huckleberry-find-window-footer"
 HUCKLEBERRY_FIND_WINDOW_FOOTER_DEFAULT="  esc back · enter switch"
+
+# Session-scoped variant (shown from Windows palette Space shortcut)
+HUCKLEBERRY_FIND_WINDOW_SESSION_HEADER="@huckleberry-find-window-session-header"
+HUCKLEBERRY_FIND_WINDOW_SESSION_HEADER_DEFAULT="  Find Window (session)"
+
+HUCKLEBERRY_FIND_WINDOW_SESSION_FOOTER="@huckleberry-find-window-session-footer"
+HUCKLEBERRY_FIND_WINDOW_SESSION_FOOTER_DEFAULT="  esc back · ␣ all sessions · enter switch"
 
 HUCKLEBERRY_FIND_WINDOW_FMT="@huckleberry-find-window-fmt"
 HUCKLEBERRY_FIND_WINDOW_FMT_DEFAULT='#{session_name} > #{window_index}: #{window_name} [#{pane_current_command}]'
