@@ -220,6 +220,9 @@ All options are set with `set -g` in your `~/.tmux.conf`. Every label, prompt, a
 | `@huckleberry-cat-config-key` | `c` | Hotkey for Config category |
 | `@huckleberry-cat-config-label` | `Config` | Display label for Config |
 | `@huckleberry-cat-config-desc` | `Reload config, TPM install/update` | Description for Config |
+| `@huckleberry-shortcut-zoom-key` | `z` | Hotkey for Zoom shortcut |
+| `@huckleberry-shortcut-zoom-label` | `Zoom` | Display label for Zoom |
+| `@huckleberry-shortcut-zoom-desc` | `Toggle pane zoom` | Description for Zoom |
 
 ### Find Session palette
 

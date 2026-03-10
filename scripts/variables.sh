@@ -616,6 +616,19 @@ HUCKLEBERRY_CFG_COMMAND_PROMPT="@huckleberry-cfg-command-prompt"
 HUCKLEBERRY_CFG_COMMAND_PROMPT_DEFAULT="Command prompt"
 
 # ---------------------------------------------------------------------------
+# Shortcut: Zoom (direct action — toggles pane zoom from top-level menu)
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_SHORTCUT_ZOOM_KEY="@huckleberry-shortcut-zoom-key"
+HUCKLEBERRY_SHORTCUT_ZOOM_KEY_DEFAULT="z"
+
+HUCKLEBERRY_SHORTCUT_ZOOM_LABEL="@huckleberry-shortcut-zoom-label"
+HUCKLEBERRY_SHORTCUT_ZOOM_LABEL_DEFAULT="Zoom"
+
+HUCKLEBERRY_SHORTCUT_ZOOM_DESC="@huckleberry-shortcut-zoom-desc"
+HUCKLEBERRY_SHORTCUT_ZOOM_DESC_DEFAULT="Toggle pane zoom"
+
+# ---------------------------------------------------------------------------
 # Category: Extensions (conditional — only shown when @huckleberry-extensions is set)
 # ---------------------------------------------------------------------------
 
