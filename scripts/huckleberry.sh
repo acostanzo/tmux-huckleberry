@@ -56,6 +56,10 @@ get_tmux_option "$HUCKLEBERRY_SHORTCUT_ZOOM_KEY" "$HUCKLEBERRY_SHORTCUT_ZOOM_KEY
 get_tmux_option "$HUCKLEBERRY_SHORTCUT_ZOOM_LABEL" "$HUCKLEBERRY_SHORTCUT_ZOOM_LABEL_DEFAULT"; zoom_shortcut_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_SHORTCUT_ZOOM_DESC" "$HUCKLEBERRY_SHORTCUT_ZOOM_DESC_DEFAULT"; zoom_shortcut_desc="$REPLY"
 
+get_tmux_option "$HUCKLEBERRY_SHORTCUT_LAST_SESSION_KEY" "$HUCKLEBERRY_SHORTCUT_LAST_SESSION_KEY_DEFAULT"; last_session_shortcut_key="$REPLY"
+get_tmux_option "$HUCKLEBERRY_SHORTCUT_LAST_SESSION_LABEL" "$HUCKLEBERRY_SHORTCUT_LAST_SESSION_LABEL_DEFAULT"; last_session_shortcut_label="$REPLY"
+get_tmux_option "$HUCKLEBERRY_SHORTCUT_LAST_SESSION_DESC" "$HUCKLEBERRY_SHORTCUT_LAST_SESSION_DESC_DEFAULT"; last_session_shortcut_desc="$REPLY"
+
 get_tmux_option "$HUCKLEBERRY_CAT_EXTENSIONS_KEY" "$HUCKLEBERRY_CAT_EXTENSIONS_KEY_DEFAULT"; extensions_key="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_EXTENSIONS_LABEL" "$HUCKLEBERRY_CAT_EXTENSIONS_LABEL_DEFAULT"; extensions_label="$REPLY"
 get_tmux_option "$HUCKLEBERRY_CAT_EXTENSIONS_DESC" "$HUCKLEBERRY_CAT_EXTENSIONS_DESC_DEFAULT"; extensions_desc="$REPLY"
@@ -65,7 +69,7 @@ get_tmux_option "$HUCKLEBERRY_EXTENSIONS" ""; extensions_list="$REPLY"
 
 _huck_seen_keys=" "
 _huck_dup=0
-_huck_dup_keys=("$sessions_key" "$session_mgmt_key" "$windows_key" "$panes_key" "$find_window_key" "$buffers_key" "$toggles_key" "$config_key" "$zoom_shortcut_key")
+_huck_dup_keys=("$sessions_key" "$session_mgmt_key" "$windows_key" "$panes_key" "$find_window_key" "$buffers_key" "$toggles_key" "$config_key" "$zoom_shortcut_key" "$last_session_shortcut_key")
 [[ -n "$extensions_list" ]] && _huck_dup_keys+=("$extensions_key")
 for _k in "${_huck_dup_keys[@]}"; do
     if [[ "$_huck_seen_keys" == *" ${_k} "* ]]; then
@@ -89,24 +93,26 @@ if [[ "$buffers_key" == "space" ]]; then buffers_display="$space_display"; else 
 if [[ "$toggles_key" == "space" ]]; then toggles_display="$space_display"; else toggles_display="$toggles_key"; fi
 if [[ "$config_key" == "space" ]]; then config_display="$space_display"; else config_display="$config_key"; fi
 if [[ "$zoom_shortcut_key" == "space" ]]; then zoom_shortcut_display="$space_display"; else zoom_shortcut_display="$zoom_shortcut_key"; fi
+if [[ "$last_session_shortcut_key" == "space" ]]; then last_session_shortcut_display="$space_display"; else last_session_shortcut_display="$last_session_shortcut_key"; fi
 if [[ "$extensions_key" == "space" ]]; then extensions_display="$space_display"; else extensions_display="$extensions_key"; fi
 
 # --- Build menu (dynamically aligned, no subshell) ---------------------------
 
 # Compute the max label width so the description column aligns for any labels.
 max_label=${#sessions_label}
-_label_list=("$session_mgmt_label" "$windows_label" "$panes_label" "$find_window_label" "$buffers_label" "$toggles_label" "$config_label" "$zoom_shortcut_label")
+_label_list=("$session_mgmt_label" "$windows_label" "$panes_label" "$find_window_label" "$buffers_label" "$toggles_label" "$config_label" "$zoom_shortcut_label" "$last_session_shortcut_label")
 [[ -n "$extensions_list" ]] && _label_list+=("$extensions_label")
 for _l in "${_label_list[@]}"; do
     (( ${#_l} > max_label )) && max_label=${#_l}
 done
 
-printf -v menu '%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s' \
+printf -v menu '%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s' \
     "$(printf '  %s  %-*s   %s' "$sessions_display" "$max_label" "$sessions_label" "$sessions_desc")" \
     "$(printf '  %s  %-*s   %s' "$session_mgmt_display" "$max_label" "$session_mgmt_label" "$session_mgmt_desc")" \
     "$(printf '  %s  %-*s   %s' "$windows_display" "$max_label" "$windows_label" "$windows_desc")" \
     "$(printf '  %s  %-*s   %s' "$panes_display" "$max_label" "$panes_label" "$panes_desc")" \
     "$(printf '  %s  %-*s   %s' "$zoom_shortcut_display" "$max_label" "$zoom_shortcut_label" "$zoom_shortcut_desc")" \
+    "$(printf '  %s  %-*s   %s' "$last_session_shortcut_display" "$max_label" "$last_session_shortcut_label" "$last_session_shortcut_desc")" \
     "$(printf '  %s  %-*s   %s' "$find_window_display" "$max_label" "$find_window_label" "$find_window_desc")" \
     "$(printf '  %s  %-*s   %s' "$buffers_display" "$max_label" "$buffers_label" "$buffers_desc")" \
     "$(printf '  %s  %-*s   %s' "$toggles_display" "$max_label" "$toggles_label" "$toggles_desc")" \
@@ -133,7 +139,7 @@ footer_border_args=(--footer-border)
 _dispatcher_dir="$CURRENT_DIR"
 
 while true; do
-    _expect="${sessions_key},${session_mgmt_key},${windows_key},${panes_key},${find_window_key},${buffers_key},${toggles_key},${config_key},${zoom_shortcut_key}"
+    _expect="${sessions_key},${session_mgmt_key},${windows_key},${panes_key},${find_window_key},${buffers_key},${toggles_key},${config_key},${zoom_shortcut_key},${last_session_shortcut_key}"
     [[ -n "$extensions_list" ]] && _expect+=",${extensions_key}"
 
     fzf_output=$(echo "$menu" | fzf \
@@ -188,6 +194,9 @@ while true; do
     elif [[ "$key" == "$zoom_shortcut_key" ]]; then
         tmux resize-pane -Z
         exit 0
+    elif [[ "$key" == "$last_session_shortcut_key" ]]; then
+        tmux switch-client -l
+        exit 0
     elif [[ -n "$extensions_list" && "$key" == "$extensions_key" ]]; then
         palette="extensions"
     elif [[ -n "$selection" ]]; then
@@ -210,6 +219,9 @@ while true; do
             palette="config"
         elif [[ "$selection" == *"$zoom_shortcut_label"* ]]; then
             tmux resize-pane -Z
+            exit 0
+        elif [[ "$selection" == *"$last_session_shortcut_label"* ]]; then
+            tmux switch-client -l
             exit 0
         elif [[ -n "$extensions_list" && "$selection" == *"$extensions_label"* ]]; then
             palette="extensions"

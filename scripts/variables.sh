@@ -629,6 +629,19 @@ HUCKLEBERRY_SHORTCUT_ZOOM_DESC="@huckleberry-shortcut-zoom-desc"
 HUCKLEBERRY_SHORTCUT_ZOOM_DESC_DEFAULT="Toggle pane zoom"
 
 # ---------------------------------------------------------------------------
+# Shortcut: Last Session (direct action — no sub-palette)
+# ---------------------------------------------------------------------------
+
+HUCKLEBERRY_SHORTCUT_LAST_SESSION_KEY="@huckleberry-shortcut-last-session-key"
+HUCKLEBERRY_SHORTCUT_LAST_SESSION_KEY_DEFAULT="."
+
+HUCKLEBERRY_SHORTCUT_LAST_SESSION_LABEL="@huckleberry-shortcut-last-session-label"
+HUCKLEBERRY_SHORTCUT_LAST_SESSION_LABEL_DEFAULT="Last Session"
+
+HUCKLEBERRY_SHORTCUT_LAST_SESSION_DESC="@huckleberry-shortcut-last-session-desc"
+HUCKLEBERRY_SHORTCUT_LAST_SESSION_DESC_DEFAULT="Switch to previous session"
+
+# ---------------------------------------------------------------------------
 # Category: Extensions (conditional — only shown when @huckleberry-extensions is set)
 # ---------------------------------------------------------------------------
 

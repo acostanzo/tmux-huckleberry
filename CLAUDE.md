@@ -17,6 +17,7 @@ scripts/huckleberry.sh (top-level dispatcher)
     ├─ t Toggles      → scripts/palettes/toggles.sh
     ├─ c Config       → scripts/palettes/config.sh
     ├─ z Zoom         → tmux resize-pane -Z (direct action)
+    ├─ . Last Session  → tmux switch-client -l (direct action)
     └─ x Extensions   → scripts/palettes/extensions.sh (conditional)
 ```
 

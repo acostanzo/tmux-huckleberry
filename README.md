@@ -38,6 +38,7 @@ Nine categories, one keypress away. Hit the hotkey to jump straight there, or ty
 | `b` | Buffers | Paste, capture, manage buffers |
 | `t` | Toggles | Toggle tmux options on/off |
 | `c` | Config | Reload config, browse keys, TPM |
+| `.` | Last Session | Switch to previous session |
 | `x` | Extensions | Run extension commands *(only shown when configured)* |
 
 ### Find Session palette
@@ -223,6 +224,9 @@ All options are set with `set -g` in your `~/.tmux.conf`. Every label, prompt, a
 | `@huckleberry-shortcut-zoom-key` | `z` | Hotkey for Zoom shortcut |
 | `@huckleberry-shortcut-zoom-label` | `Zoom` | Display label for Zoom |
 | `@huckleberry-shortcut-zoom-desc` | `Toggle pane zoom` | Description for Zoom |
+| `@huckleberry-shortcut-last-session-key` | `.` | Hotkey for Last Session shortcut |
+| `@huckleberry-shortcut-last-session-label` | `Last Session` | Display label for Last Session |
+| `@huckleberry-shortcut-last-session-desc` | `Switch to previous session` | Description for Last Session |
 
 ### Find Session palette
 
