@@ -174,10 +174,16 @@ while true; do
                     continue
                 fi
 
+                current=$(tmux display-message -p '#{session_name}')
+                if [[ "$target" == "$current" ]]; then
+                    tmux switch-client -n 2>/dev/null
+                fi
                 tmux kill-session -t "=$target"
             else
                 # Enter — kill current session
-                tmux kill-session
+                current=$(tmux display-message -p '#{session_name}')
+                tmux switch-client -n 2>/dev/null
+                tmux kill-session -t "=$current"
             fi
             exit 0
             ;;
