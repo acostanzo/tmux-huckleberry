@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "stack": "generic",
+  "docs": {
+    "changelog": {
+      "enabled": true,
+      "file": "CHANGELOG.md"
+    },
+    "api-reference": {
+      "enabled": false,
+      "directory": "docs/reference/",
+      "paths": ["scripts/**"]
+    },
+    "api-contract": {
+      "enabled": false,
+      "file": "docs/reference/api.md",
+      "paths": [],
+      "patterns": []
+    },
+    "env-config": {
+      "enabled": false,
+      "file": "docs/reference/configuration.md",
+      "paths": [".env*", "config/**"],
+      "patterns": []
+    },
+    "domain-scaffold": {
+      "enabled": false,
+      "file": "docs/reference/domain.md",
+      "paths": []
+    },
+    "architecture": {
+      "enabled": true,
+      "file": "docs/ARCHITECTURE.md"
+    },
+    "index": {
+      "enabled": true,
+      "file": "docs/INDEX.md",
+      "paths": ["docs/**/*.md"]
+    }
+  }
+}
